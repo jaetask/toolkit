@@ -68,7 +68,7 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "toolkit-guard": "./dist/guard.js"
+    "toolkit-guard": "dist/guard.js"
   },
   "publishConfig": {
     "access": "public",
@@ -85,7 +85,8 @@
     "format:check": "biome format .",
     "test": "tsx --test src/*.test.ts src/suite/*.test.tsx",
     "demo": "tsx scripts/demo.tsx",
-    "prepare": "npm run build && (git config core.hooksPath .agents/guardrails/hooks || true)"
+    "prepare": "npm run build && (git config core.hooksPath .agents/guardrails/hooks || true)",
+    "prebuild": "node scripts/check-install.mjs"
   },
   "peerDependencies": {
     "react": "^19.0.0",
