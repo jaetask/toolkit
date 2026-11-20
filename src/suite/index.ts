@@ -57,6 +57,7 @@ export { AddLinkDialog, knownService, linkHost, ServiceIcon, service } from "./l
 export { PropertyPills, type ViewChoice, ViewToggle } from "./views.js";
 export { day, endOfWeek, parseDue } from "./due.js";
 export { DueDatePicker, DueIcon, dueLabel, dueState } from "./due-picker.js";
+export { AttachButton, FileChip, fileSize, VideoFigure } from "./files.js";
 export {
   AddReactionButton,
   CommentIconButton,
