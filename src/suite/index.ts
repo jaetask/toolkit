@@ -52,3 +52,14 @@ export {
   PROJECT_ICONS,
 } from "./project-appearance.js";
 export { ColourSwatches, ProjectIcon, ProjectIconPicker } from "./project-icon.js";
+export {
+  AddReactionButton,
+  CommentIconButton,
+  type CommentReactionSummary,
+  CommentReactionChips,
+  EMOJI_CATEGORIES,
+  type EmojiCategory,
+  EmojiPickerPanel,
+  filterEmojiCategories,
+  QUICK_REACTIONS,
+} from "./emoji.js";

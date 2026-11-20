@@ -16,7 +16,8 @@
       "!src/editor",
       "!src/collab-ui",
       "!src/app",
-      "!src/editor.css"
+      "!src/editor.css",
+      "!src/suite/emoji.tsx"
     ]
   },
   "formatter": { "indentStyle": "space", "lineWidth": 100 }

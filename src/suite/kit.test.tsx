@@ -154,6 +154,27 @@ test("the app's own navigation sits under the pages and knows the collapsed stat
   assert.match(html, /aria-label="Pages">.*<\/nav><nav aria-label="Projects">narrow<\/nav>/s);
 });
 
+test("reactions: chips, the add button, and emoji search", async () => {
+  const { CommentReactionChips, AddReactionButton, filterEmojiCategories } = await import(
+    "./index.js"
+  );
+  const html = at(
+    "/",
+    <>
+      <CommentReactionChips
+        reactions={[{ reaction: "👍", count: 2, reactedByMe: true }]}
+        canReact
+        onToggle={() => {}}
+      />
+      <AddReactionButton onSelect={() => {}} />
+    </>,
+  );
+  assert.match(html, /aria-pressed="true" aria-label="👍: 2"/);
+  assert.match(html, /aria-label="Add reaction"/);
+  assert.ok(filterEmojiCategories("thumbs").some((c) => c.emojis.includes("👍")));
+  assert.equal(filterEmojiCategories("zzzz-nothing").length, 0);
+});
+
 test("only same-origin paths are followed back", () => {
   assert.equal(safeFrom("/p/w"), "/p/w");
   assert.equal(safeFrom("//evil.example"), null);
