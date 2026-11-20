@@ -100,9 +100,9 @@
 .tk-root *::after {
   box-sizing: border-box;
 }
+/* No ring is drawn round a focused part. A focused field shows a darker border. */
 .tk-root :focus-visible {
-  outline: 2px solid var(--tk-focus);
-  outline-offset: 2px;
+  outline: none;
 }
 .tk-muted {
   color: var(--tk-muted);
@@ -632,9 +632,8 @@ a.tk-list-body:hover {
 .tk-input:focus-visible,
 .tk-textarea:focus-visible,
 .tk-select:focus-visible {
-  outline: 2px solid var(--tk-focus);
-  outline-offset: 0;
-  border-color: transparent;
+  outline: none;
+  border-color: var(--tk-focus);
 }
 .tk-pick {
   padding: 6px 12px;
