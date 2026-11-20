@@ -52,6 +52,7 @@ export {
   PROJECT_ICONS,
 } from "./project-appearance.js";
 export { ColourSwatches, ProjectIcon, ProjectIconPicker } from "./project-icon.js";
+export { type PickerChoice, PropertyPicker, RailRow } from "./pickers.js";
 export {
   AddReactionButton,
   CommentIconButton,

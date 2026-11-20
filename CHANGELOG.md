@@ -2,6 +2,7 @@
 
 ## 0.3.1
 
+- Suite: `PropertyPicker`, a row that opens a searchable list in a popover (a key that opens it, number keys, pick several with the chosen ones above a line, create from what was typed), and `RailRow`, the quiet row it opens from.
 - Select's highlighted row is light grey (`focus:bg-accent`), with the tick on the chosen one; the emoji search says "Search emoji...".
 - Suite: the agent-native Content app's emoji reactions: `EmojiPickerPanel` (search, then the categories), `filterEmojiCategories`, `CommentReactionChips`, `AddReactionButton` (quick reactions, then the searchable panel, in a Popover) and `CommentIconButton`.
 - `@jaetask/toolkit/editor` (and `/editor/*`, `/editor.css`): agent-native's Notion-style editor on Tiptap 3.28: SharedRichEditor, RichMarkdownEditor (Markdown in and out), SlashCommandMenu with DEFAULT_SLASH_COMMANDS, BubbleToolbar, code blocks with lowlight, images and the rest, with `/collab-ui` for its optional collaboration parts.
