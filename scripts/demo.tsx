@@ -63,7 +63,7 @@ function Shell({ title, children }: { title: string; children: React.ReactNode }
               id: "web",
               href: "/p/web",
               label: "Website",
-              avatar: <Avatar name="Website" colour="var(--tk-ink)" />,
+              avatar: <Avatar name="Website" colour="blue" />,
               open: (
                 <>
                   <SideSection label="Board">

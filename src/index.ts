@@ -25,9 +25,35 @@ export {
   Panel,
   PrimaryLink,
   type Progress,
+  ROW_DRAG_TYPE,
   Row,
   StatusDot,
+  COLOURS,
+  type Colour,
 } from "./page.js";
+export {
+  ActivityRow,
+  Board,
+  CenteredPage,
+  Column,
+  Comment,
+  Facts,
+  Inline,
+  Notice,
+  type NoticeTone,
+  Reactions,
+  Thread,
+} from "./parts.js";
+export {
+  ChipMultiPicker,
+  Composer,
+  FileButton,
+  FilterBar,
+  SearchInput,
+  type TabOption,
+  Tabs,
+  Thumbs,
+} from "./forms.js";
 export {
   AppShell,
   Avatar,

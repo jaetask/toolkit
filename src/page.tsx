@@ -1,6 +1,6 @@
 // The page kit. A read page stacks Panels at one width; each Panel's one Edit button opens that
 // section's own edit page (EditFrame with labelled Rows), and Back, Cancel or Save return here.
-import type { ReactNode } from "react";
+import type { DragEvent, ReactNode } from "react";
 import { Link, useFromHref } from "./link.js";
 import { Button, cx, type Surface } from "./ui.js";
 
@@ -153,32 +153,68 @@ export function BackLink({ to }: { to: string }) {
 }
 
 /** A list: one white card of divided rows. */
-export function ListCard({ children }: { children: ReactNode }) {
-  return <ul className="tk-list">{children}</ul>;
+export function ListCard({
+  children,
+  as = "ul",
+}: {
+  children: ReactNode;
+  as?: "ul" | "ol" | "div";
+}) {
+  const Tag = as;
+  return <Tag className="tk-list">{children}</Tag>;
 }
 
-/** One list row. With `to`, the row opens its own page. */
+/** The drag type the toolkit uses for rows; Column reads it on drop. */
+export const ROW_DRAG_TYPE = "application/x-tk-row";
+
+/**
+ * One list row. With `to`, the row opens its own page. With `dragId`, the row can be dragged onto
+ * a Column. `blocked` marks it as waiting on something, with a word you can change.
+ */
 export function ListRow({
   to,
   children,
   aside,
+  as = "li",
+  dragId,
+  blocked,
+  blockedLabel = "Blocked",
 }: {
   to?: string;
   children: ReactNode;
   aside?: ReactNode;
+  as?: "li" | "div" | "article";
+  dragId?: string;
+  blocked?: boolean;
+  blockedLabel?: string;
 }) {
   const href = useFromHref(to ?? "");
+  const Tag = as;
+  const drag = dragId
+    ? {
+        draggable: true,
+        onDragStart: (e: DragEvent<HTMLElement>) => {
+          e.dataTransfer.setData(ROW_DRAG_TYPE, dragId);
+          e.dataTransfer.effectAllowed = "move";
+        },
+      }
+    : {};
   return (
-    <li className="tk-list-row">
+    <Tag className="tk-list-row" data-blocked={blocked ? "true" : undefined} {...drag}>
       {to ? (
-        <Link href={href} className="tk-list-body">
+        <Link href={href} className="tk-list-body" draggable={dragId ? false : undefined}>
           {children}
         </Link>
       ) : (
-        <span className="tk-list-body">{children}</span>
+        <div className="tk-list-body">{children}</div>
       )}
-      {aside && <span className="tk-list-aside">{aside}</span>}
-    </li>
+      {(aside || blocked) && (
+        <span className="tk-list-aside">
+          {blocked && <Chip colour="amber">{blockedLabel}</Chip>}
+          {aside}
+        </span>
+      )}
+    </Tag>
   );
 }
 
@@ -214,9 +250,17 @@ export function StatusDot({ status, label }: { status: Progress; label?: string 
   );
 }
 
-/** A pill value. */
-export function Chip({ children }: { children: ReactNode }) {
-  return <span className="tk-chip">{children}</span>;
+/** The six named colours for labels, project colours and avatars. */
+export const COLOURS = ["blue", "teal", "green", "amber", "purple", "pink"] as const;
+export type Colour = (typeof COLOURS)[number];
+
+/** A pill value: a label, a kind or a state, in any word. `colour` picks one of the six. */
+export function Chip({ children, colour }: { children: ReactNode; colour?: Colour }) {
+  return (
+    <span className="tk-chip" data-colour={colour}>
+      {children}
+    </span>
+  );
 }
 
 /** Pills to pick one value from, on an edit page. */

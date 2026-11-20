@@ -1,9 +1,9 @@
 // The app shell: a light grey sidebar (app mark, nav with icons, small-caps groups of projects or
 // entities with status dots, Settings at the bottom), a top bar, and the page. Every Kit app opens
 // in this frame; the app passes data and the shell draws it.
-import { type ReactNode, useEffect, useState } from "react";
+import { type DragEvent, type ReactNode, useEffect, useState } from "react";
 import { Link } from "./link.js";
-import { Dot, type Progress } from "./page.js";
+import { type Colour, Dot, type Progress } from "./page.js";
 
 export type NavItem = {
   href: string;
@@ -11,6 +11,8 @@ export type NavItem = {
   /** A 16px line icon (for example from @tabler/icons-react). */
   icon?: ReactNode;
   current?: boolean;
+  /** A number shown at the right of the row, such as items waiting. */
+  count?: number;
 };
 
 export type GroupItem = {
@@ -41,7 +43,14 @@ export type Group = {
   items: GroupItem[];
   /** Shown when the group has no items: one line on how to add the first. */
   empty?: ReactNode;
+  /**
+   * Lets the person reorder the items by dragging a row, or with Alt+Up and Alt+Down on a focused
+   * row. Gets the item ids in their new order; save it, then pass the items back in that order.
+   */
+  onReorder?: (ids: string[]) => void;
 };
+
+const GROUP_DRAG_TYPE = "application/x-tk-group-item";
 
 const STORAGE_KEY = "tk-sidebar-collapsed";
 
@@ -107,18 +116,29 @@ const CollapseIcon = () => (
   </svg>
 );
 
-/** A round avatar: an image, or the first letter on a colour. */
-export function Avatar({ name, src, colour }: { name: string; src?: string; colour?: string }) {
+/** A round avatar: an image, an emoji, or the first letter, on one of the six colours. */
+export function Avatar({
+  name,
+  src,
+  emoji,
+  colour,
+}: {
+  name: string;
+  src?: string;
+  emoji?: string;
+  colour?: Colour;
+}) {
   return (
     <span
       className="tk-avatar"
-      style={colour ? { background: colour, color: "white" } : undefined}
+      data-colour={colour}
+      data-emoji={emoji ? "true" : undefined}
       aria-hidden
     >
       {src ? (
         <img src={src} alt="" width={22} height={22} />
       ) : (
-        (name.trim()[0] ?? "?").toUpperCase()
+        (emoji ?? (name.trim()[0] ?? "?").toUpperCase())
       )}
     </span>
   );
@@ -169,19 +189,28 @@ function NavLink({ item }: { item: NavItem }) {
     >
       {item.icon && <span className="tk-nav-icon">{item.icon}</span>}
       <span className="tk-label">{item.label}</span>
+      {item.count !== undefined && item.count > 0 && <span className="tk-count">{item.count}</span>}
     </Link>
   );
 }
+
+type Move = {
+  onMove: (id: string, before: string | null) => void;
+  onStep: (id: string, by: -1 | 1) => void;
+};
 
 function GroupRow({
   item,
   expanded,
   onToggle,
+  move,
 }: {
   item: GroupItem;
   expanded: boolean;
   onToggle: () => void;
+  move?: Move;
 }) {
+  const [over, setOver] = useState(false);
   const expandable = item.children !== undefined;
   const shown = item.open ?? (expandable && expanded ? item.children : undefined);
   const link = (
@@ -191,6 +220,16 @@ function GroupRow({
       title={item.label}
       onClick={item.onSelect}
       aria-current={item.current ? "page" : item.open ? "true" : undefined}
+      aria-keyshortcuts={move ? "Alt+ArrowUp Alt+ArrowDown" : undefined}
+      onKeyDown={
+        move
+          ? (e) => {
+              if (!e.altKey || (e.key !== "ArrowUp" && e.key !== "ArrowDown")) return;
+              e.preventDefault();
+              move.onStep(item.id, e.key === "ArrowUp" ? -1 : 1);
+            }
+          : undefined
+      }
     >
       {item.avatar ?? <Avatar name={item.label} />}
       <span className="tk-label">{item.label}</span>
@@ -215,13 +254,46 @@ function GroupRow({
   ) : (
     link
   );
-  if (!shown) return row;
+  const drag = move
+    ? {
+        draggable: true,
+        "data-over": over ? "true" : undefined,
+        onDragStart: (e: DragEvent<HTMLDivElement>) => {
+          e.dataTransfer.setData(GROUP_DRAG_TYPE, item.id);
+          e.dataTransfer.effectAllowed = "move";
+        },
+        onDragOver: (e: DragEvent<HTMLDivElement>) => {
+          if (!e.dataTransfer.types.includes(GROUP_DRAG_TYPE)) return;
+          e.preventDefault();
+          if (!over) setOver(true);
+        },
+        onDragLeave: () => setOver(false),
+        onDrop: (e: DragEvent<HTMLDivElement>) => {
+          setOver(false);
+          const id = e.dataTransfer.getData(GROUP_DRAG_TYPE);
+          if (!id || id === item.id) return;
+          e.preventDefault();
+          move.onMove(id, item.id);
+        },
+      }
+    : {};
   return (
-    <div className="tk-group-open" id={sectionsId}>
+    <div
+      className={shown ? "tk-group-open" : "tk-group-slot"}
+      id={shown ? sectionsId : undefined}
+      {...drag}
+    >
       {row}
       {shown}
     </div>
   );
+}
+
+function reorder(ids: string[], id: string, before: string | null): string[] {
+  const rest = ids.filter((x) => x !== id);
+  const at = before === null ? rest.length : rest.indexOf(before);
+  rest.splice(at < 0 ? rest.length : at, 0, id);
+  return rest;
 }
 
 /** The frame every Kit app opens in. */
@@ -285,6 +357,23 @@ export function AppShell({
                 <GroupRow
                   key={item.id}
                   item={item}
+                  move={
+                    group.onReorder
+                      ? {
+                          onMove: (id, before) => {
+                            const ids = group.items.map((i) => i.id);
+                            group.onReorder?.(reorder(ids, id, before));
+                          },
+                          onStep: (id, by) => {
+                            const ids = group.items.map((i) => i.id);
+                            const at = ids.indexOf(id) + by;
+                            if (at < 0 || at >= ids.length) return;
+                            const before = by < 0 ? (ids[at] ?? null) : (ids[at + 1] ?? null);
+                            group.onReorder?.(reorder(ids, id, before));
+                          },
+                        }
+                      : undefined
+                  }
                   expanded={openItems.isOpen(
                     `${group.label}/${item.id}`,
                     item.defaultOpen ?? false,

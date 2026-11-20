@@ -1,6 +1,6 @@
 {
   "name": "@jaetask/toolkit",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "One shell and page kit for every Kit app: sidebar, sections, edit pages and tokens, as React components.",
   "keywords": [
     "react",
@@ -32,7 +32,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./fonts/*": "./dist/fonts/*"
   },
   "bin": {
     "toolkit-guard": "./dist/guard.js"
@@ -45,7 +46,7 @@
     "node": ">=22.13"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && cp src/styles.css dist/styles.css && chmod +x dist/guard.js",
+    "build": "tsc -p tsconfig.build.json && cp src/styles.css dist/styles.css && rm -rf dist/fonts && cp -R src/fonts dist/fonts && chmod +x dist/guard.js",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint . && node scripts/check-scrub.mjs",
     "format": "biome format --write .",
