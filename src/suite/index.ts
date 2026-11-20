@@ -58,6 +58,7 @@ export { PropertyPills, type ViewChoice, ViewToggle } from "./views.js";
 export { day, endOfWeek, parseDue } from "./due.js";
 export { DueDatePicker, DueIcon, dueLabel, dueState } from "./due-picker.js";
 export { AttachButton, FileChip, fileSize, VideoFigure } from "./files.js";
+export { MarkdownText } from "./markdown.js";
 export {
   AddReactionButton,
   CommentIconButton,
