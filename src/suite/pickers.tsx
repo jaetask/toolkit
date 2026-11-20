@@ -1,7 +1,7 @@
 // Property pickers: a quiet row that opens a searchable list in a popover, as on a ticket's
 // rail or on a card. A letter key opens one; a number key picks a row.
 import { IconCheck } from "@tabler/icons-react";
-import { type ComponentProps, type ReactNode, useEffect, useState } from "react";
+import { type ComponentProps, type ReactNode, type RefObject, useEffect, useState } from "react";
 import { Button } from "../ui/button.js";
 import {
   Command,
@@ -13,7 +13,7 @@ import {
   CommandSeparator,
 } from "../ui/command.js";
 import { Kbd } from "../ui/kbd.js";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover.js";
+import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "../ui/popover.js";
 
 /** One row of a PropertyPicker. An empty id or "none" stands for no value. */
 export type PickerChoice = { id: string; name: string; icon?: ReactNode; group?: string };
@@ -37,6 +37,9 @@ export function PropertyPicker({
   onCreate,
   disabled,
   armed = true,
+  anchor,
+  side = "bottom",
+  align = "start",
   children,
 }: {
   label: string;
@@ -49,6 +52,11 @@ export function PropertyPicker({
   /** Makes a new choice from the words typed, when none matches. */
   onCreate?: (name: string) => void;
   disabled?: boolean;
+  /** A part the list opens from, when it should not follow the trigger as the trigger moves. */
+  anchor?: RefObject<HTMLElement | null>;
+  /** Which side of the trigger or anchor the list opens on, and how it lines up with it. */
+  side?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
   /** False while the key in `hint` should not open it. True if left out. */
   armed?: boolean | undefined;
   children: ReactNode;
@@ -91,10 +99,12 @@ export function PropertyPicker({
         if (!next) setSearch("");
       }}
     >
+      {/* With an anchor the list opens from that fixed place, wherever the trigger has moved to. */}
+      {anchor && <PopoverAnchor virtualRef={anchor as RefObject<HTMLElement>} />}
       <PopoverTrigger asChild disabled={disabled}>
         {children}
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-72 p-0">
+      <PopoverContent side={side} align={align} className="w-72 p-0">
         <Command
           onKeyDown={(e) => {
             if (!numbered || search !== "" || !/^[0-9]$/.test(e.key)) return;
@@ -106,7 +116,8 @@ export function PropertyPicker({
             pick(target.id);
           }}
         >
-          <div className="flex items-center gap-2 pr-2">
+          {/* The line under the search box runs the full width, under the key hint too. */}
+          <div className="flex items-center gap-2 border-b pr-3 [&>div]:flex-1 [&>div]:border-b-0">
             <CommandInput
               leading={null}
               aria-label={label}

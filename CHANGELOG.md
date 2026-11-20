@@ -2,6 +2,7 @@
 
 ## 0.3.1
 
+- `PropertyPicker`: the search line runs the full width; `anchor`, `side` and `align` open the list from a fixed part and a chosen side.
 - Suite: `MarkdownText`, Markdown shown as text with headings, lists, code, links and the app's own pictures. A picture from another site is shown as a link.
 - Light theme: the page is a very light grey and the sidebar a step greyer, so white cards and comment threads stand out.
 - `toolkit-guard` rule `no-focus-rings`: fails a class that asks for a ring or outline on focus, and a drawn `outline` in CSS.
