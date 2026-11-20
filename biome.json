@@ -12,7 +12,11 @@
       "!src/provider.tsx",
       "!src/utils.ts",
       "!src/styles.css",
-      "!src/theme"
+      "!src/theme",
+      "!src/editor",
+      "!src/collab-ui",
+      "!src/app",
+      "!src/editor.css"
     ]
   },
   "formatter": { "indentStyle": "space", "lineWidth": 100 }

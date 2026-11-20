@@ -1,4 +1,86 @@
 {
+  "app/review/InlineMarkdown.tsx": {
+    "exports": ["InlineMarkdown", "InlineMarkdownProps", "InlineMarkdownProtectedSpan"],
+    "radix": []
+  },
+  "collab-ui/AgentPresenceChip.tsx": {
+    "exports": ["AgentPresenceChip", "AgentPresenceChipProps"],
+    "radix": []
+  },
+  "collab-ui/LiveCursorOverlay.tsx": {
+    "exports": ["CursorMapFn", "LiveCursorOverlay", "LiveCursorOverlayProps"],
+    "radix": []
+  },
+  "collab-ui/PresenceBar.tsx": {
+    "exports": ["PresenceBar", "PresenceBarProps"],
+    "radix": []
+  },
+  "collab-ui/RecentEditHighlights.tsx": {
+    "exports": ["RecentEditHighlights", "RecentEditHighlightsProps"],
+    "radix": []
+  },
+  "collab-ui/RemoteSelectionRings.tsx": {
+    "exports": ["RemoteSelectionRings", "RemoteSelectionRingsProps", "SelectionDescriptor"],
+    "radix": []
+  },
+  "collab-ui/agent-identity.ts": {
+    "exports": ["AGENT_CLIENT_ID", "AgentIdentity", "DEFAULT_AGENT_IDENTITY"],
+    "radix": []
+  },
+  "collab-ui/index.ts": {
+    "exports": [
+      "AGENT_CLIENT_ID",
+      "AgentIdentity",
+      "AgentPresenceChip",
+      "AgentPresenceChipProps",
+      "AttributedRecentEdit",
+      "CollabUser",
+      "CursorMapFn",
+      "DEFAULT_AGENT_IDENTITY",
+      "LiveCursorOverlay",
+      "LiveCursorOverlayProps",
+      "NormalizedPoint",
+      "OtherPresence",
+      "PresenceBar",
+      "PresenceBarProps",
+      "PresencePayload",
+      "RECENT_EDITS_MAX",
+      "RECENT_EDIT_TTL_MS",
+      "RecentEdit",
+      "RecentEditDescriptor",
+      "RecentEditHighlights",
+      "RecentEditHighlightsProps",
+      "RemoteSelectionRings",
+      "RemoteSelectionRingsProps",
+      "SelectionDescriptor",
+      "dedupeCollabUsersByEmail",
+      "emailToColor",
+      "emailToName",
+      "isReconcileLeadClient"
+    ],
+    "radix": []
+  },
+  "collab-ui/lead-client.ts": {
+    "exports": ["isReconcileLeadClient"],
+    "radix": []
+  },
+  "collab-ui/types.ts": {
+    "exports": [
+      "AttributedRecentEdit",
+      "CollabUser",
+      "NormalizedPoint",
+      "OtherPresence",
+      "PresencePayload",
+      "RECENT_EDITS_MAX",
+      "RECENT_EDIT_TTL_MS",
+      "RecentEdit",
+      "RecentEditDescriptor",
+      "dedupeCollabUsersByEmail",
+      "emailToColor",
+      "emailToName"
+    ],
+    "radix": []
+  },
   "design-system/components.tsx": {
     "exports": [
       "ActionButton",
@@ -101,6 +183,256 @@
       "TextAreaProps",
       "TextFieldProps",
       "TooltipProps"
+    ],
+    "radix": []
+  },
+  "editor/BubbleToolbar.tsx": {
+    "exports": [
+      "BubbleToolbar",
+      "BubbleToolbarItem",
+      "BubbleToolbarProps",
+      "buildDefaultBubbleItems"
+    ],
+    "radix": []
+  },
+  "editor/CodeBlockNode.tsx": {
+    "exports": [
+      "CodeBlockClassNames",
+      "CodeLanguageOption",
+      "CreateCodeBlockNodeOptions",
+      "DEFAULT_CODE_LANGUAGES",
+      "createCodeBlockNode"
+    ],
+    "radix": []
+  },
+  "editor/DragHandle.ts": {
+    "exports": [
+      "DEFAULT_DRAG_HANDLE_WRAPPER_SELECTOR",
+      "DragHandle",
+      "DragHandleDropContext",
+      "DragHandleDropPlacement",
+      "DragHandleOptions",
+      "dragPreviewTransform"
+    ],
+    "radix": []
+  },
+  "editor/ImageExtension.ts": {
+    "exports": [
+      "ImageUploadFn",
+      "SharedImage",
+      "SharedImageOptions",
+      "createImageExtension",
+      "pickAndInsertImage"
+    ],
+    "radix": []
+  },
+  "editor/RegistryBlockContext.tsx": {
+    "exports": [
+      "RegistryBlockDataChangeMeta",
+      "RegistryBlockDataProvider",
+      "RegistryBlockDataValue",
+      "RegistryBlockEditSurfaceOptions",
+      "RegistryBlockNestedBlock",
+      "RegistryBlockRenderOptions",
+      "RegistryBlockRenderResult",
+      "RegistryBlockSideMapBlock",
+      "useRegistryBlockData"
+    ],
+    "radix": []
+  },
+  "editor/RegistryBlockNode.tsx": {
+    "exports": [
+      "CreateRegistryBlockNodeOptions",
+      "LegacyJsonEditSurface",
+      "RegistryBlockDataChangeMeta",
+      "RegistryBlockDataProvider",
+      "RegistryBlockDataValue",
+      "RegistryBlockEditSurfaceOptions",
+      "RegistryBlockLoadErrorView",
+      "RegistryBlockNestedBlock",
+      "RegistryBlockNodeView",
+      "RegistryBlockRenderOptions",
+      "RegistryBlockRenderResult",
+      "RegistryBlockSideMapBlock",
+      "createRegistryBlockNode",
+      "selectRegistryBlockNode",
+      "useRegistryBlockData"
+    ],
+    "radix": []
+  },
+  "editor/RichMarkdownEditor.tsx": {
+    "exports": [
+      "CreateRichMarkdownExtensionsOptions",
+      "RichMarkdownCollabUser",
+      "RichMarkdownDialect",
+      "RichMarkdownEditor",
+      "RichMarkdownEditorPreset",
+      "RichMarkdownEditorProps",
+      "createRichMarkdownExtensions"
+    ],
+    "radix": []
+  },
+  "editor/RunId.ts": {
+    "exports": ["RUN_ID_NODE_TYPES", "RunId"],
+    "radix": []
+  },
+  "editor/SharedRichEditor.tsx": {
+    "exports": ["SharedRichEditor", "SharedRichEditorProps"],
+    "radix": []
+  },
+  "editor/SlashCommandMenu.tsx": {
+    "exports": [
+      "DEFAULT_SLASH_COMMANDS",
+      "SlashCommandFeatureFlags",
+      "SlashCommandItem",
+      "SlashCommandMenu",
+      "SlashCommandMenuProps",
+      "createImageSlashCommand",
+      "filterSlashCommandItems",
+      "focusEditorInInsertedBlock"
+    ],
+    "radix": []
+  },
+  "editor/TaskListPaste.ts": {
+    "exports": ["TaskListPasteNormalization", "normalizePastedTaskListHtml"],
+    "radix": []
+  },
+  "editor/extensions.ts": {
+    "exports": [
+      "CreateSharedEditorExtensionsOptions",
+      "MARKDOWN_DIALECT_CONFIG",
+      "RichMarkdownCollabUser",
+      "RichMarkdownDialect",
+      "RichMarkdownEditorPreset",
+      "SharedEditorCollab",
+      "SharedEditorFeatures",
+      "createSharedEditorExtensions"
+    ],
+    "radix": []
+  },
+  "editor/gfmDoc.ts": {
+    "exports": ["gfmToProseJSON", "proseJSONToGfm"],
+    "radix": []
+  },
+  "editor/index.ts": {
+    "exports": [
+      "BubbleToolbar",
+      "BubbleToolbarItem",
+      "BubbleToolbarProps",
+      "BuildRegistryBlockSlashItemsOptions",
+      "CodeBlockClassNames",
+      "CodeLanguageOption",
+      "CreateCodeBlockNodeOptions",
+      "CreateRegistryBlockNodeOptions",
+      "CreateRichMarkdownExtensionsOptions",
+      "CreateSharedEditorExtensionsOptions",
+      "DEFAULT_CODE_LANGUAGES",
+      "DEFAULT_DRAG_HANDLE_WRAPPER_SELECTOR",
+      "DEFAULT_SLASH_COMMANDS",
+      "DragHandle",
+      "DragHandleDropContext",
+      "DragHandleDropPlacement",
+      "DragHandleOptions",
+      "ImageUploadFn",
+      "JSONContent",
+      "LegacyJsonEditSurface",
+      "MARKDOWN_DIALECT_CONFIG",
+      "RICH_MARKDOWN_PROGRAMMATIC_TRANSACTION",
+      "RUN_ID_NODE_TYPES",
+      "RegistryBlockDataChangeMeta",
+      "RegistryBlockDataProvider",
+      "RegistryBlockDataValue",
+      "RegistryBlockEditSurfaceOptions",
+      "RegistryBlockNestedBlock",
+      "RegistryBlockNodeView",
+      "RegistryBlockRenderOptions",
+      "RegistryBlockRenderResult",
+      "RegistryBlockSideMapBlock",
+      "RegistrySlashBlockRegistry",
+      "RegistrySlashBlockSpec",
+      "RichMarkdownCollabUser",
+      "RichMarkdownDialect",
+      "RichMarkdownEditor",
+      "RichMarkdownEditorPreset",
+      "RichMarkdownEditorProps",
+      "RunId",
+      "SharedEditorCollab",
+      "SharedEditorFeatures",
+      "SharedImage",
+      "SharedImageOptions",
+      "SharedRichEditor",
+      "SharedRichEditorProps",
+      "SlashCommandFeatureFlags",
+      "SlashCommandItem",
+      "SlashCommandMenu",
+      "SlashCommandMenuProps",
+      "TaskListPasteNormalization",
+      "TopLevelDiff",
+      "UseCollabReconcileOptions",
+      "UseCollabReconcileResult",
+      "applyDocSurgically",
+      "buildDefaultBubbleItems",
+      "buildRegistryBlockSlashItems",
+      "createCodeBlockNode",
+      "createImageExtension",
+      "createImageSlashCommand",
+      "createRegistryBlockNode",
+      "createRichMarkdownExtensions",
+      "createSharedEditorExtensions",
+      "defaultParseValue",
+      "diffTopLevel",
+      "filterSlashCommandItems",
+      "focusEditorInInsertedBlock",
+      "getEditorMarkdown",
+      "getRegistryBlockSlashDescription",
+      "getRegistryBlockSlashSearchText",
+      "gfmToProseJSON",
+      "normalizePastedTaskListHtml",
+      "pickAndInsertImage",
+      "planDocReconcile",
+      "proseJSONToGfm",
+      "useCollabReconcile",
+      "useRegistryBlockData"
+    ],
+    "radix": []
+  },
+  "editor/registrySlashCommands.ts": {
+    "exports": [
+      "BuildRegistryBlockSlashItemsOptions",
+      "RegistrySlashBlockRegistry",
+      "RegistrySlashBlockSpec",
+      "buildRegistryBlockSlashItems",
+      "getRegistryBlockSlashDescription",
+      "getRegistryBlockSlashSearchText"
+    ],
+    "radix": []
+  },
+  "editor/surgical-apply.ts": {
+    "exports": [
+      "BaseAwareReconcileOptions",
+      "BaseAwareReconcilePlan",
+      "BaseAwareReconcileResult",
+      "RICH_MARKDOWN_PROGRAMMATIC_TRANSACTION",
+      "TopLevelDiff",
+      "TopLevelHunk",
+      "applyDocSurgically",
+      "defaultParseValue",
+      "diffTopLevel",
+      "diffTopLevelHunks",
+      "planDocReconcile",
+      "reconcileDocAgainstBase"
+    ],
+    "radix": []
+  },
+  "editor/useCollabReconcile.ts": {
+    "exports": [
+      "RICH_MARKDOWN_PROGRAMMATIC_TRANSACTION",
+      "UseCollabReconcileOptions",
+      "UseCollabReconcileResult",
+      "applyAuthoritativeInitialSeed",
+      "getEditorMarkdown",
+      "isRemoteCollaborativeTransaction",
+      "useCollabReconcile"
     ],
     "radix": []
   },
