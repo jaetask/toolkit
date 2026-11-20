@@ -2,6 +2,7 @@
 
 ## 0.3.1
 
+- Suite: `ViewToggle`, the icon buttons that choose how a board is grouped, and `PropertyPills`, on and off pills such as the properties a card shows.
 - Suite: links to other sites. `ServiceIcon` (YouTube, GitHub, Figma, Notion, or a plain link), `service`, `knownService` and `linkHost` name a link's site, and `AddLinkDialog` asks for an address and an optional title.
 - Suite: `PropertyPicker`, a row that opens a searchable list in a popover (a key that opens it, number keys, pick several with the chosen ones above a line, create from what was typed), and `RailRow`, the quiet row it opens from.
 - Select's highlighted row is light grey (`focus:bg-accent`), with the tick on the chosen one; the emoji search says "Search emoji...".
