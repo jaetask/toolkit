@@ -38,6 +38,8 @@ const CONTROL: Record<string, string> = {
   input: "Input or Checkbox",
   textarea: "Textarea",
 };
+const colourByName =
+  /<(SelectItem|option|ToggleGroupItem|DropdownMenuItem|DropdownMenuRadioItem)\b[^>]*>\s*(Grey|Gray|Slate|Indigo|Cyan|Green|Yellow|Orange|Rose|Red|Purple|Blue|Pink|Brown|Teal|Amber)\s*</;
 const sheetImport = /from\s+["'][^"']*(?:sheet|drawer)[^"']*["']|<(?:Sheet|Drawer)[\s>]/i;
 const colour =
   /(?:^|[\s:("'`,=])(#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3}(?:[0-9a-fA-F]{2})?)?)\b|\b(?:rgba?|hsla?)\(/;
@@ -81,6 +83,13 @@ export function check(dirs: string[], root = process.cwd()): Finding[] {
             ...at,
             rule: "toolkit-controls",
             message: `A raw <${raw[1]}> is the browser's own: use ${CONTROL[raw[1]]} from @jaetask/toolkit/ui.`,
+          });
+        if (colourByName.test(line))
+          found.push({
+            ...at,
+            rule: "colour-swatches",
+            message:
+              "A colour is chosen from swatches, never a name: use ProjectIconPicker from @jaetask/toolkit/suite.",
           });
         if (sheetImport.test(line))
           found.push({

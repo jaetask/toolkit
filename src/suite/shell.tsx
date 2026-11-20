@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar.js";
 import { Button } from "../ui/button.js";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible.js";
 import { Dot, type Progress } from "./page.js";
+import { ProjectIcon } from "./project-icon.js";
 
 export type NavItem = {
   href: string;
@@ -26,6 +27,9 @@ export type GroupItem = {
   label: string;
   /** The item's icon, as the ResourceIconPicker stores it. Else `avatar`, else the first letter. */
   icon?: ResourceIconValue | null;
+  /** A project icon by name and its colour, as the ProjectIconPicker stores them. */
+  projectIcon?: string;
+  iconColour?: string;
   /** An image URL for a round avatar. */
   image?: string;
   /** Anything else to show before the label. */
@@ -128,6 +132,12 @@ const CollapseIcon = () => (
 /** The mark before a group item's label: its icon, an image, or the first letter. */
 function ItemMark({ item }: { item: GroupItem }) {
   if (item.avatar) return <>{item.avatar}</>;
+  if (item.projectIcon)
+    return (
+      <span className="tk-item-icon" aria-hidden>
+        <ProjectIcon projectIcon={item.projectIcon} iconColour={item.iconColour} size={18} />
+      </span>
+    );
   if (item.icon)
     return (
       <span className="tk-item-icon" aria-hidden>
