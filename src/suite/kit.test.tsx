@@ -139,6 +139,21 @@ test("threads, reactions and the composer", () => {
   assert.match(html, /aria-label="Reply"/);
 });
 
+test("the app's own navigation sits under the pages and knows the collapsed state", () => {
+  const html = at(
+    "/",
+    <AppShell
+      app={{ name: "Tasks" }}
+      nav={[{ href: "/", label: "Overview" }]}
+      collapsed
+      side={(collapsed) => <nav aria-label="Projects">{collapsed ? "narrow" : "wide"}</nav>}
+    >
+      x
+    </AppShell>,
+  );
+  assert.match(html, /aria-label="Pages">.*<\/nav><nav aria-label="Projects">narrow<\/nav>/s);
+});
+
 test("only same-origin paths are followed back", () => {
   assert.equal(safeFrom("/p/w"), "/p/w");
   assert.equal(safeFrom("//evil.example"), null);

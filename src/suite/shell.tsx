@@ -323,6 +323,7 @@ export function AppShell({
   onSearch,
   title,
   topAside,
+  side,
   collapsed: collapsedProp,
   onCollapsedChange,
   children,
@@ -338,6 +339,8 @@ export function AppShell({
   title?: ReactNode;
   /** Controls on the right of the top bar, for example the chat panel toggle. */
   topAside?: ReactNode;
+  /** The app's own navigation, drawn under the pages (for example its projects). It is told whether the sidebar is collapsed. */
+  side?: (collapsed: boolean) => ReactNode;
   collapsed?: boolean;
   onCollapsedChange?: (collapsed: boolean) => void;
   children: ReactNode;
@@ -361,6 +364,7 @@ export function AppShell({
               <NavLink key={item.href} item={item} />
             ))}
           </nav>
+          {side?.(collapsed)}
           {groups.map((group) => (
             <div key={group.label} className="tk-group">
               {group.href ? (
