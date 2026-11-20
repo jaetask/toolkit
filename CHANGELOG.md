@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0
+
+The toolkit is now the agent-native toolkit with the suite's look, plus the suite's own parts.
+
+- The main entry (`@jaetask/toolkit`) and `@jaetask/toolkit/ui`, `/ui/*`, `/icons`, `/hooks`, `/design-system`, `/provider` and `/utils` are the agent-native toolkit's parts, with its component names, props and setup: Radix underneath, Tailwind 4, `cn`, class-variance-authority and tw-animate-css. Only the theme values are ours (`theme/suite-theme.css`, the Marketing app's colours).
+- `ResourceIcon` and `ResourceIconPicker` are the toolkit's icon and picker, with the full Tabler catalogue, emoji, colours and recents.
+- The suite's own parts move to `@jaetask/toolkit/suite`: AppShell, SideSection, SideLink, PageBody (now with `wide`), Panel, Kicker, PageLink, EditLink, PrimaryLink, BackLink, ListCard, ListRow, Dot, StatusDot, EditFrame, Row, Board, Column, Thread, Comment, Reactions, ActivityRow, Facts, Composer, FileButton, Thumbs, CenteredPage, and the link helpers (`LinkProvider`, formerly `ToolkitProvider`). They are built on the ui parts. Sidebar group items take `icon` (a ResourceIcon value), several open at once and remembered; `bottom` pages sit above Settings.
+- Removed in favour of the agent-native parts: the suite's Button, Input, Textarea, Label, Select, Checkbox, Tabs, Chip, ChipPicker, ChipMultiPicker, Card, Avatar, ConfirmDelete, Notice, EmptyCard, FilterBar, SearchInput and Inline.
+- `toolkit-guard` also fails a raw select, button, input or textarea in app code, and looks for AppShell from `@jaetask/toolkit/suite`.
+
 ## 0.2.0
 
 - Inter ships with the toolkit: `styles.css` loads it from `fonts/` beside it (SIL Open Font License, `fonts/OFL.txt`). Serve or bundle `dist/fonts` with the styles.

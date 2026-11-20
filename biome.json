@@ -1,6 +1,19 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
-  "files": { "includes": ["**", "!.claude"] },
+  "files": {
+    "includes": [
+      "**",
+      "!.claude",
+      "!src/ui",
+      "!src/icons",
+      "!src/design-system",
+      "!src/hooks",
+      "!src/provider.tsx",
+      "!src/utils.ts",
+      "!src/styles.css",
+      "!src/theme"
+    ]
+  },
   "formatter": { "indentStyle": "space", "lineWidth": 100 }
 }

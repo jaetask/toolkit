@@ -31,10 +31,17 @@ const SKIP = new Set(["node_modules", "dist", "build", ".git", "coverage"]);
 const ownKit = new RegExp(
   `\\b(?:function|const|let|class)\\s+(${KIT.join("|")})\\b(?!\\s*=\\s*(?:require|await import))`,
 );
+const rawControl = /<(select|button|input|textarea)[\s>/]/;
+const CONTROL: Record<string, string> = {
+  select: "Select",
+  button: "Button",
+  input: "Input or Checkbox",
+  textarea: "Textarea",
+};
 const sheetImport = /from\s+["'][^"']*(?:sheet|drawer)[^"']*["']|<(?:Sheet|Drawer)[\s>]/i;
 const colour =
   /(?:^|[\s:("'`,=])(#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3}(?:[0-9a-fA-F]{2})?)?)\b|\b(?:rgba?|hsla?)\(/;
-const shellImport = /import\s*{[^}]*\bAppShell\b[^}]*}\s*from\s*["']@jaetask\/toolkit["']/s;
+const shellImport = /import\s*{[^}]*\bAppShell\b[^}]*}\s*from\s*["']@jaetask\/toolkit\/suite["']/s;
 
 function files(dir: string): string[] {
   let out: string[] = [];
@@ -66,7 +73,14 @@ export function check(dirs: string[], root = process.cwd()): Finding[] {
           found.push({
             ...at,
             rule: "own-kit",
-            message: `${kit[1]} is a toolkit component: import it from @jaetask/toolkit.`,
+            message: `${kit[1]} is a toolkit component: import it from @jaetask/toolkit/suite.`,
+          });
+        const raw = rawControl.exec(line);
+        if (raw?.[1])
+          found.push({
+            ...at,
+            rule: "toolkit-controls",
+            message: `A raw <${raw[1]}> is the browser's own: use ${CONTROL[raw[1]]} from @jaetask/toolkit/ui.`,
           });
         if (sheetImport.test(line))
           found.push({
