@@ -23,12 +23,12 @@ test("an app built from the toolkit is clean", () => {
   assert.deepEqual(rules(dir), []);
 });
 
-test("a hand-built panel, a sheet and a literal colour fail", () => {
+test("a hand-built panel and a literal colour fail", () => {
   const dir = app({
-    "page.tsx": `import { AppShell } from "@jaetask/toolkit/suite";\nimport { Sheet } from "./ui/sheet";\nfunction Panel() { return <div style={{ color: "#ff0000" }} />; }\n`,
+    "page.tsx": `import { AppShell } from "@jaetask/toolkit/suite";\nfunction Panel() { return <div style={{ color: "#ff0000" }} />; }\n`,
     "app.css": ".x { background: rgb(1 2 3); }\n.y { color: red; } /* named colours are fine */\n",
   });
-  assert.deepEqual(rules(dir).sort(), ["no-sheet", "own-kit", "tokens-only", "tokens-only"]);
+  assert.deepEqual(rules(dir).sort(), ["own-kit", "tokens-only", "tokens-only"]);
 });
 
 test("raw browser controls fail", () => {

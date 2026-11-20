@@ -73,7 +73,6 @@ npx skills add jaetask/toolkit --skill ux-flow
 | Rule            | Fails when                                                                                              |
 | --------------- | ------------------------------------------------------------------------------------------------------- |
 | `own-kit`       | The app defines its own AppShell, Sidebar, Panel, EditFrame, Row, ListRow or another toolkit component. |
-| `no-sheet`      | The app imports a sheet or drawer.                                                                      |
 | `tokens-only`   | App code or CSS holds a literal colour instead of a `--tk-` token.                                      |
 | `shell-present` | No file imports `AppShell` from `@jaetask/toolkit`.                                                     |
 

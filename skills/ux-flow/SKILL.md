@@ -14,10 +14,11 @@ Every Kit app feels the same. The user reads, edits, and lands back where they w
 - **Edit.** One button per section. It opens that section's own edit page and carries the way back (`?from=`).
 - **Edit page.** The read page's width and frame. Back at the top. Labelled rows: label and one line on the left, input on the right. Cancel and Save at the bottom; both return to the same spot.
 - **One home per field.** Each value is edited on exactly one page.
-- **One way in.** Every edit takes this trip. Sheets, drawers, side panels, inline editors and separate settings pages each break it. Dialogs only confirm.
+- **One way in.** Every edit takes this trip.
+- **One sidebar.** We do not want multiple sidebars on the same page. If you load one sidebar and then another, we don't want content being hidden by multiple sidebars.
 - **Colours are swatches.** A colour is chosen from round swatches (and a custom colour input), never from a list of colour names.
 - **Real data.** Show what is stored or computed from it; an empty section says how to fill it.
 - **Deliberate delete.** Archive first. Permanent delete confirms by name.
 
 1. Build from `@jaetask/toolkit`: the ui parts (`@jaetask/toolkit/ui`), and `Panel`, `ListRow`, `EditLink`, `EditFrame`, `Row`, `BackLink`, `ProjectIconPicker`, inside `AppShell` (`@jaetask/toolkit/suite`). A missing piece goes into the toolkit, never a single page.
-2. Run `npx toolkit-guard src` with the app's lint. It fails on a hand-built shell or kit component, a sheet or drawer, or a literal colour, and names the toolkit piece to use.
+2. Run `npx toolkit-guard src` with the app's lint. It fails on a hand-built shell or kit component, a raw browser control, a colour chosen by name, or a literal colour, and names the toolkit piece to use.
