@@ -1,6 +1,8 @@
 # Installed by the guardrails skill. Pushing any branch but main opens a pull request to main and
 # turns on auto-merge, so it merges itself once the ci check passes. Agents push branches over SSH;
 # this runs on GitHub with its own token, so nothing on the agent's machine needs gh.
+# GitHub does not delete a head branch that its own token merged, even with "Automatically delete
+# head branches" on, so the job waits for the merge and deletes the branch itself.
 name: auto-pr
 on:
   push:
@@ -10,6 +12,7 @@ permissions:
   pull-requests: write
 concurrency:
   group: auto-pr-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   auto-pr:
     runs-on: ubuntu-latest
@@ -28,4 +31,19 @@ jobs:
               --title "$(printf '%s\n' "$TITLE" | head -n 1)" \
               --body "Opened by auto-pr when \`$BRANCH\` was pushed. It merges itself when the ci check passes."
           fi
-          gh pr merge -R "$REPO" "$BRANCH" --auto --rebase --delete-branch
+          gh pr merge -R "$REPO" "$BRANCH" --auto --rebase
+      - name: Delete the branch once it has merged
+        timeout-minutes: 30
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          while true; do
+            state=$(gh pr view -R "$REPO" "$BRANCH" --json state -q .state)
+            case "$state" in
+              MERGED) gh api -X DELETE "repos/$REPO/git/refs/heads/$BRANCH" && echo "Deleted $BRANCH." && exit 0 ;;
+              CLOSED) echo "Closed without merging; keeping $BRANCH." && exit 0 ;;
+            esac
+            sleep 15
+          done
