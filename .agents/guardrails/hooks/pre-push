@@ -1,0 +1,5 @@
+#!/bin/sh
+# The hook catches failures before they leave the machine.
+set -e
+npm run test
+npm run build

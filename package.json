@@ -1,0 +1,70 @@
+{
+  "name": "@jaetask/toolkit",
+  "version": "0.1.0",
+  "description": "One shell and page kit for every Kit app: sidebar, sections, edit pages and tokens, as React components.",
+  "keywords": [
+    "react",
+    "app-shell",
+    "design-system",
+    "ux-flow"
+  ],
+  "author": "jaetask",
+  "license": "MIT",
+  "homepage": "https://github.com/jaetask/toolkit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaetask/toolkit.git"
+  },
+  "bugs": "https://github.com/jaetask/toolkit/issues",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "bin": {
+    "toolkit-guard": "./dist/guard.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && cp src/styles.css dist/styles.css && chmod +x dist/guard.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint . && node scripts/check-scrub.mjs",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "test": "tsx --test src/*.test.tsx src/*.test.ts",
+    "demo": "tsx scripts/demo.tsx",
+    "prepare": "git config core.hooksPath .agents/guardrails/hooks || true"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1 || ^19.0.0",
+    "react-dom": "^18.3.1 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.5",
+    "@types/node": "22.18.0",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tsx": "4.20.5",
+    "typescript": "5.9.2"
+  }
+}
