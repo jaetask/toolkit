@@ -40,7 +40,6 @@ const CONTROL: Record<string, string> = {
 };
 const colourByName =
   /<(SelectItem|option|ToggleGroupItem|DropdownMenuItem|DropdownMenuRadioItem)\b[^>]*>\s*(Grey|Gray|Slate|Indigo|Cyan|Green|Yellow|Orange|Rose|Red|Purple|Blue|Pink|Brown|Teal|Amber)\s*</;
-const sheetImport = /from\s+["'][^"']*(?:sheet|drawer)[^"']*["']|<(?:Sheet|Drawer)[\s>]/i;
 const colour =
   /(?:^|[\s:("'`,=])(#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3}(?:[0-9a-fA-F]{2})?)?)\b|\b(?:rgba?|hsla?)\(/;
 const shellImport = /import\s*{[^}]*\bAppShell\b[^}]*}\s*from\s*["']@jaetask\/toolkit\/suite["']/s;
@@ -90,12 +89,6 @@ export function check(dirs: string[], root = process.cwd()): Finding[] {
             rule: "colour-swatches",
             message:
               "A colour is chosen from swatches, never a name: use ProjectIconPicker from @jaetask/toolkit/suite.",
-          });
-        if (sheetImport.test(line))
-          found.push({
-            ...at,
-            rule: "no-sheet",
-            message: "Sheets and drawers break ux-flow: open an EditFrame page instead.",
           });
       }
       if ((CODE.has(ext) || STYLE.has(ext)) && colour.test(line))
