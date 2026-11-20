@@ -62,6 +62,22 @@ test("the shell draws the mark, nav, groups and Settings", () => {
   assert.match(html, /aria-label="Collapse sidebar"/);
 });
 
+test("bottom pages sit above Settings", () => {
+  const html = at(
+    "/archive",
+    <AppShell
+      app={{ name: "Tasks" }}
+      nav={[]}
+      bottom={[{ href: "/archive", label: "Archive", current: true }]}
+      settingsHref="/settings"
+    >
+      x
+    </AppShell>,
+  );
+  assert.match(html, /aria-label="More pages"><a href="\/archive"[^>]*aria-current="page"/);
+  assert.ok(html.indexOf("Archive") < html.indexOf(">Settings<"));
+});
+
 test("an empty group says how to add the first item", () => {
   const html = at(
     "/",

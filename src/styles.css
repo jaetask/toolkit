@@ -252,6 +252,10 @@ a.tk-group-label:hover {
   font-size: 12px;
   color: var(--tk-side-text);
 }
+.tk-nav-bottom {
+  padding-block: 8px;
+  border-top: 1px solid var(--tk-side-line);
+}
 .tk-side-foot {
   display: flex;
   align-items: center;

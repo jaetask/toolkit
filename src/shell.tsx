@@ -121,6 +121,20 @@ export function SideLink({
   );
 }
 
+function NavLink({ item }: { item: NavItem }) {
+  return (
+    <Link
+      href={item.href}
+      title={item.label}
+      className="tk-nav-item"
+      aria-current={item.current ? "page" : undefined}
+    >
+      {item.icon && <span className="tk-nav-icon">{item.icon}</span>}
+      <span className="tk-label">{item.label}</span>
+    </Link>
+  );
+}
+
 function GroupRow({ item }: { item: GroupItem }) {
   const row = (
     <Link
@@ -149,6 +163,7 @@ export function AppShell({
   app,
   nav,
   groups = [],
+  bottom = [],
   settingsHref,
   onSearch,
   title,
@@ -160,6 +175,8 @@ export function AppShell({
   app: { name: string; href?: string; mark?: ReactNode };
   nav: NavItem[];
   groups?: Group[];
+  /** Pages that sit at the bottom of the sidebar, above Settings (for example Archive). */
+  bottom?: NavItem[];
   settingsHref?: string;
   onSearch?: () => void;
   /** Where you are, shown in the top bar before the app name. */
@@ -185,16 +202,7 @@ export function AppShell({
           </Link>
           <nav className="tk-nav" aria-label="Pages">
             {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                title={item.label}
-                className="tk-nav-item"
-                aria-current={item.current ? "page" : undefined}
-              >
-                {item.icon && <span className="tk-nav-icon">{item.icon}</span>}
-                <span className="tk-label">{item.label}</span>
-              </Link>
+              <NavLink key={item.href} item={item} />
             ))}
           </nav>
           {groups.map((group) => (
@@ -215,6 +223,13 @@ export function AppShell({
             </div>
           ))}
         </div>
+        {bottom.length > 0 && (
+          <nav className="tk-nav tk-nav-bottom" aria-label="More pages">
+            {bottom.map((item) => (
+              <NavLink key={item.href} item={item} />
+            ))}
+          </nav>
+        )}
         <div className="tk-side-foot">
           {settingsHref ? (
             <Link href={settingsHref} className="tk-settings">
