@@ -2,6 +2,8 @@
 
 ## 0.3.1
 
+- `@jaetask/toolkit/editor` (and `/editor/*`, `/editor.css`): agent-native's Notion-style editor on Tiptap 3.28: SharedRichEditor, RichMarkdownEditor (Markdown in and out), SlashCommandMenu with DEFAULT_SLASH_COMMANDS, BubbleToolbar, code blocks with lowlight, images and the rest, with `/collab-ui` for its optional collaboration parts.
+- `@jaetask/toolkit/app/review`: InlineMarkdown, for rendering Markdown in comments and descriptions.
 - `AppShell` takes `side`: the app's own navigation, drawn under the pages (for example its projects), told whether the sidebar is collapsed.
 - ux-flow: popovers, menus, sheets and dialogs are allowed; the rule is one sidebar on a page, so a second sidebar never hides content. `toolkit-guard` no longer fails a sheet or drawer import.
 - `npm run build` first checks node_modules against package-lock.json and says to run `npm ci` when they differ.
