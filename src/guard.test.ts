@@ -17,7 +17,7 @@ const rules = (dir: string) => check([dir], dir).map((f) => f.rule);
 
 test("an app built from the toolkit is clean", () => {
   const dir = app({
-    "page.tsx": `import { AppShell, Panel } from "@jaetask/toolkit";\nexport const Page = () => <AppShell app={{ name: "x" }} nav={[]}><Panel id="a" title="A">x</Panel></AppShell>;\n`,
+    "page.tsx": `import { AppShell, Panel } from "@jaetask/toolkit/suite";\nexport const Page = () => <AppShell app={{ name: "x" }} nav={[]}><Panel id="a" title="A">x</Panel></AppShell>;\n`,
     "app.css": ".x { color: var(--tk-muted); }\n",
   });
   assert.deepEqual(rules(dir), []);
@@ -25,10 +25,22 @@ test("an app built from the toolkit is clean", () => {
 
 test("a hand-built panel, a sheet and a literal colour fail", () => {
   const dir = app({
-    "page.tsx": `import { AppShell } from "@jaetask/toolkit";\nimport { Sheet } from "./ui/sheet";\nfunction Panel() { return <div style={{ color: "#ff0000" }} />; }\n`,
+    "page.tsx": `import { AppShell } from "@jaetask/toolkit/suite";\nimport { Sheet } from "./ui/sheet";\nfunction Panel() { return <div style={{ color: "#ff0000" }} />; }\n`,
     "app.css": ".x { background: rgb(1 2 3); }\n.y { color: red; } /* named colours are fine */\n",
   });
   assert.deepEqual(rules(dir).sort(), ["no-sheet", "own-kit", "tokens-only", "tokens-only"]);
+});
+
+test("raw browser controls fail", () => {
+  const dir = app({
+    "page.tsx": `import { AppShell } from "@jaetask/toolkit/suite";\nconst a = <select />;\nconst b = <button type="button">Go</button>;\nconst c = <input />;\nconst d = <textarea />;\n`,
+  });
+  assert.deepEqual(rules(dir), [
+    "toolkit-controls",
+    "toolkit-controls",
+    "toolkit-controls",
+    "toolkit-controls",
+  ]);
 });
 
 test("an app without the shell fails", () => {
@@ -38,7 +50,7 @@ test("an app without the shell fails", () => {
 
 test("an allowed line is skipped", () => {
   const dir = app({
-    "page.tsx": `import { AppShell } from "@jaetask/toolkit";\nconst brand = "#0b4a8f"; // toolkit-guard-allow\n`,
+    "page.tsx": `import { AppShell } from "@jaetask/toolkit/suite";\nconst brand = "#0b4a8f"; // toolkit-guard-allow\n`,
   });
   assert.deepEqual(rules(dir), []);
 });

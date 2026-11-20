@@ -1,7 +1,7 @@
 {
   "name": "@jaetask/toolkit",
-  "version": "0.2.0",
-  "description": "One shell and page kit for every Kit app: sidebar, sections, edit pages and tokens, as React components.",
+  "version": "0.3.0",
+  "description": "The agent-native toolkit's ui parts, ported with the suite's look, plus the suite's app shell and page kit.",
   "keywords": [
     "react",
     "app-shell",
@@ -32,8 +32,40 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./ui": {
+      "types": "./dist/ui/index.d.ts",
+      "import": "./dist/ui/index.js"
+    },
+    "./ui/*": {
+      "types": "./dist/ui/*.d.ts",
+      "import": "./dist/ui/*.js"
+    },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "import": "./dist/icons/index.js"
+    },
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js"
+    },
+    "./design-system": {
+      "types": "./dist/design-system/index.d.ts",
+      "import": "./dist/design-system/index.js"
+    },
+    "./provider": {
+      "types": "./dist/provider.d.ts",
+      "import": "./dist/provider.js"
+    },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "import": "./dist/utils.js"
+    },
+    "./suite": {
+      "types": "./dist/suite/index.d.ts",
+      "import": "./dist/suite/index.js"
+    },
     "./styles.css": "./dist/styles.css",
-    "./fonts/*": "./dist/fonts/*"
+    "./package.json": "./package.json"
   },
   "bin": {
     "toolkit-guard": "./dist/guard.js"
@@ -46,27 +78,78 @@
     "node": ">=22.13"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && cp src/styles.css dist/styles.css && rm -rf dist/fonts && cp -R src/fonts dist/fonts && chmod +x dist/guard.js",
+    "build": "tsc -p tsconfig.build.json && node scripts/finalize-build.mjs && chmod +x dist/guard.js",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint . && node scripts/check-scrub.mjs",
     "format": "biome format --write .",
     "format:check": "biome format .",
-    "test": "tsx --test src/*.test.tsx src/*.test.ts",
+    "test": "tsx --test src/*.test.ts src/suite/*.test.tsx",
     "demo": "tsx scripts/demo.tsx",
     "prepare": "npm run build && (git config core.hooksPath .agents/guardrails/hooks || true)"
   },
   "peerDependencies": {
-    "react": "^18.3.1 || ^19.0.0",
-    "react-dom": "^18.3.1 || ^19.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.5",
+    "@tailwindcss/cli": "4.3.5",
+    "@types/culori": "4.0.1",
     "@types/node": "22.18.0",
-    "@types/react": "18.3.31",
-    "@types/react-dom": "18.3.7",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "tailwindcss": "4.3.5",
     "tsx": "4.20.5",
     "typescript": "5.9.2"
+  },
+  "dependencies": {
+    "@radix-ui/react-accordion": "1.3.1",
+    "@radix-ui/react-alert-dialog": "1.2.1",
+    "@radix-ui/react-aspect-ratio": "1.2.0",
+    "@radix-ui/react-avatar": "1.3.1",
+    "@radix-ui/react-checkbox": "1.4.1",
+    "@radix-ui/react-collapsible": "1.2.1",
+    "@radix-ui/react-context-menu": "2.4.1",
+    "@radix-ui/react-dialog": "1.3.1",
+    "@radix-ui/react-dropdown-menu": "2.2.1",
+    "@radix-ui/react-hover-card": "1.2.1",
+    "@radix-ui/react-label": "2.1.17",
+    "@radix-ui/react-menubar": "1.2.1",
+    "@radix-ui/react-navigation-menu": "1.4.1",
+    "@radix-ui/react-popover": "1.3.1",
+    "@radix-ui/react-progress": "1.2.1",
+    "@radix-ui/react-radio-group": "1.5.1",
+    "@radix-ui/react-scroll-area": "1.4.0",
+    "@radix-ui/react-select": "2.4.1",
+    "@radix-ui/react-separator": "1.2.0",
+    "@radix-ui/react-slider": "1.6.1",
+    "@radix-ui/react-slot": "1.5.0",
+    "@radix-ui/react-switch": "1.4.1",
+    "@radix-ui/react-tabs": "1.2.1",
+    "@radix-ui/react-toast": "1.3.1",
+    "@radix-ui/react-toggle": "1.2.1",
+    "@radix-ui/react-toggle-group": "1.2.1",
+    "@radix-ui/react-tooltip": "1.4.1",
+    "@tabler/icons-react": "3.44.0",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "cmdk": "1.1.1",
+    "culori": "4.0.2",
+    "date-fns": "4.4.0",
+    "embla-carousel-react": "8.6.0",
+    "emojibase-data": "17.0.0",
+    "input-otp": "1.5.0",
+    "next-themes": "0.4.6",
+    "react-day-picker": "10.0.2",
+    "react-hook-form": "7.91.0",
+    "react-resizable-panels": "4.16.1",
+    "recharts": "3.10.1",
+    "sonner": "2.0.8",
+    "tailwind-merge": "3.7.0",
+    "tw-animate-css": "1.4.0",
+    "vaul": "1.1.2"
   }
 }
