@@ -20,8 +20,17 @@ export type GroupItem = {
   /** An image or Avatar. */
   avatar?: ReactNode;
   status?: Progress;
-  /** The selected item opens into a warm grey block holding these sections. */
+  /** Always shown open, in a warm grey block: for an app where only the selected item opens. */
   open?: ReactNode;
+  /**
+   * Sections the item expands into. Each item with children has its own expand button; several
+   * can be open at once, and the shell remembers which ones were left open.
+   */
+  children?: ReactNode;
+  /** Expanded until the person collapses it. */
+  defaultOpen?: boolean;
+  /** The row is the current page. */
+  current?: boolean;
   onSelect?: () => void;
 };
 
@@ -55,6 +64,35 @@ function useCollapsed(controlled?: boolean, onChange?: (collapsed: boolean) => v
   };
   return [collapsed, set] as const;
 }
+
+const OPEN_KEY = "tk-sidebar-open";
+
+/** Which expandable items are open, remembered per browser. */
+function useOpenItems() {
+  const [stored, setStored] = useState<Record<string, boolean>>({});
+  useEffect(() => {
+    try {
+      const value = JSON.parse(localStorage.getItem(OPEN_KEY) ?? "{}");
+      if (value && typeof value === "object") setStored(value);
+    } catch {}
+  }, []);
+  const isOpen = (key: string, fallback: boolean) => stored[key] ?? fallback;
+  const toggle = (key: string, fallback: boolean) =>
+    setStored((prev) => {
+      const next = { ...prev, [key]: !(prev[key] ?? fallback) };
+      try {
+        localStorage.setItem(OPEN_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  return { isOpen, toggle };
+}
+
+const ChevronIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+    <path d="m9 6 6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
 
 const SearchIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
@@ -135,25 +173,53 @@ function NavLink({ item }: { item: NavItem }) {
   );
 }
 
-function GroupRow({ item }: { item: GroupItem }) {
-  const row = (
+function GroupRow({
+  item,
+  expanded,
+  onToggle,
+}: {
+  item: GroupItem;
+  expanded: boolean;
+  onToggle: () => void;
+}) {
+  const expandable = item.children !== undefined;
+  const shown = item.open ?? (expandable && expanded ? item.children : undefined);
+  const link = (
     <Link
       href={item.href}
       className="tk-group-item"
       title={item.label}
       onClick={item.onSelect}
-      aria-current={item.open ? "true" : undefined}
+      aria-current={item.current ? "page" : item.open ? "true" : undefined}
     >
       {item.avatar ?? <Avatar name={item.label} />}
       <span className="tk-label">{item.label}</span>
-      {!item.open && item.status && <Dot status={item.status} />}
+      {!shown && item.status && <Dot status={item.status} />}
     </Link>
   );
-  if (!item.open) return row;
+  const sectionsId = `tk-group-${item.id}`;
+  const row = expandable ? (
+    <div className="tk-group-row">
+      {link}
+      <button
+        type="button"
+        className="tk-icon-button tk-chevron"
+        aria-label={`${expanded ? "Collapse" : "Expand"} ${item.label}`}
+        aria-expanded={expanded}
+        aria-controls={sectionsId}
+        onClick={onToggle}
+      >
+        <ChevronIcon />
+      </button>
+    </div>
+  ) : (
+    link
+  );
+  if (!shown) return row;
   return (
-    <div className="tk-group-open">
+    <div className="tk-group-open" id={sectionsId}>
       {row}
-      {item.open}
+      {shown}
     </div>
   );
 }
@@ -188,6 +254,7 @@ export function AppShell({
   children: ReactNode;
 }) {
   const [collapsed, setCollapsed] = useCollapsed(collapsedProp, onCollapsedChange);
+  const openItems = useOpenItems();
   return (
     <div className="tk-root tk-shell" data-collapsed={collapsed ? "true" : "false"}>
       <aside className="tk-side" aria-label={`${app.name} navigation`}>
@@ -215,7 +282,17 @@ export function AppShell({
                 <span className="tk-group-label">{group.label}</span>
               )}
               {group.items.map((item) => (
-                <GroupRow key={item.id} item={item} />
+                <GroupRow
+                  key={item.id}
+                  item={item}
+                  expanded={openItems.isOpen(
+                    `${group.label}/${item.id}`,
+                    item.defaultOpen ?? false,
+                  )}
+                  onToggle={() =>
+                    openItems.toggle(`${group.label}/${item.id}`, item.defaultOpen ?? false)
+                  }
+                />
               ))}
               {!group.items.length && group.empty && (
                 <div className="tk-side-empty">{group.empty}</div>

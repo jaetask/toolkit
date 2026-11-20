@@ -62,6 +62,54 @@ test("the shell draws the mark, nav, groups and Settings", () => {
   assert.match(html, /aria-label="Collapse sidebar"/);
 });
 
+test("several items expand on their own, each with its own button", () => {
+  const html = at(
+    "/p/a",
+    <AppShell
+      app={{ name: "Tasks" }}
+      nav={[]}
+      groups={[
+        {
+          label: "Projects",
+          items: [
+            {
+              id: "a",
+              href: "/p/a",
+              label: "Alpha",
+              defaultOpen: true,
+              current: true,
+              children: <SideLink href="/p/a/board" label="Alpha board" />,
+            },
+            {
+              id: "b",
+              href: "/p/b",
+              label: "Beta",
+              defaultOpen: true,
+              children: <SideLink href="/p/b/board" label="Beta board" />,
+            },
+            {
+              id: "c",
+              href: "/p/c",
+              label: "Gamma",
+              status: "done",
+              children: <SideLink href="/p/c/board" label="Gamma board" />,
+            },
+          ],
+        },
+      ]}
+    >
+      x
+    </AppShell>,
+  );
+  assert.match(html, /Alpha board/);
+  assert.match(html, /Beta board/);
+  assert.doesNotMatch(html, /Gamma board/);
+  assert.match(html, /aria-label="Collapse Alpha" aria-expanded="true" aria-controls="tk-group-a"/);
+  assert.match(html, /aria-label="Expand Gamma" aria-expanded="false"/);
+  assert.match(html, /class="tk-group-item" title="Alpha" aria-current="page"/);
+  assert.match(html, /Gamma<\/span><span aria-hidden="true" class="tk-dot" data-status="done"/);
+});
+
 test("bottom pages sit above Settings", () => {
   const html = at(
     "/archive",

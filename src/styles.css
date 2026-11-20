@@ -207,6 +207,26 @@ a.tk-group-label:hover {
   font-size: 11px;
   font-weight: 700;
 }
+.tk-group-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0 12px;
+  border-radius: var(--tk-radius-row);
+}
+.tk-group-row > .tk-group-item {
+  flex: 1;
+  margin: 0;
+}
+.tk-chevron > svg {
+  transition: transform 120ms ease;
+}
+.tk-chevron[aria-expanded="true"] > svg {
+  transform: rotate(90deg);
+}
+.tk-group-open > .tk-group-row {
+  margin: 0 6px;
+}
 .tk-group-open {
   margin: 2px 12px;
   padding: 6px 0 10px;
@@ -291,8 +311,9 @@ a.tk-group-label:hover {
 }
 .tk-shell[data-collapsed="true"] .tk-label,
 .tk-shell[data-collapsed="true"] .tk-group-label,
-.tk-shell[data-collapsed="true"] .tk-group-open > :not(.tk-group-item),
+.tk-shell[data-collapsed="true"] .tk-group-open > :not(.tk-group-item):not(.tk-group-row),
 .tk-shell[data-collapsed="true"] .tk-dot,
+.tk-shell[data-collapsed="true"] .tk-chevron,
 .tk-shell[data-collapsed="true"] .tk-settings,
 .tk-shell[data-collapsed="true"] .tk-side-empty {
   display: none;
@@ -682,4 +703,10 @@ a.tk-list-body:hover {
   margin: 0;
   font-size: 18px;
   font-weight: 800;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-chevron > svg {
+    transition: none;
+  }
 }
