@@ -1,7 +1,8 @@
 /* The suite's look, as the theme variables the ui parts read (the values the Marketing app uses).
    Light on :root, dark under .dark. An app can override any of them after importing styles.css. */
 :root {
-  --background: 0 0% 100%;
+  /* The page is a very light grey, so white cards and threads stand out on it. */
+  --background: 0 0% 97.6%;
   --foreground: 0 0% 10%;
   --card: 0 0% 100%;
   --card-foreground: 0 0% 10%;
@@ -9,11 +10,11 @@
   --popover-foreground: 0 0% 10%;
   --primary: 0 0% 15%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 95%;
+  --secondary: 0 0% 94%;
   --secondary-foreground: 0 0% 15%;
-  --muted: 0 0% 95%;
+  --muted: 0 0% 94%;
   --muted-foreground: 0 0% 45%;
-  --accent: 0 0% 95%;
+  --accent: 0 0% 94%;
   --accent-foreground: 0 0% 15%;
   --destructive: 0 91% 71%;
   --destructive-foreground: 0 0% 98%;
@@ -21,11 +22,12 @@
   --input: 0 0% 90%;
   --ring: 0 0% 40%;
   --radius: 0.5rem;
-  --sidebar-background: 0 0% 98%;
+  /* The sidebar is a step greyer than the page. */
+  --sidebar-background: 0 0% 95.3%;
   --sidebar-foreground: 0 0% 45%;
   --sidebar-primary: 0 0% 15%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 0 0% 95%;
+  --sidebar-accent: 0 0% 91%;
   --sidebar-accent-foreground: 0 0% 15%;
   --sidebar-border: 0 0% 90%;
   --sidebar-ring: 0 0% 40%;

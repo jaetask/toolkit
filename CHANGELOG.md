@@ -2,6 +2,7 @@
 
 ## 0.3.1
 
+- Light theme: the page is a very light grey and the sidebar a step greyer, so white cards and comment threads stand out.
 - `toolkit-guard` rule `no-focus-rings`: fails a class that asks for a ring or outline on focus, and a drawn `outline` in CSS.
 - No focus rings: no part draws a ring or an outline when focused. A focused field shows a darker border.
 - `PropertyPicker`: roomier rows with a gap after the icon, no search icon, and a tick box at the start of each row when several can be chosen.
