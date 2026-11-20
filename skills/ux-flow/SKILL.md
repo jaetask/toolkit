@@ -22,4 +22,4 @@ Every Kit app feels the same. The user reads, edits, and lands back where they w
 - **Deliberate delete.** Archive first. Permanent delete confirms by name.
 
 1. Build from `@jaetask/toolkit`: the ui parts (`@jaetask/toolkit/ui`), and `Panel`, `ListRow`, `EditLink`, `EditFrame`, `Row`, `BackLink`, `ProjectIconPicker`, inside `AppShell` (`@jaetask/toolkit/suite`). A missing piece goes into the toolkit, never a single page.
-2. Run `npx toolkit-guard src` with the app's lint. It fails on a hand-built shell or kit component, a raw browser control, a colour chosen by name, or a literal colour, and names the toolkit piece to use.
+2. Run `npx toolkit-guard src` with the app's lint. It fails on a hand-built shell or kit component, a raw browser control, a colour chosen by name, a literal colour, or a ring or outline drawn on focus, and names the toolkit piece to use.

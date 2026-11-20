@@ -61,3 +61,34 @@ test("an allowed line is skipped", () => {
   });
   assert.deepEqual(rules(dir), []);
 });
+
+test("a ring or an outline on focus fails; asking for none is fine", () => {
+  const dir = app({
+    "page.tsx": `import { AppShell } from "@jaetask/toolkit/suite";
+const a = "rounded focus-visible:ring-2 focus-visible:ring-ring";
+const b = "focus:outline-2";
+const c = "focus-visible:outline-ring";
+const fine = "focus-visible:outline-none focus:ring-0 ring-1";
+`,
+    "app.css":
+      ".x:focus-visible { outline: 2px solid var(--tk-focus); }\n.y:focus { outline: none; }\n",
+  });
+  assert.deepEqual(rules(dir), [
+    "no-focus-rings",
+    "no-focus-rings",
+    "no-focus-rings",
+    "no-focus-rings",
+  ]);
+});
+
+test("the suite's own parts ask for no ring on focus", async () => {
+  const { readdirSync, readFileSync } = await import("node:fs");
+  const { focusRing } = await import("./guard.js");
+  const dir = new URL("./suite/", import.meta.url);
+  for (const name of readdirSync(dir).filter((n) => n.endsWith(".tsx") && !n.includes(".test."))) {
+    const found = readFileSync(new URL(name, dir), "utf8")
+      .split("\n")
+      .filter((line) => focusRing.test(line));
+    assert.deepEqual(found, [], name);
+  }
+});

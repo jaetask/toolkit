@@ -42,6 +42,11 @@ const colourByName =
   /<(SelectItem|option|ToggleGroupItem|DropdownMenuItem|DropdownMenuRadioItem)\b[^>]*>\s*(Grey|Gray|Slate|Indigo|Cyan|Green|Yellow|Orange|Rose|Red|Purple|Blue|Pink|Brown|Teal|Amber)\s*</;
 const colour =
   /(?:^|[\s:("'`,=])(#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3}(?:[0-9a-fA-F]{2})?)?)\b|\b(?:rgba?|hsla?)\(/;
+// A ring or an outline asked for on focus, as a class. "outline-none" and "ring-0" ask for none.
+export const focusRing =
+  /\bfocus(?:-visible|-within)?:(?:ring|outline)(?!-none\b|-hidden\b|-0\b)(?:-[\w./[\]()%-]+)?/;
+// In a stylesheet: an outline that is drawn.
+const drawnOutline = /\boutline\s*:(?!\s*(?:none|0|inherit|unset)\b)/;
 const shellImport = /import\s*{[^}]*\bAppShell\b[^}]*}\s*from\s*["']@jaetask\/toolkit\/suite["']/s;
 
 function files(dir: string): string[] {
@@ -91,6 +96,15 @@ export function check(dirs: string[], root = process.cwd()): Finding[] {
               "A colour is chosen from swatches, never a name: use ProjectIconPicker from @jaetask/toolkit/suite.",
           });
       }
+      const ring = CODE.has(ext) ? focusRing.exec(line) : null;
+      if (ring || (STYLE.has(ext) && drawnOutline.test(line)))
+        found.push({
+          ...at,
+          rule: "no-focus-rings",
+          message: ring
+            ? `${ring[0]} draws a ring round a focused part: the suite draws none. Remove it.`
+            : "An outline draws a ring round a part: the suite draws none. Remove it.",
+        });
       if ((CODE.has(ext) || STYLE.has(ext)) && colour.test(line))
         found.push({
           ...at,

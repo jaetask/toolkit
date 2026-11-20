@@ -72,11 +72,12 @@ npx skills add jaetask/toolkit --skill ux-flow
 
 `npx toolkit-guard src` fails when an app hand-builds what the toolkit has:
 
-| Rule            | Fails when                                                                                              |
-| --------------- | ------------------------------------------------------------------------------------------------------- |
-| `own-kit`       | The app defines its own AppShell, Sidebar, Panel, EditFrame, Row, ListRow or another toolkit component. |
-| `tokens-only`   | App code or CSS holds a literal colour instead of a `--tk-` token.                                      |
-| `shell-present` | No file imports `AppShell` from `@jaetask/toolkit`.                                                     |
+| Rule             | Fails when                                                                                                                                        |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `own-kit`        | The app defines its own AppShell, Sidebar, Panel, EditFrame, Row, ListRow or another toolkit component.                                           |
+| `tokens-only`    | App code or CSS holds a literal colour instead of a `--tk-` token.                                                                                |
+| `shell-present`  | No file imports `AppShell` from `@jaetask/toolkit`.                                                                                               |
+| `no-focus-rings` | A class asks for a ring or an outline on focus (`focus-visible:ring-2`), or CSS draws an `outline`. The suite draws no ring round a focused part. |
 
 A line that must keep a literal ends with the comment `toolkit-guard-allow`.
 

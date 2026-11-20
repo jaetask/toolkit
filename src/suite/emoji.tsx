@@ -692,7 +692,7 @@ export const CommentIconButton = forwardRef<
       ref={ref}
       type={type}
       className={cn(
-        "inline-flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40",
+        "inline-flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-40",
         className,
       )}
       {...props}
@@ -739,7 +739,7 @@ export function CommentReactionChips({
           disabled={!canReact}
           onClick={() => onToggle(entry.reaction, !entry.reactedByMe)}
           className={cn(
-            "inline-flex h-6 items-center gap-1 rounded-md border px-1.5 text-xs text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default",
+            "inline-flex h-6 items-center gap-1 rounded-md border px-1.5 text-xs text-muted-foreground transition-colors disabled:cursor-default",
             entry.reactedByMe
               ? "border-foreground/20 bg-accent text-foreground"
               : "border-transparent bg-muted hover:bg-accent",
@@ -792,7 +792,7 @@ export function AddReactionButton({
               type="button"
               aria-label={reaction}
               onClick={() => choose(reaction)}
-              className="flex size-9 items-center justify-center rounded-md text-lg hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex size-9 items-center justify-center rounded-md text-lg hover:bg-accent"
             >
               {reaction}
             </button>
