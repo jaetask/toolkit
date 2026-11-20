@@ -76,3 +76,20 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
+
+/*
+ * No focus rings. The ported parts ask for a ring with Tailwind's ring and outline classes; the
+ * suite's look draws none, on any part. A focused field shows a darker border in its place.
+ */
+:focus,
+:focus-visible {
+  outline: none !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  --tw-inset-ring-shadow: 0 0 #0000 !important;
+}
+input:focus-visible,
+textarea:focus-visible,
+[role="combobox"]:focus-visible {
+  border-color: hsl(var(--ring));
+}

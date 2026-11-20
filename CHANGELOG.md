@@ -2,6 +2,7 @@
 
 ## 0.3.1
 
+- No focus rings: no part draws a ring or an outline when focused. A focused field shows a darker border.
 - `PropertyPicker`: roomier rows with a gap after the icon, no search icon, and a tick box at the start of each row when several can be chosen.
 - Suite: files. `AttachButton` (the paperclip, with its tooltip and Cmd+Shift+U), `FileChip` (name, size, download), `VideoFigure` (a video that plays in place) and `fileSize`.
 - Suite: due dates. `DueDatePicker` (type "tomorrow", "7 days" or "Feb 9", pick a row, or a calendar; Shift+D opens it), `DueIcon`, `dueLabel` and `dueState`, with the parser behind them: `parseDue`, `endOfWeek`, `day`.
