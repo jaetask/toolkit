@@ -2,8 +2,9 @@
 // toolkit-guard: fails when an app hand-builds what the toolkit already has.
 //   npx toolkit-guard [dir ...]   (default: src)
 // A line ending in the comment `toolkit-guard-allow` is skipped, for the rare literal that must stay.
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { readdirSync, readFileSync, realpathSync, statSync } from "node:fs";
 import { extname, join, relative } from "node:path";
+import { fileURLToPath } from "node:url";
 
 export type Finding = { file: string; line: number; rule: string; message: string };
 
@@ -92,7 +93,9 @@ export function check(dirs: string[], root = process.cwd()): Finding[] {
   return found;
 }
 
-const isMain = process.argv[1] && /guard\.(js|ts)$/.test(process.argv[1]);
+const isMain =
+  !!process.argv[1] &&
+  realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
 if (isMain) {
   const dirs = process.argv.slice(2);
   const found = check(dirs.length ? dirs : ["src"]);
