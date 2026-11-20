@@ -46,3 +46,9 @@ export {
   SideLink,
   SideSection,
 } from "./shell.js";
+export {
+  DEFAULT_PROJECT_COLOUR,
+  PROJECT_COLOURS,
+  PROJECT_ICONS,
+} from "./project-appearance.js";
+export { ColourSwatches, ProjectIcon, ProjectIconPicker } from "./project-icon.js";

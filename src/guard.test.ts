@@ -43,6 +43,13 @@ test("raw browser controls fail", () => {
   ]);
 });
 
+test("a colour picked from a list of names fails", () => {
+  const dir = app({
+    "page.tsx": `import { AppShell } from "@jaetask/toolkit/suite";\nconst a = <SelectItem value="g">Green</SelectItem>;\n`,
+  });
+  assert.deepEqual(rules(dir), ["colour-swatches"]);
+});
+
 test("an app without the shell fails", () => {
   const dir = app({ "index.html": "<main></main>\n", "app.js": "document.title = 'x';\n" });
   assert.deepEqual(rules(dir), ["shell-present"]);
