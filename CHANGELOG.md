@@ -2,6 +2,7 @@
 
 ## 0.3.1
 
+- `npm run build` first checks node_modules against package-lock.json and says to run `npm ci` when they differ.
 - `ProjectIcon` and `ProjectIconPicker` (suite) are the earlier Tasks app's "Icon & colour" picker: ten round swatches with a tick, a custom colour, icon search and a six-column grid of 28 Tabler icons in the chosen colour. `ColourSwatches` is the swatches and custom colour on their own, for any colour; `PROJECT_COLOURS`, `PROJECT_ICONS` and `DEFAULT_PROJECT_COLOUR` come with it. Sidebar group items take `projectIcon` and `iconColour`.
 - `toolkit-guard` fails a colour chosen from a list of colour names (`colour-swatches`); the ux-flow skill says colours are swatches.
 

@@ -8,6 +8,7 @@
 - **ux-flow is the rule** for every page: [skills/ux-flow/SKILL.md](skills/ux-flow/SKILL.md). No sheets, drawers, side panels or inline editors; the one dialog is ConfirmDelete.
 - **Tokens only** in the suite: colours, radii and widths are CSS variables in `src/suite/suite.css`; suite parts use the `tk-` classes.
 - **Public repo**: no private package names, person names or home paths. `npm run lint` runs `scripts/check-scrub.mjs`.
+- **After a pull**, run `npm ci` before building or publishing; `npm run build` stops with that instruction when node_modules is out of date.
 - **Checks**: `npm run typecheck`, `lint`, `format:check`, `test`, `build`. Hooks in `.agents/guardrails/hooks` run them on commit and push; `npm run format` fixes formatting.
 - **Branches**: push a branch, never main. `auto-pr` opens a pull request to main and it merges itself when the `ci` check passes; the pre-push hook refuses main.
 - **Plain, literal language** in docs: no slogans or hype.
