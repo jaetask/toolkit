@@ -94,7 +94,7 @@ export function PropertyPicker({
       <PopoverTrigger asChild disabled={disabled}>
         {children}
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-64 p-0">
+      <PopoverContent align="start" className="w-72 p-0">
         <Command
           onKeyDown={(e) => {
             if (!numbered || search !== "" || !/^[0-9]$/.test(e.key)) return;
@@ -108,6 +108,7 @@ export function PropertyPicker({
         >
           <div className="flex items-center gap-2 pr-2">
             <CommandInput
+              leading={null}
               aria-label={label}
               placeholder={placeholder}
               value={search}
@@ -139,10 +140,24 @@ export function PropertyPicker({
                           key={c.id || "none"}
                           value={c.name}
                           onSelect={() => pick(c.id)}
+                          className="group gap-3 px-3 py-2"
                         >
+                          {many && (
+                            // A tick box: filled when chosen, an outline on the row in hand.
+                            <span
+                              aria-hidden
+                              className={`flex size-4 shrink-0 items-center justify-center rounded-[4px] border ${
+                                chosen.includes(c.id)
+                                  ? "border-primary bg-primary text-primary-foreground"
+                                  : "border-transparent group-data-[selected=true]:border-input"
+                              }`}
+                            >
+                              {chosen.includes(c.id) && <IconCheck size={12} stroke={3} />}
+                            </span>
+                          )}
                           {c.icon}
                           <span className="min-w-0 flex-1 truncate">{c.name}</span>
-                          {chosen.includes(c.id) && <IconCheck size={16} aria-hidden />}
+                          {!many && chosen.includes(c.id) && <IconCheck size={16} aria-hidden />}
                           {numbered && (
                             <span
                               aria-hidden
