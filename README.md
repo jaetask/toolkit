@@ -122,6 +122,10 @@ A line that must keep a literal ends with the comment `toolkit-guard-allow`.
 
 Six named colours for labels, project colours and avatars: `blue`, `teal`, `green`, `amber`, `purple`, `pink`. Pass the name (`<Chip colour="teal">`), never a CSS value.
 
+## Changes
+
+Push a branch, never main. A pull request to main opens by itself and merges when the `ci` check passes.
+
 ## Credit
 
 The app shell follows the layout of [agent-native](https://github.com/BuilderIO/agent-native) (MIT, Builder.io).
