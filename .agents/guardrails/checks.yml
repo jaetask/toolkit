@@ -1,0 +1,21 @@
+# Guardrails. on runs a check; off skips it. Re-run the guardrails skill to check again.
+commands:
+  typecheck: "npm run typecheck"
+  lint: "npm run lint" # biome, then the scrub check
+  format: "npm run format:check"
+  test: "npm run test"
+checks:
+  gitignore: on
+  no-secrets: on
+  lockfile: on
+  pre-commit: on
+  tests-before-merge: on
+  strict-types: on
+  lint: on
+  format: on
+  yaml: on
+  agents-md: on
+  ci: on
+  no-push-main: on
+  auto-pr: on
+dismissed: []

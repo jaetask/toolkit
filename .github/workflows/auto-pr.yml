@@ -1,0 +1,31 @@
+# Installed by the guardrails skill. Pushing any branch but main opens a pull request to main and
+# turns on auto-merge, so it merges itself once the ci check passes. Agents push branches over SSH;
+# this runs on GitHub with its own token, so nothing on the agent's machine needs gh.
+name: auto-pr
+on:
+  push:
+    branches-ignore: [main]
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: auto-pr-${{ github.ref }}
+jobs:
+  auto-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open a pull request to main and merge it when ci passes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          TITLE: ${{ github.event.head_commit.message }}
+        run: |
+          set -e
+          open=$(gh pr list -R "$REPO" --head "$BRANCH" --base main --state open --json number -q '.[0].number')
+          if [ -z "$open" ]; then
+            gh pr create -R "$REPO" --base main --head "$BRANCH" \
+              --title "$(printf '%s\n' "$TITLE" | head -n 1)" \
+              --body "Opened by auto-pr when \`$BRANCH\` was pushed. It merges itself when the ci check passes."
+          fi
+          gh pr merge -R "$REPO" "$BRANCH" --auto --rebase --delete-branch

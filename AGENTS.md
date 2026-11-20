@@ -7,5 +7,6 @@
 - **Tokens only**: colours, radii and widths are CSS variables in `src/styles.css` with light and dark values. Components use the `tk-` classes, never inline colours.
 - **Public repo**: no private package names, person names or home paths. `npm run lint` runs `scripts/check-scrub.mjs`.
 - **Checks**: `npm run typecheck`, `lint`, `format:check`, `test`, `build`. Hooks in `.agents/guardrails/hooks` run them on commit and push; `npm run format` fixes formatting.
+- **Branches**: push a branch, never main. `auto-pr` opens a pull request to main and it merges itself when the `ci` check passes; the pre-push hook refuses main.
 - **Demo**: `npm run demo` writes `demo/*.html`; open them to check a change looks right in light and dark.
 - **Plain, literal language** in docs: no slogans or hype.
