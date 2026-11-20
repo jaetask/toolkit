@@ -54,6 +54,7 @@ export {
 export { ColourSwatches, ProjectIcon, ProjectIconPicker } from "./project-icon.js";
 export { type PickerChoice, PropertyPicker, RailRow } from "./pickers.js";
 export { AddLinkDialog, knownService, linkHost, ServiceIcon, service } from "./links.js";
+export { PropertyPills, type ViewChoice, ViewToggle } from "./views.js";
 export {
   AddReactionButton,
   CommentIconButton,
