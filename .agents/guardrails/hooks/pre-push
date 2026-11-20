@@ -1,4 +1,11 @@
 #!/bin/sh
+# guardrails: no-push-main. main changes only through a green pull request (auto-pr opens it).
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  if [ "$remote_ref" = "refs/heads/main" ]; then
+    echo "Refused: push a branch instead. auto-pr opens a pull request to main and it merges when ci passes." >&2
+    exit 1
+  fi
+done
 # The hook catches failures before they leave the machine.
 set -e
 npm run test
