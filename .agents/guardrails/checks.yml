@@ -17,4 +17,5 @@ checks:
   ci: on
   no-push-main: on
   auto-pr: on
+  no-comments: on
 dismissed: []
