@@ -22,6 +22,12 @@ const KIT = [
   "StatusDot",
   "BackLink",
   "ChipPicker",
+  "WorkPage",
+  "PageSection",
+  "FormDialog",
+  "RowMenu",
+  "InlineText",
+  "FilterMenu",
 ];
 const CODE = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs"]);
 const STYLE = new Set([".css", ".scss"]);

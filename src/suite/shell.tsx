@@ -324,6 +324,7 @@ export function AppShell({
   title,
   topAside,
   side,
+  bar = true,
   collapsed: collapsedProp,
   onCollapsedChange,
   children,
@@ -341,6 +342,8 @@ export function AppShell({
   topAside?: ReactNode;
   /** The app's own navigation, drawn under the pages (for example its projects). It is told whether the sidebar is collapsed. */
   side?: (collapsed: boolean) => ReactNode;
+  /** False leaves out the top bar, for an app whose pages carry their own small title. */
+  bar?: boolean;
   collapsed?: boolean;
   onCollapsedChange?: (collapsed: boolean) => void;
   children: ReactNode;
@@ -449,12 +452,16 @@ export function AppShell({
         </div>
       </aside>
       <div className="tk-main">
-        <header className="tk-top">
-          {title && <span className="tk-top-title">{title}</span>}
-          <span className="tk-top-app">{app.name}</span>
-          {topAside && <span className="tk-top-aside">{topAside}</span>}
-        </header>
-        <main className="tk-content">{children}</main>
+        {bar && (
+          <header className="tk-top">
+            {title && <span className="tk-top-title">{title}</span>}
+            <span className="tk-top-app">{app.name}</span>
+            {topAside && <span className="tk-top-aside">{topAside}</span>}
+          </header>
+        )}
+        <main className="tk-content" data-bar={bar ? undefined : "none"}>
+          {children}
+        </main>
       </div>
     </div>
   );
