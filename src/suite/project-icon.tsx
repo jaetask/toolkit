@@ -34,7 +34,7 @@ import {
   IconCheck,
 } from "@tabler/icons-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover.js";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { Button } from "../ui/button.js";
 import { Input } from "../ui/input.js";
@@ -93,28 +93,36 @@ export function ProjectIconPicker({
   colour,
   onIcon,
   onColour,
+  title = "Project icon",
+  children,
 }: {
   icon: string;
   colour: string;
   onIcon: (v: string) => void;
   onColour: (v: string) => void;
+  /** The heading inside the picker. */
+  title?: string;
+  /** What opens the picker, in place of the "Icon & colour" button: an avatar, say. */
+  children?: ReactNode;
 }) {
   const [search, setSearch] = useState("");
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          type="button"
-          variant="outline"
-          aria-label="Choose project icon and colour"
-          className="w-fit gap-2"
-        >
-          <ProjectIcon projectIcon={icon} iconColour={colour} size={24} />
-          Icon & colour
-        </Button>
+        {children ?? (
+          <Button
+            type="button"
+            variant="outline"
+            aria-label="Choose project icon and colour"
+            className="w-fit gap-2"
+          >
+            <ProjectIcon projectIcon={icon} iconColour={colour} size={24} />
+            Icon & colour
+          </Button>
+        )}
       </PopoverTrigger>
       <PopoverContent align="start" className="w-80 space-y-4">
-        <p className="text-sm font-medium">Project icon</p>
+        <p className="text-sm font-medium">{title}</p>
         <ColourSwatches value={colour} onChange={onColour} label="Icon colour" />
         <Input
           aria-label="Search project icons"

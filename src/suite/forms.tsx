@@ -1,6 +1,9 @@
 // Suite parts for list views and edit pages: the composer, and a file button with a thumbnail grid.
 // Built on the ported ui Input and Button.
-import { type FormEvent, useRef } from "react";
+import { IconX } from "@tabler/icons-react";
+import { type FormEvent, useRef, useState } from "react";
+import { Button } from "../ui/button.js";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../ui/dialog.js";
 import { Input } from "../ui/input.js";
 import { DarkButton, GreyButton, type Surface } from "./controls.js";
 
@@ -86,7 +89,10 @@ export function FileButton({
   );
 }
 
-/** A grid of image thumbnails, each with a Remove button. */
+/**
+ * A grid of image thumbnails. A click opens the image at full size; a small "x" removes it, shown
+ * while the thumbnail is pointed at or focused.
+ */
 export function Thumbs({
   items,
   onRemove,
@@ -96,24 +102,44 @@ export function Thumbs({
   onRemove?: (id: string) => void;
   removeLabel?: string;
 }) {
+  const [shown, setShown] = useState<string | null>(null);
+  const full = items.find((t) => t.id === shown);
   return (
-    <ul className="tk-thumbs">
-      {items.map((t) => (
-        <li key={t.id} className="tk-thumb">
-          <img src={t.src} alt={t.alt} loading="lazy" />
-          {onRemove && (
-            <GreyButton
-              surface="white"
-              size="sm"
-              className="tk-thumb-remove"
-              aria-label={`${removeLabel} ${t.alt}`}
-              onClick={() => onRemove(t.id)}
+    <>
+      <ul className="tk-thumbs">
+        {items.map((t) => (
+          <li key={t.id} className="tk-thumb">
+            <Button
+              variant="ghost"
+              className="tk-thumb-open"
+              aria-label={`Open ${t.alt}`}
+              onClick={() => setShown(t.id)}
             >
-              {removeLabel}
-            </GreyButton>
-          )}
-        </li>
-      ))}
-    </ul>
+              <img src={t.src} alt={t.alt} loading="lazy" />
+            </Button>
+            {onRemove && (
+              <Button
+                variant="secondary"
+                size="icon-xs"
+                className="tk-thumb-remove"
+                aria-label={`${removeLabel} ${t.alt}`}
+                onClick={() => onRemove(t.id)}
+              >
+                <IconX aria-hidden />
+              </Button>
+            )}
+          </li>
+        ))}
+      </ul>
+      <Dialog open={!!full} onOpenChange={(open) => !open && setShown(null)}>
+        {full && (
+          <DialogContent className="w-auto max-w-[95vw] p-2">
+            <DialogTitle className="sr-only">{full.alt}</DialogTitle>
+            <DialogDescription className="sr-only">The image at full size.</DialogDescription>
+            <img src={full.src} alt={full.alt} className="max-h-[85vh] max-w-full rounded-md" />
+          </DialogContent>
+        )}
+      </Dialog>
+    </>
   );
 }
