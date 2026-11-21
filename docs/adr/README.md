@@ -14,3 +14,4 @@ Decisions about the code live here, since comments are not kept in the code.
 - [10. ViewToggle marks the chosen view with a class, not data-state](0010-view-toggle-marks-the-chosen-view-by-class.md)
 - [11. PropertyPicker: a fixed anchor, numbers that start at 0 for a none choice, and one full-width line under the search box](0011-property-picker-anchor-numbers-and-search-line.md)
 - [12. Stylesheets ship beside the compiled files, and the build checks the install first](0012-styles-ship-beside-compiled-files.md)
+- [13. FormDialog is centred without a transform](0013-form-dialog-is-centred-without-a-transform.md)

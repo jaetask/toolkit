@@ -334,7 +334,10 @@ export function FormDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {open && (
-        <DialogContent className={wide ? "w-[min(44rem,95vw)] max-w-none" : "max-w-md"}>
+        <DialogContent
+          motion="instant"
+          className={`inset-0 m-auto h-fit translate-none ${wide ? "w-[min(44rem,95vw)] max-w-none" : "max-w-md"}`}
+        >
           <form
             className="grid min-w-0 gap-4"
             onSubmit={(e) => {
