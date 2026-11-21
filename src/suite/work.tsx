@@ -62,7 +62,7 @@ export function WorkPage({
                   variant="ghost"
                   size="icon-xs"
                   aria-label={`About ${title}`}
-                  className="text-muted-foreground"
+                  className="text-muted-foreground [&_svg]:size-4"
                 >
                   <IconHelpCircle aria-hidden />
                 </Button>
