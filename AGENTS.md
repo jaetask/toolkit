@@ -10,5 +10,6 @@
 - **Public repo**: no private package names, person names or home paths. `npm run lint` runs `scripts/check-scrub.mjs`.
 - **After a pull**, run `npm ci` before building or publishing; `npm run build` stops with that instruction when node_modules is out of date.
 - **Checks**: `npm run typecheck`, `lint`, `format:check`, `test`, `build`. Hooks in `.agents/guardrails/hooks` run them on commit and push; `npm run format` fixes formatting.
+- **Releases**: change `version` in package.json and add its CHANGELOG section on a branch. When that reaches main, the `publish` workflow puts the version on npm. Nobody runs `npm publish`.
 - **Branches**: push a branch, never main. `auto-pr` opens a pull request to main and it merges itself when the `ci` check passes; the pre-push hook refuses main.
 - **Plain, literal language** in docs: no slogans or hype.
