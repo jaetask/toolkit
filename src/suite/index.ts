@@ -41,6 +41,8 @@ export {
   type Group,
   type GroupItem,
   type NavItem,
+  SIDEBAR_MAX,
+  SIDEBAR_MIN,
   SideLink,
   SideSection,
 } from "./shell.js";

@@ -120,6 +120,31 @@
   border-right: 1px solid var(--tk-side-line);
   color: var(--tk-side-text);
 }
+.tk-side-resize {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  bottom: 0;
+  width: 6px;
+  cursor: col-resize;
+  touch-action: none;
+  z-index: 5;
+}
+.tk-side-resize::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2px;
+  width: 2px;
+  background: transparent;
+  transition: background 120ms ease;
+}
+.tk-side-resize:hover::after,
+.tk-side-resize:focus-visible::after,
+.tk-side-resize[data-dragging="true"]::after {
+  background: var(--tk-line-strong);
+}
 .tk-side-scroll {
   flex: 1;
   min-height: 0;
@@ -387,6 +412,9 @@ a.tk-group-label:hover {
 }
 
 @media (max-width: 760px) {
+  .tk-side-resize {
+    display: none;
+  }
   .tk-shell,
   .tk-shell[data-collapsed="true"] {
     grid-template-columns: 1fr;

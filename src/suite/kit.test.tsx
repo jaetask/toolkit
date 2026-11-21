@@ -180,3 +180,15 @@ test("only same-origin paths are followed back", () => {
   assert.equal(safeFrom("//evil.example"), null);
   assert.equal(withFrom("/a?x=1", "/b"), "/a?x=1&from=%2Fb");
 });
+
+test("the sidebar's edge is a separator that can be moved, with a least and a most", () => {
+  const html = renderToStaticMarkup(
+    <AppShell app={{ name: "Notes" }} nav={[{ href: "/", label: "Home" }]}>
+      <p>page</p>
+    </AppShell>,
+  );
+  assert.match(html, /role="separator"/);
+  assert.match(html, /aria-label="Resize the sidebar"/);
+  assert.match(html, /aria-valuemin="200"/);
+  assert.match(html, /aria-valuemax="440"/);
+});
