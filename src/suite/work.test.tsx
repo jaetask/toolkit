@@ -131,3 +131,20 @@ test("a page's controls and its groups are their own bands", () => {
   assert.match(html, /aria-label="To do"/);
   assert.match(html, /tk-group-list-count">2</);
 });
+
+test("a filter's choice shows its mark in the chip", () => {
+  const html = renderToStaticMarkup(
+    <FilterMenu
+      filters={[
+        {
+          id: "label",
+          label: "Label",
+          options: [{ id: "l1", name: "bug", icon: <i data-mark="bug" /> }],
+        },
+      ]}
+      values={{ label: ["l1"] }}
+      onChange={() => {}}
+    />,
+  );
+  assert.match(html, /data-mark="bug"/);
+});

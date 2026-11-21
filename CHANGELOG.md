@@ -8,6 +8,7 @@
 - `FormDialog` is centred without a transform, so a part inside it that places itself by the window, such as the editor's selection toolbar, lands where it should.
 - Suite: `PageControls`, `PageGroups` and `PageGroup`, the bands of a working page, with gaps that grow down the page. ux-flow: white space is the hierarchy.
 - `AppShell`: the sidebar's right edge can be dragged between 200 and 440 pixels wide. The width is remembered in the browser; a double click puts back the usual width, and the arrow keys move the edge.
+- `FilterMenu` options and `RowMenu` items take an `icon`, shown in the list and, for a filter, in its chip.
 - Suite: `FilterMenu`, one Filter button that opens the properties to filter by, with a chip for each filter in use.
 - `AppShell` takes `bar={false}` to leave out the top bar, for an app whose pages carry their own title.
 - `Thumbs`: a click opens the image at full size, and Remove is a small "x" shown while the thumbnail is pointed at.
