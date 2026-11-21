@@ -288,7 +288,15 @@ export function RowMenu({
           : {
               ...e,
               onSelect: () => {
-                after.current = e.onSelect;
+                const run = e.onSelect;
+                after.current = run;
+                // A menu opened again before it finished closing never says it closed: the
+                // item still runs, a moment later.
+                setTimeout(() => {
+                  if (after.current !== run) return;
+                  after.current = null;
+                  run();
+                }, 400);
               },
             },
     );
