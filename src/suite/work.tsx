@@ -198,7 +198,7 @@ export function InlineText({
 }
 
 export type MenuEntry =
-  | { label: string; onSelect: () => void; disabled?: boolean; hint?: string }
+  | { label: string; onSelect: () => void; disabled?: boolean; hint?: string; icon?: ReactNode }
   | { label: string; items: MenuEntry[]; disabled?: boolean }
   | { label: string; content: ReactNode }
   | "line";
@@ -229,7 +229,9 @@ function Entries({ items }: { items: MenuEntry[] }) {
             key={item.label}
             disabled={item.disabled ?? false}
             onSelect={item.onSelect}
+            className={item.icon ? "gap-2" : undefined}
           >
+            {item.icon}
             {item.label}
             {item.hint && (
               <span className="ml-auto pl-4 text-xs text-muted-foreground">{item.hint}</span>

@@ -15,7 +15,7 @@ export type FilterChoice = {
   id: string;
   label: string;
   icon?: ReactNode;
-  options: { id: string; name: string }[];
+  options: { id: string; name: string; icon?: ReactNode }[];
   many?: boolean;
 };
 
@@ -72,7 +72,10 @@ export function FilterMenu({
                         )
                       }
                     >
-                      {o.name}
+                      <span className="flex min-w-0 items-center gap-2">
+                        {o.icon}
+                        <span className="truncate">{o.name}</span>
+                      </span>
                     </DropdownMenuCheckboxItem>
                   );
                 })}
@@ -82,13 +85,18 @@ export function FilterMenu({
         </DropdownMenuContent>
       </DropdownMenu>
       {used.map((f) => {
-        const names = (values[f.id] ?? []).map(
-          (id) => f.options.find((o) => o.id === id)?.name ?? id,
+        const chosen = (values[f.id] ?? []).map(
+          (id) => f.options.find((o) => o.id === id) ?? { id, name: id },
         );
         return (
           <span key={f.id} className="tk-filter-chip" data-filter={f.id}>
             <span className="text-muted-foreground">{f.label}</span>
-            <span className="truncate">{names.join(", ")}</span>
+            {chosen.map((o, i) => (
+              <span key={o.id} className="flex min-w-0 items-center gap-1.5">
+                {o.icon}
+                <span className="truncate">{i < chosen.length - 1 ? `${o.name},` : o.name}</span>
+              </span>
+            ))}
             <Button
               variant="ghost"
               size="icon-xs"
