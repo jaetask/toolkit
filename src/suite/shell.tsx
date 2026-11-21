@@ -1,4 +1,4 @@
-import { type DragEvent, type ReactNode, useEffect, useState } from "react";
+import { type CSSProperties, type DragEvent, type ReactNode, useEffect, useState } from "react";
 import { Link } from "./link.js";
 import { ResourceIcon } from "../icons/ResourceIcon.js";
 import type { ResourceIconValue } from "../icons/types.js";
@@ -63,6 +63,82 @@ function useCollapsed(controlled?: boolean, onChange?: (collapsed: boolean) => v
     } catch {}
   };
   return [collapsed, set] as const;
+}
+
+const WIDTH_KEY = "tk-sidebar-width";
+export const SIDEBAR_MIN = 200;
+export const SIDEBAR_MAX = 440;
+const SIDEBAR_STEP = 16;
+
+const within = (width: number) => Math.min(SIDEBAR_MAX, Math.max(SIDEBAR_MIN, Math.round(width)));
+
+function useSidebarWidth() {
+  const [width, setWidth] = useState<number | null>(null);
+  useEffect(() => {
+    try {
+      const stored = Number(localStorage.getItem(WIDTH_KEY));
+      if (stored > 0) setWidth(within(stored));
+    } catch {}
+  }, []);
+  const set = (next: number | null) => {
+    const value = next === null ? null : within(next);
+    setWidth(value);
+    try {
+      if (value === null) localStorage.removeItem(WIDTH_KEY);
+      else localStorage.setItem(WIDTH_KEY, String(value));
+    } catch {}
+  };
+  return [width, set] as const;
+}
+
+function SideResize({
+  width,
+  onWidth,
+}: {
+  width: number | null;
+  onWidth: (width: number | null) => void;
+}) {
+  const [dragging, setDragging] = useState(false);
+  const now = (el: HTMLElement) =>
+    width ?? el.parentElement?.getBoundingClientRect().width ?? SIDEBAR_MIN;
+  return (
+    // biome-ignore lint/a11y/useSemanticElements: a draggable edge is a separator with a value, which hr cannot hold
+    <div
+      role="separator"
+      aria-orientation="vertical"
+      aria-label="Resize the sidebar"
+      aria-valuemin={SIDEBAR_MIN}
+      aria-valuemax={SIDEBAR_MAX}
+      aria-valuenow={width ?? undefined}
+      tabIndex={0}
+      className="tk-side-resize"
+      data-dragging={dragging ? "true" : undefined}
+      onPointerDown={(e) => {
+        e.preventDefault();
+        e.currentTarget.setPointerCapture(e.pointerId);
+        setDragging(true);
+      }}
+      onPointerMove={(e) => {
+        if (!dragging) return;
+        const left = e.currentTarget.parentElement?.getBoundingClientRect().left ?? 0;
+        onWidth(e.clientX - left);
+      }}
+      onPointerUp={(e) => {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+        setDragging(false);
+      }}
+      onPointerCancel={() => setDragging(false)}
+      onDoubleClick={() => onWidth(null)}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowLeft") onWidth(now(e.currentTarget) - SIDEBAR_STEP);
+        else if (e.key === "ArrowRight") onWidth(now(e.currentTarget) + SIDEBAR_STEP);
+        else if (e.key === "Home") onWidth(SIDEBAR_MIN);
+        else if (e.key === "End") onWidth(SIDEBAR_MAX);
+        else return;
+        e.preventDefault();
+      }}
+    />
+  );
 }
 
 const OPEN_KEY = "tk-sidebar-open";
@@ -318,8 +394,13 @@ export function AppShell({
 }) {
   const [collapsed, setCollapsed] = useCollapsed(collapsedProp, onCollapsedChange);
   const openItems = useOpenItems();
+  const [width, setWidth] = useSidebarWidth();
   return (
-    <div className="tk-root tk-shell" data-collapsed={collapsed ? "true" : "false"}>
+    <div
+      className="tk-root tk-shell"
+      data-collapsed={collapsed ? "true" : "false"}
+      style={width === null ? undefined : ({ "--tk-sidebar-width": `${width}px` } as CSSProperties)}
+    >
       <aside className="tk-side" aria-label={`${app.name} navigation`}>
         <div className="tk-side-scroll">
           <Link href={app.href ?? "/"} className="tk-mark" title={app.name}>
@@ -418,6 +499,7 @@ export function AppShell({
             <CollapseIcon />
           </Button>
         </div>
+        {!collapsed && <SideResize width={width} onWidth={setWidth} />}
       </aside>
       <div className="tk-main">
         {bar && (
