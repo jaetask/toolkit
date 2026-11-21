@@ -7,6 +7,7 @@
 - `AppShell` takes `bar={false}` to leave out the top bar, for an app whose pages carry their own title.
 - `Thumbs`: a click opens the image at full size, and Remove is a small "x" shown while the thumbnail is pointed at.
 - `ProjectIconPicker` takes `children` (what opens it, such as an avatar) and `title`.
+- `RowMenu`: an item runs once the menu has closed and given up the focus, so a box or dialog it opens keeps the focus it takes.
 - ux-flow: working pages edit in place and use dialogs for short forms; `toolkit-guard` knows the new parts.
 
 ## 0.3.2
