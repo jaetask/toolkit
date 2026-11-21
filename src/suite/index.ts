@@ -1,5 +1,3 @@
-// The suite parts: the app shell and page kit every Kit app shares, built on the ported ui parts.
-// The ui parts themselves are the main entry and @jaetask/toolkit/ui.
 export {
   Link,
   type LinkComponent,

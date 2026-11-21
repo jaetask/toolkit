@@ -1,14 +1,8 @@
-// The page kit. A read page stacks Panels at one width; each Panel's one Edit button opens that
-// section's own edit page (EditFrame with labelled Rows), and Back, Cancel or Save return here.
 import type { DragEvent, ReactNode } from "react";
 import { Link, useFromHref } from "./link.js";
 import { Badge } from "../ui/badge.js";
 import { DarkButton, GreyButton, type Surface } from "./controls.js";
 
-/**
- * A page: title, one line, the one primary action on the right, then stacked panels. Pages sit at
- * one reading width; `wide` lets the content use the whole width, for a board of many columns.
- */
 export function PageBody({
   title,
   line,
@@ -36,7 +30,6 @@ export function PageBody({
   );
 }
 
-/** A section: warm grey panel, title, one line on what it holds, at most one action on the right. */
 export function Panel({
   id,
   title,
@@ -66,7 +59,6 @@ export function Panel({
   );
 }
 
-/** A small-caps label above a value inside a card. */
 export function Kicker({ children }: { children: ReactNode }) {
   return <span className="tk-kicker">{children}</span>;
 }
@@ -103,7 +95,6 @@ function ButtonLink({
   );
 }
 
-/** A grey button that opens another page and remembers this one as ?from=. */
 export function PageLink({
   to,
   children,
@@ -123,7 +114,6 @@ export function PageLink({
   );
 }
 
-/** A panel's one Edit button: opens that section's own edit page. */
 export function EditLink({
   to,
   label = "Edit",
@@ -140,7 +130,6 @@ export function EditLink({
   );
 }
 
-/** The page's one dark button. */
 export function PrimaryLink({ to, children }: { to: string; children: ReactNode }) {
   const href = useFromHref(to);
   return (
@@ -150,7 +139,6 @@ export function PrimaryLink({ to, children }: { to: string; children: ReactNode 
   );
 }
 
-/** Back to where you came from: the same pill on every page that has one. */
 export function BackLink({ to }: { to: string }) {
   return (
     <ButtonLink href={to} surface="white">
@@ -159,7 +147,6 @@ export function BackLink({ to }: { to: string }) {
   );
 }
 
-/** A list: one white card of divided rows. */
 export function ListCard({
   children,
   as = "ul",
@@ -171,13 +158,8 @@ export function ListCard({
   return <Tag className="tk-list">{children}</Tag>;
 }
 
-/** The drag type the toolkit uses for rows; Column reads it on drop. */
 export const ROW_DRAG_TYPE = "application/x-tk-row";
 
-/**
- * One list row. With `to`, the row opens its own page. With `dragId`, the row can be dragged onto
- * a Column. `blocked` marks it as waiting on something, with a word you can change.
- */
 export function ListRow({
   to,
   children,
@@ -236,12 +218,10 @@ const WORD: Record<Progress, string> = {
   done: "Done",
 };
 
-/** A bare status dot, for sidebars and tight rows. */
 export function Dot({ status }: { status: Progress }) {
   return <span aria-hidden className="tk-dot" data-status={status} />;
 }
 
-/** Status as a dot and a word: grey not started, orange in progress, green done. Never red. */
 export function StatusDot({ status, label }: { status: Progress; label?: string }) {
   return (
     <span className="tk-status">
@@ -251,10 +231,6 @@ export function StatusDot({ status, label }: { status: Progress; label?: string 
   );
 }
 
-/**
- * One edit page: title and Back, a white card of labelled Rows, then Cancel and Save. Without
- * onSave (changes save as you go) the bar shows Done.
- */
 export function EditFrame({
   title,
   line,
@@ -305,7 +281,6 @@ export function EditFrame({
   );
 }
 
-/** A labelled row on an edit page: label and one line on the left, the inputs on the right. */
 export function Row({
   title,
   line,

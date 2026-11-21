@@ -1,4 +1,3 @@
-// The project icon colours and icons, from the earlier Tasks app (shared/project-appearance.ts).
 export const PROJECT_ICONS = [
   "folder",
   "robot",

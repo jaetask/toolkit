@@ -1,6 +1,3 @@
-// Runs before every build: stops with one clear line when node_modules does not match
-// package-lock.json (for example after a pull that added dependencies), instead of a wall of
-// type errors.
 import { execFileSync } from "node:child_process";
 
 try {

@@ -1,6 +1,3 @@
-// The app shell: a light grey sidebar (app mark, nav with icons, small-caps groups of projects or
-// entities with status dots, Settings at the bottom), a top bar, and the page. Every Kit app opens
-// in this frame; the app passes data and the shell draws it.
 import { type DragEvent, type ReactNode, useEffect, useState } from "react";
 import { Link } from "./link.js";
 import { ResourceIcon } from "../icons/ResourceIcon.js";
@@ -14,10 +11,8 @@ import { ProjectIcon } from "./project-icon.js";
 export type NavItem = {
   href: string;
   label: string;
-  /** A 16px line icon (for example from @tabler/icons-react). */
   icon?: ReactNode;
   current?: boolean;
-  /** A number shown at the right of the row, such as items waiting. */
   count?: number;
 };
 
@@ -25,41 +20,24 @@ export type GroupItem = {
   id: string;
   href: string;
   label: string;
-  /** The item's icon, as the ResourceIconPicker stores it. Else `avatar`, else the first letter. */
   icon?: ResourceIconValue | null;
-  /** A project icon by name and its colour, as the ProjectIconPicker stores them. */
   projectIcon?: string;
   iconColour?: string;
-  /** An image URL for a round avatar. */
   image?: string;
-  /** Anything else to show before the label. */
   avatar?: ReactNode;
   status?: Progress;
-  /** Always shown open, in a warm grey block: for an app where only the selected item opens. */
   open?: ReactNode;
-  /**
-   * Sections the item expands into. Each item with children has its own expand button; several
-   * can be open at once, and the shell remembers which ones were left open.
-   */
   children?: ReactNode;
-  /** Expanded until the person collapses it. */
   defaultOpen?: boolean;
-  /** The row is the current page. */
   current?: boolean;
   onSelect?: () => void;
 };
 
 export type Group = {
   label: string;
-  /** Where the group label links, for example the list of all projects. */
   href?: string;
   items: GroupItem[];
-  /** Shown when the group has no items: one line on how to add the first. */
   empty?: ReactNode;
-  /**
-   * Lets the person reorder the items by dragging a row, or with Alt+Up and Alt+Down on a focused
-   * row. Gets the item ids in their new order; save it, then pass the items back in that order.
-   */
   onReorder?: (ids: string[]) => void;
 };
 
@@ -89,7 +67,6 @@ function useCollapsed(controlled?: boolean, onChange?: (collapsed: boolean) => v
 
 const OPEN_KEY = "tk-sidebar-open";
 
-/** Which expandable items are open, remembered per browser. */
 function useOpenItems() {
   const [stored, setStored] = useState<Record<string, boolean>>({});
   useEffect(() => {
@@ -129,7 +106,6 @@ const CollapseIcon = () => (
   </svg>
 );
 
-/** The mark before a group item's label: its icon, an image, or the first letter. */
 function ItemMark({ item }: { item: GroupItem }) {
   if (item.avatar) return <>{item.avatar}</>;
   if (item.projectIcon)
@@ -152,7 +128,6 @@ function ItemMark({ item }: { item: GroupItem }) {
   );
 }
 
-/** A small-caps label and its links, inside the selected group item. */
 export function SideSection({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="tk-side-section">
@@ -162,7 +137,6 @@ export function SideSection({ label, children }: { label: string; children: Reac
   );
 }
 
-/** A link inside the selected group item, with an optional line and status dot. */
 export function SideLink({
   href,
   label,
@@ -313,7 +287,6 @@ function reorder(ids: string[], id: string, before: string | null): string[] {
   return rest;
 }
 
-/** The frame every Kit app opens in. */
 export function AppShell({
   app,
   nav,
@@ -332,17 +305,12 @@ export function AppShell({
   app: { name: string; href?: string; mark?: ReactNode };
   nav: NavItem[];
   groups?: Group[];
-  /** Pages that sit at the bottom of the sidebar, above Settings (for example Archive). */
   bottom?: NavItem[];
   settingsHref?: string;
   onSearch?: () => void;
-  /** Where you are, shown in the top bar before the app name. */
   title?: ReactNode;
-  /** Controls on the right of the top bar, for example the chat panel toggle. */
   topAside?: ReactNode;
-  /** The app's own navigation, drawn under the pages (for example its projects). It is told whether the sidebar is collapsed. */
   side?: (collapsed: boolean) => ReactNode;
-  /** False leaves out the top bar, for an app whose pages carry their own small title. */
   bar?: boolean;
   collapsed?: boolean;
   onCollapsedChange?: (collapsed: boolean) => void;

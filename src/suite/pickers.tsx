@@ -1,5 +1,3 @@
-// Property pickers: a quiet row that opens a searchable list in a popover, as on a ticket's
-// rail or on a card. A letter key opens one; a number key picks a row.
 import { IconCheck } from "@tabler/icons-react";
 import { type ComponentProps, type ReactNode, type RefObject, useEffect, useState } from "react";
 import { Button } from "../ui/button.js";
@@ -15,17 +13,12 @@ import {
 import { Kbd } from "../ui/kbd.js";
 import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "../ui/popover.js";
 
-/** One row of a PropertyPicker. An empty id or "none" stands for no value. */
 export type PickerChoice = { id: string; name: string; icon?: ReactNode; group?: string };
 
 const typing = (target: EventTarget | null) =>
   target instanceof HTMLElement &&
   (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
 
-/**
- * A row that opens a searchable list. `chosen` holds one id, or several when `many`. The key in
- * `hint` opens it from anywhere on the ticket; the number beside a row picks it.
- */
 export function PropertyPicker({
   label,
   placeholder,
@@ -49,15 +42,11 @@ export function PropertyPicker({
   chosen: string[];
   onPick: (id: string) => void;
   many?: boolean;
-  /** Makes a new choice from the words typed, when none matches. */
   onCreate?: (name: string) => void;
   disabled?: boolean;
-  /** A part the list opens from, when it should not follow the trigger as the trigger moves. */
   anchor?: RefObject<HTMLElement | null>;
-  /** Which side of the trigger or anchor the list opens on, and how it lines up with it. */
   side?: "top" | "right" | "bottom" | "left";
   align?: "start" | "center" | "end";
-  /** False while the key in `hint` should not open it. True if left out. */
   armed?: boolean | undefined;
   children: ReactNode;
 }) {
@@ -78,14 +67,12 @@ export function PropertyPicker({
     onPick(id);
     if (!many) setOpen(false);
   };
-  // Chosen ones first when several can be chosen; otherwise the order given.
   const ordered = many
     ? [
         ...choices.filter((c) => chosen.includes(c.id)),
         ...choices.filter((c) => !chosen.includes(c.id)),
       ]
     : choices;
-  // With several to choose, the chosen ones sit above a line; otherwise choices keep their groups.
   const groupOf = (c: PickerChoice) =>
     many ? (chosen.includes(c.id) ? "chosen" : "") : (c.group ?? "");
   const groups = [...new Set(ordered.map(groupOf))];
@@ -99,7 +86,6 @@ export function PropertyPicker({
         if (!next) setSearch("");
       }}
     >
-      {/* With an anchor the list opens from that fixed place, wherever the trigger has moved to. */}
       {anchor && <PopoverAnchor virtualRef={anchor as RefObject<HTMLElement>} />}
       <PopoverTrigger asChild disabled={disabled}>
         {children}
@@ -116,7 +102,6 @@ export function PropertyPicker({
             pick(target.id);
           }}
         >
-          {/* The line under the search box runs the full width, under the key hint too. */}
           <div className="flex items-center gap-2 border-b pr-3 [&>div]:flex-1 [&>div]:border-b-0">
             <CommandInput
               leading={null}
@@ -154,7 +139,6 @@ export function PropertyPicker({
                           className="group gap-3 px-3 py-2"
                         >
                           {many && (
-                            // A tick box: filled when chosen, an outline on the row in hand.
                             <span
                               aria-hidden
                               className={`flex size-4 shrink-0 items-center justify-center rounded-[4px] border ${
@@ -190,10 +174,8 @@ export function PropertyPicker({
   );
 }
 
-// A list that starts with a "none" choice numbers from 0, as "No priority" is 0.
 const zeroFirst = (choices: PickerChoice[]) => choices[0]?.id === "" || choices[0]?.id === "none";
 
-/** The quiet button a property row is: an icon and a value, grey on hover. */
 export function RailRow({
   icon,
   children,

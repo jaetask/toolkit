@@ -1,6 +1,3 @@
-// The project "Icon & colour" picker from the earlier Tasks app, on the ported ui parts: ten round
-// colour swatches (the chosen one ticked), a custom colour, icon search, and a six-column grid of
-// Tabler icons drawn in the chosen colour. A colour is always chosen from a swatch, never a name.
 import { DEFAULT_PROJECT_COLOUR, PROJECT_COLOURS, PROJECT_ICONS } from "./project-appearance.js";
 import {
   IconFolder,
@@ -100,9 +97,7 @@ export function ProjectIconPicker({
   colour: string;
   onIcon: (v: string) => void;
   onColour: (v: string) => void;
-  /** The heading inside the picker. */
   title?: string;
-  /** What opens the picker, in place of the "Icon & colour" button: an avatar, say. */
   children?: ReactNode;
 }) {
   const [search, setSearch] = useState("");
@@ -155,10 +150,6 @@ export function ProjectIconPicker({
   );
 }
 
-/**
- * Round colour swatches, the chosen one ticked, then a custom colour input. The way to choose any
- * colour (a project's icon, a label): never a list of colour names.
- */
 export function ColourSwatches({
   value,
   onChange,

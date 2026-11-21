@@ -1,4 +1,3 @@
-// Attaching files, and showing them: the paperclip, a chip for a file, a player for a video.
 import { IconDownload, IconFile, IconPaperclip } from "@tabler/icons-react";
 import { type ReactNode, useEffect, useRef } from "react";
 import { Button } from "../ui/button.js";
@@ -6,7 +5,6 @@ import { Input } from "../ui/input.js";
 import { Kbd } from "../ui/kbd.js";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip.js";
 
-/** A size as a person reads it: 812 B, 34 KB, 1.2 MB. */
 export const fileSize = (bytes: number) =>
   bytes < 1024
     ? `${bytes} B`
@@ -14,10 +12,6 @@ export const fileSize = (bytes: number) =>
       ? `${Math.round(bytes / 1024)} KB`
       : `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 
-/**
- * The paperclip: opens the file chooser and hands over what was chosen. With `shortcut`, Cmd or
- * Ctrl with Shift and U opens it from anywhere on the page.
- */
 export function AttachButton({
   onFiles,
   label = "Attach images, files, or videos",
@@ -26,7 +20,6 @@ export function AttachButton({
 }: {
   onFiles: (files: File[]) => void;
   label?: string;
-  /** The types the chooser offers, as a file input's accept. Any file if left out. */
   accept?: string;
   shortcut?: boolean;
 }) {
@@ -78,7 +71,6 @@ export function AttachButton({
   );
 }
 
-/** A file as a chip: its name and size, and a click downloads it. `action` sits at its end. */
 export function FileChip({
   name,
   size,
@@ -103,7 +95,6 @@ export function FileChip({
   );
 }
 
-/** A video that plays in place, with its name and size under it. `action` follows them. */
 export function VideoFigure({
   name,
   size,

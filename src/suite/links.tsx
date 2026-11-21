@@ -1,4 +1,3 @@
-// Links to other sites: the name and icon a site goes by, and the dialog that adds a link.
 import {
   IconBrandFigma,
   IconBrandGithub,
@@ -28,7 +27,6 @@ const SERVICES: Record<string, string> = {
   "notion.so": "Notion",
 };
 
-/** A link's host without "www.", or "" when the text is not a web address. */
 export const linkHost = (url: string) => {
   try {
     return new URL(url).hostname.replace(/^(www|m)\./, "");
@@ -37,12 +35,9 @@ export const linkHost = (url: string) => {
   }
 };
 
-/** The name a link's site goes by: a known service, its domain, or "" for no address yet. */
 export const knownService = (url: string) => SERVICES[linkHost(url)] ?? "";
-/** The same, falling back to the domain, then to the text itself. */
 export const service = (url: string) => knownService(url) || linkHost(url) || url;
 
-/** The icon of a link's site: the service's own mark, or a plain link. */
 export function ServiceIcon({
   url,
   size = 14,
@@ -73,10 +68,6 @@ export function ServiceIcon({
   return <Icon size={size} aria-hidden className={`text-muted-foreground ${className ?? ""}`} />;
 }
 
-/**
- * The dialog that adds a link to something: its address and, if wanted, what to call it. Its
- * heading shows the site's icon. `onAdd` answers true once the link is added, which closes it.
- */
 export function AddLinkDialog({
   to,
   line = "A web address that belongs here, such as a pull request.",
@@ -84,7 +75,6 @@ export function AddLinkDialog({
   onOpenChange,
   onAdd,
 }: {
-  /** What the link is added to, as the heading names it: "Add link to TLK-3". */
   to: string;
   line?: string;
   open: boolean;
@@ -104,7 +94,6 @@ export function AddLinkDialog({
     <Dialog open={open} onOpenChange={close}>
       {open && (
         <DialogContent className="max-w-md">
-          {/* A form, so Enter in either box adds the link with what the boxes hold. */}
           <form
             className="grid gap-4"
             onSubmit={(e) => {

@@ -1,7 +1,3 @@
-// The toolkit stays interchangeable with the agent-native toolkit: every part recorded from it
-// (src/agent-native-parts.json, read from its src/ on 2026-11-20) is here at the same path, with the
-// same exported names, on the same Radix packages. A part that opens a menu, traps focus or takes
-// arrow keys keeps its Radix base, so it can never fall back to a browser control.
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { test } from "node:test";

@@ -1,10 +1,7 @@
-// Suite parts that go inside a page: the board and its columns, threads of comments, facts, and the
-// centred page that sits outside the shell (sign-in).
 import { createContext, type DragEvent, type ReactNode, useContext, useState } from "react";
 import { Toggle } from "../ui/toggle.js";
 import { ROW_DRAG_TYPE } from "./page.js";
 
-/** Columns side by side, scrolling sideways when they do not fit. */
 export function Board({ children, label }: { children: ReactNode; label?: string }) {
   return (
     <section className="tk-board" aria-label={label}>
@@ -13,10 +10,6 @@ export function Board({ children, label }: { children: ReactNode; label?: string
   );
 }
 
-/**
- * One column: a title, an optional kind chip and count, then its rows. With `onDrop`, a ListRow
- * that has a `dragId` can be dropped here, and onDrop gets that id.
- */
 export function Column({
   id,
   title,
@@ -80,7 +73,6 @@ export function Column({
 
 const Depth = createContext(0);
 
-/** A run of comments and activity lines, oldest first. */
 export function Thread({ children, label }: { children: ReactNode; label?: string }) {
   return (
     <ol className="tk-thread" aria-label={label}>
@@ -89,10 +81,6 @@ export function Thread({ children, label }: { children: ReactNode; label?: strin
   );
 }
 
-/**
- * One comment: author, time, text, then reactions and actions. `replies` holds one level of
- * reply Comments; a reply's own replies are not shown.
- */
 export function Comment({
   author,
   avatar,
@@ -136,7 +124,6 @@ export function Comment({
   );
 }
 
-/** Emoji reactions under a comment, on the ported ui Toggle; the person's own are pressed. */
 export function Reactions({
   items,
   onToggle,
@@ -163,7 +150,6 @@ export function Reactions({
   );
 }
 
-/** One line of activity in a thread (a move, a status change), with at most one action. */
 export function ActivityRow({
   children,
   time,
@@ -183,7 +169,6 @@ export function ActivityRow({
   );
 }
 
-/** Small-caps labels with their values, in a white card. */
 export function Facts({ items }: { items: { label: string; value: ReactNode }[] }) {
   return (
     <dl className="tk-card tk-facts">
@@ -197,7 +182,6 @@ export function Facts({ items }: { items: { label: string; value: ReactNode }[] 
   );
 }
 
-/** A page outside the shell, such as sign-in: one panel in the middle of the window. */
 export function CenteredPage({
   title,
   line,

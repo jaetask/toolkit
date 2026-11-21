@@ -1,5 +1,3 @@
-// Suite parts for list views and edit pages: the composer, and a file button with a thumbnail grid.
-// Built on the ported ui Input and Button.
 import { IconX } from "@tabler/icons-react";
 import { type FormEvent, useRef, useState } from "react";
 import { Button } from "../ui/button.js";
@@ -7,7 +5,6 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../ui/dia
 import { Input } from "../ui/input.js";
 import { DarkButton, GreyButton, type Surface } from "./controls.js";
 
-/** A one-line input with its button: chat, a quick add, a reply. */
 export function Composer({
   label,
   value,
@@ -48,7 +45,6 @@ export function Composer({
   );
 }
 
-/** A grey button that opens the file picker. */
 export function FileButton({
   label,
   onFiles,
@@ -89,10 +85,6 @@ export function FileButton({
   );
 }
 
-/**
- * A grid of image thumbnails. A click opens the image at full size; a small "x" removes it, shown
- * while the thumbnail is pointed at or focused.
- */
 export function Thumbs({
   items,
   onRemove,

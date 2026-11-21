@@ -1,18 +1,14 @@
-// Choosing how a board looks: the buttons that pick a view, and the pills that pick what a card shows.
 import type { ComponentType } from "react";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group.js";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip.js";
 
-/** One way to group a board: its id, the name its button is known by, and the button's icon. */
 export type ViewChoice<Id extends string = string> = {
   id: Id;
   label: string;
   Icon: ComponentType<{ size?: number; "aria-hidden"?: boolean }>;
-  /** The heading shown above the board in this view, where an app shows one. */
   heading?: string;
 };
 
-/** The buttons that choose how a board groups its tickets. */
 export function ViewToggle<Id extends string>({
   views,
   value,
@@ -41,7 +37,6 @@ export function ViewToggle<Id extends string>({
               <ToggleGroupItem
                 value={id}
                 aria-label={`${label} view`}
-                // The tooltip takes over data-state, so the chosen view is marked by class.
                 className={`size-8 p-0 ${value === id ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : ""}`}
               >
                 <Icon size={18} aria-hidden />
@@ -55,10 +50,6 @@ export function ViewToggle<Id extends string>({
   );
 }
 
-/**
- * Pills that are each on or off, such as the properties a card shows. `value` holds the ids
- * that are on.
- */
 export function PropertyPills({
   label,
   options,

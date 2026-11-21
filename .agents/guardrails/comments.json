@@ -1,0 +1,17 @@
+{
+  "skip": [
+    ".claude/",
+    ".github/",
+    "src/app/",
+    "src/collab-ui/",
+    "src/design-system/",
+    "src/editor/",
+    "src/editor.css",
+    "src/hooks/",
+    "src/icons/",
+    "src/provider.tsx",
+    "src/ui/",
+    "src/utils.ts"
+  ],
+  "files": {}
+}

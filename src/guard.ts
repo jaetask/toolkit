@@ -1,7 +1,4 @@
 #!/usr/bin/env node
-// toolkit-guard: fails when an app hand-builds what the toolkit already has.
-//   npx toolkit-guard [dir ...]   (default: src)
-// A line ending in the comment `toolkit-guard-allow` is skipped, for the rare literal that must stay.
 import { readdirSync, readFileSync, realpathSync, statSync } from "node:fs";
 import { extname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -48,10 +45,8 @@ const colourByName =
   /<(SelectItem|option|ToggleGroupItem|DropdownMenuItem|DropdownMenuRadioItem)\b[^>]*>\s*(Grey|Gray|Slate|Indigo|Cyan|Green|Yellow|Orange|Rose|Red|Purple|Blue|Pink|Brown|Teal|Amber)\s*</;
 const colour =
   /(?:^|[\s:("'`,=])(#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3}(?:[0-9a-fA-F]{2})?)?)\b|\b(?:rgba?|hsla?)\(/;
-// A ring or an outline asked for on focus, as a class. "outline-none" and "ring-0" ask for none.
 export const focusRing =
   /\bfocus(?:-visible|-within)?:(?:ring|outline)(?!-none\b|-hidden\b|-0\b)(?:-[\w./[\]()%-]+)?/;
-// In a stylesheet: an outline that is drawn.
 const drawnOutline = /\boutline\s*:(?!\s*(?:none|0|inherit|unset)\b)/;
 const shellImport = /import\s*{[^}]*\bAppShell\b[^}]*}\s*from\s*["']@jaetask\/toolkit\/suite["']/s;
 
@@ -66,7 +61,6 @@ function files(dir: string): string[] {
   return out;
 }
 
-/** Every finding in the given directories. */
 export function check(dirs: string[], root = process.cwd()): Finding[] {
   const found: Finding[] = [];
   let shell = false;

@@ -1,4 +1,3 @@
-// Fails when a tracked file names a private source, a person or a home path. The toolkit is public.
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 

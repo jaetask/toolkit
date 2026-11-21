@@ -1,4 +1,3 @@
-// A due date: how it reads, the icon that says how close it is, and the picker that sets it.
 import { IconCalendar, IconCalendarOff } from "@tabler/icons-react";
 import { type ReactNode, useEffect, useState } from "react";
 import { Calendar } from "../ui/calendar.js";
@@ -7,7 +6,6 @@ import { Kbd } from "../ui/kbd.js";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover.js";
 import { day, endOfWeek, parseDue } from "./due.js";
 
-/** A due day as people say it: Today, Tomorrow, Fri, or a short date further out. */
 export function dueLabel(due: string, now: Date = new Date()): string {
   const date = new Date(`${due}T00:00:00`);
   const days = Math.round(
@@ -24,7 +22,6 @@ export function dueLabel(due: string, now: Date = new Date()): string {
   });
 }
 
-/** overdue, soon (today or tomorrow) or later: what colours a due date's icon. */
 export function dueState(due: string, now: Date = new Date()): "overdue" | "soon" | "later" {
   const today = day(now);
   if (due < today) return "overdue";
@@ -40,10 +37,6 @@ const full = (due: string) =>
     month: "short",
   });
 
-/**
- * The due date picker: type a date in words, or pick a row. Shift+D opens it while `armed`.
- * `value` and what `onChange` hands back are days written YYYY-MM-DD, or null for no date.
- */
 export function DueDatePicker({
   value,
   onChange,
@@ -54,9 +47,7 @@ export function DueDatePicker({
   value: string | null;
   onChange: (due: string | null) => void;
   disabled?: boolean;
-  /** False while Shift+D should not open it, as on a card that is not hovered. */
   armed?: boolean;
-  /** The row or chip that opens the picker. */
   children: ReactNode;
 }) {
   const [shown, setShown] = useState(false);
@@ -170,7 +161,6 @@ const DUE_ICON = {
   soon: "text-orange-500",
   later: "text-muted-foreground",
 } as const;
-/** The calendar icon of a due date: red when overdue, orange when due within a day. */
 export function DueIcon({ due, size = 16 }: { due: string | null; size?: number }) {
   return (
     <IconCalendar
