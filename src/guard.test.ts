@@ -92,3 +92,14 @@ test("the suite's own parts ask for no ring on focus", async () => {
     assert.deepEqual(found, [], name);
   }
 });
+
+test("a bordered box with no side padding fails, and one pulled back by a margin passes", () => {
+  const tight = app({
+    "page.tsx": `import { AppShell } from "@jaetask/toolkit/suite";\nconst a = <i className="h-auto border-transparent px-0 text-lg hover:border-input" />;\n`,
+  });
+  assert.deepEqual(rules(tight), ["room-inside"]);
+  const roomy = app({
+    "page.tsx": `import { AppShell } from "@jaetask/toolkit/suite";\nconst a = <i className="-mx-3 h-auto border-transparent px-3 text-lg hover:border-input" />;\nconst b = <i className="size-6 rounded-full p-0" />;\nconst c = <i className="border-0 px-0" />;\n`,
+  });
+  assert.deepEqual(rules(roomy), []);
+});

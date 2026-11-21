@@ -51,6 +51,8 @@ const colour =
 export const focusRing =
   /\bfocus(?:-visible|-within)?:(?:ring|outline)(?!-none\b|-hidden\b|-0\b)(?:-[\w./[\]()%-]+)?/;
 const drawnOutline = /\boutline\s*:(?!\s*(?:none|0|inherit|unset)\b)/;
+export const noRoom =
+  /\b(?:px|pl|pr|p)-0\b(?![^"'`]*-m[xlr]?-)[^"'`]*\bborder(?!-0\b)|\bborder(?!-0\b)[^"'`]*\b(?:px|pl|pr)-0\b(?![^"'`]*-m[xlr]?-)/;
 const shellImport = /import\s*{[^}]*\bAppShell\b[^}]*}\s*from\s*["']@jaetask\/toolkit\/suite["']/s;
 
 function files(dir: string): string[] {
@@ -107,6 +109,13 @@ export function check(dirs: string[], root = process.cwd()): Finding[] {
           message: ring
             ? `${ring[0]} draws a ring round a focused part: the suite draws none. Remove it.`
             : "An outline draws a ring round a part: the suite draws none. Remove it.",
+        });
+      if (CODE.has(ext) && noRoom.test(line) && !/-m[xlr]?-\d/.test(line))
+        found.push({
+          ...at,
+          rule: "room-inside",
+          message:
+            "A box with a border and no side padding puts its text against the edge. Give it padding and pull it back with a negative margin, such as px-3 -mx-3.",
         });
       if ((CODE.has(ext) || STYLE.has(ext)) && colour.test(line))
         found.push({
