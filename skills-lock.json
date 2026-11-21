@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "skills": {
+    "delete-comment": {
+      "source": "jaetask/skills",
+      "commit": "bdab5ae8bc4ccd0ae1131617a332e52c3908585a",
+      "sourceType": "github",
+      "skillPath": "skills/delete-comment/SKILL.md",
+      "computedHash": "0788874c01106e5ebf407843cbc5881438d3af75a15f45827c10d0afdba18ce3"
+    },
+    "remove-the-human": {
+      "source": "jaetask/skills",
+      "commit": "bdab5ae8bc4ccd0ae1131617a332e52c3908585a",
+      "sourceType": "github",
+      "skillPath": "skills/remove-the-human/SKILL.md",
+      "computedHash": "d19cbd1e6c7de6e98255ecfd74a1c6363ac69727a35c49d793b541fa42aa7a6c"
+    }
+  }
+}
