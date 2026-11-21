@@ -43,4 +43,10 @@ jobs:
       - if: steps.version.outputs.new == 'true'
         run: npm run build
       - if: steps.version.outputs.new == 'true'
-        run: npm publish
+        name: Publish, and show npm's error in the run's annotations if it fails
+        run: |
+          set -o pipefail
+          if ! npm publish 2>&1 | tee publish.log; then
+            grep -E "npm (error|ERR)" publish.log | tail -8 | while IFS= read -r line; do echo "::error title=npm publish::$line"; done
+            exit 1
+          fi
