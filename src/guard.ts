@@ -25,6 +25,9 @@ const KIT = [
   "RowMenu",
   "InlineText",
   "FilterMenu",
+  "PageControls",
+  "PageGroups",
+  "PageGroup",
 ];
 const CODE = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs"]);
 const STYLE = new Set([".css", ".scss"]);

@@ -1116,10 +1116,38 @@ a.tk-list-body:hover {
 }
 
 .tk-content[data-bar="none"] {
-  padding-top: 18px;
+  padding-top: 24px;
 }
 .tk-work {
-  gap: 16px;
+  gap: 24px;
+}
+.tk-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.tk-groups {
+  display: grid;
+  gap: 28px;
+}
+.tk-group-list {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.tk-group-list-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--tk-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+.tk-group-list-count {
+  font-weight: 400;
 }
 .tk-work-head {
   display: flex;
@@ -1149,7 +1177,7 @@ a.tk-list-body:hover {
 }
 .tk-section {
   display: grid;
-  gap: 4px;
+  gap: 8px;
   min-width: 0;
 }
 .tk-section-head {
