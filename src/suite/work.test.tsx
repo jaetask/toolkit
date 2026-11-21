@@ -5,6 +5,7 @@ import {
   ago,
   EmptyLine,
   FilterMenu,
+  IconAction,
   IconAvatar,
   InlineText,
   PageSection,
@@ -72,7 +73,7 @@ test("a filter in use shows as a chip that can be removed", () => {
       onChange={() => {}}
     />,
   );
-  assert.match(html, /Filter/);
+  assert.match(html, /aria-label="Filter"/);
   assert.match(html, /data-filter="actor"/);
   assert.match(html, /Codex/);
   assert.match(html, /aria-label="Remove the actor filter"/);
@@ -99,4 +100,12 @@ test("ago says how long ago in a few letters", () => {
   assert.equal(ago("2026-11-21T09:00:00Z", now), "3h ago");
   assert.equal(ago("2026-11-19T09:00:00Z", now), "2d ago");
   assert.equal(ago("2026-10-01T09:00:00Z", now), "7w ago");
+});
+
+test("a page action is an icon with its name for a label", () => {
+  const html = renderToStaticMarkup(
+    <IconAction label="New ticket" icon={<svg />} primary onClick={() => {}} />,
+  );
+  assert.match(html, /aria-label="New ticket"/);
+  assert.doesNotMatch(html, />New ticket</);
 });

@@ -33,9 +33,14 @@ export function FilterMenu({
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm" className="text-muted-foreground">
-            <IconFilter size={15} aria-hidden />
-            Filter
+          <Button
+            variant="outline"
+            size="icon-sm"
+            aria-label="Filter"
+            title="Filter"
+            className="text-muted-foreground [&_svg]:size-4"
+          >
+            <IconFilter aria-hidden />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" aria-label="Filter by">

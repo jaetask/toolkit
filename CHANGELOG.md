@@ -3,6 +3,8 @@
 ## 0.3.3
 
 - Suite: working pages. `WorkPage` (one small title, what the page is for behind "?", the page's actions), `PageSection` (a small grey heading that folds, a count, a "+"), `EmptyLine`, `InlineText` (a name edited where it is shown), `RowMenu` (the "..." of a row, with menus inside it), `FormDialog` and `Field` (a short form in the centre of the page), `IconAvatar` (an icon in its colour, an emoji or a first letter), `TimeAgo` and `ago`.
+- Suite: `IconAction`, a page action shown as an icon with its name as tooltip and label. The Filter button is an icon.
+- ux-flow: page actions are icons, and a list or board toggle sits at the top of the Display popover.
 - Suite: `FilterMenu`, one Filter button that opens the properties to filter by, with a chip for each filter in use.
 - `AppShell` takes `bar={false}` to leave out the top bar, for an app whose pages carry their own title.
 - `Thumbs`: a click opens the image at full size, and Remove is a small "x" shown while the thumbnail is pointed at.

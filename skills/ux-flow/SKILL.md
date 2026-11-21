@@ -14,6 +14,8 @@ Every Kit app feels the same. The user reads, edits, and lands back where they w
 - **Working page.** A page people work on all day (a board, a list, settings) uses `WorkPage`: one small title, what the page is for behind "?", its actions on the right, and its lists straight on the page. A section is a `PageSection`: a small grey heading that folds, a count, a "+".
 - **Edit in place.** On a working page a name is changed where it is shown (`InlineText`): click, type, Enter saves, Escape cancels. Everything else that can be done to a row is in its "..." (`RowMenu`).
 - **A short form is a dialog.** Making something new, or changing several fields at once, opens a `FormDialog` in the centre: fields, Cancel, one button that saves.
+- **Icons, not words.** A page's actions are icon buttons (`IconAction`): the icon shows, its name is the tooltip and the label. Words stay where no icon says it, and on the one button that saves a form.
+- **List or board.** Where the same things can be shown as a list or as a board, one toggle at the top of the Display popover switches between them, and the page remembers the choice.
 - **Edit page.** A long form keeps its own page: the read page's width and frame, Back at the top, labelled rows, Cancel and Save at the bottom; both return to the same spot (`?from=`).
 - **One home per field.** Each value is edited on exactly one page.
 - **One way in.** A value is changed the same way wherever it shows.
