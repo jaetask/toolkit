@@ -8,6 +8,9 @@ import {
   IconAction,
   IconAvatar,
   InlineText,
+  PageControls,
+  PageGroup,
+  PageGroups,
   PageSection,
   RowMenu,
   Thumbs,
@@ -108,4 +111,23 @@ test("a page action is an icon with its name for a label", () => {
   );
   assert.match(html, /aria-label="New ticket"/);
   assert.doesNotMatch(html, />New ticket</);
+});
+
+test("a page's controls and its groups are their own bands", () => {
+  const html = renderToStaticMarkup(
+    <>
+      <PageControls>
+        <b>filter</b>
+      </PageControls>
+      <PageGroups>
+        <PageGroup title="To do" count={2}>
+          <p>rows</p>
+        </PageGroup>
+      </PageGroups>
+    </>,
+  );
+  assert.match(html, /class="tk-controls"/);
+  assert.match(html, /class="tk-groups"/);
+  assert.match(html, /aria-label="To do"/);
+  assert.match(html, /tk-group-list-count">2</);
 });

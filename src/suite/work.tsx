@@ -497,3 +497,34 @@ export function IconAction({
     </TooltipProvider>
   );
 }
+
+export function PageControls({ children }: { children: ReactNode }) {
+  return <div className="tk-controls">{children}</div>;
+}
+
+export function PageGroups({ children }: { children: ReactNode }) {
+  return <div className="tk-groups">{children}</div>;
+}
+
+export function PageGroup({
+  title,
+  icon,
+  count,
+  children,
+}: {
+  title: string;
+  icon?: ReactNode;
+  count?: ReactNode;
+  children?: ReactNode;
+}) {
+  return (
+    <section aria-label={title} className="tk-group-list">
+      <h2 className="tk-group-list-head">
+        {icon}
+        {title}
+        {count !== undefined && <span className="tk-group-list-count">{count}</span>}
+      </h2>
+      {children}
+    </section>
+  );
+}
