@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.1
+## 0.3.2
 
 - `PropertyPicker`: the search line runs the full width; `anchor`, `side` and `align` open the list from a fixed part and a chosen side.
 - Suite: `MarkdownText`, Markdown shown as text with headings, lists, code, links and the app's own pictures. A picture from another site is shown as a link.
@@ -13,6 +13,9 @@
 - Suite: `ViewToggle`, the icon buttons that choose how a board is grouped, and `PropertyPills`, on and off pills such as the properties a card shows.
 - Suite: links to other sites. `ServiceIcon` (YouTube, GitHub, Figma, Notion, or a plain link), `service`, `knownService` and `linkHost` name a link's site, and `AddLinkDialog` asks for an address and an optional title.
 - Suite: `PropertyPicker`, a row that opens a searchable list in a popover (a key that opens it, number keys, pick several with the chosen ones above a line, create from what was typed), and `RailRow`, the quiet row it opens from.
+
+## 0.3.1
+
 - Select's highlighted row is light grey (`focus:bg-accent`), with the tick on the chosen one; the emoji search says "Search emoji...".
 - Suite: the agent-native Content app's emoji reactions: `EmojiPickerPanel` (search, then the categories), `filterEmojiCategories`, `CommentReactionChips`, `AddReactionButton` (quick reactions, then the searchable panel, in a Popover) and `CommentIconButton`.
 - `@jaetask/toolkit/editor` (and `/editor/*`, `/editor.css`): agent-native's Notion-style editor on Tiptap 3.28: SharedRichEditor, RichMarkdownEditor (Markdown in and out), SlashCommandMenu with DEFAULT_SLASH_COMMANDS, BubbleToolbar, code blocks with lowlight, images and the rest, with `/collab-ui` for its optional collaboration parts.
