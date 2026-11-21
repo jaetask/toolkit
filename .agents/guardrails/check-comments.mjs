@@ -93,16 +93,31 @@ export function commentsOf(file, text) {
       : HASH.has(ext)
         ? hashComments(text)
         : [];
-  return ranges
+  const found = ranges
     .map((r) => ({
       ...r,
-      jsx: r.jsx,
       text: text.slice(r.pos, r.end),
       line: text.slice(0, r.pos).split("\n").length,
       lines: text.slice(r.pos, r.end).split("\n").length,
       own: /^\s*$/.test(text.slice(text.lastIndexOf("\n", r.pos - 1) + 1, r.pos)),
     }))
-    .filter((c) => !DIRECTIVE.test(c.text) && !LICENCE.test(c.text));
+    .sort((a, b) => a.pos - b.pos);
+  const licensed = new Set();
+  for (let i = 0; i < found.length; i += 1) {
+    if (!LICENCE.test(found[i].text)) continue;
+    licensed.add(i);
+    for (let j = i - 1; j >= 0 && found[j].line + found[j].lines === found[j + 1].line; j -= 1) {
+      licensed.add(j);
+    }
+    for (
+      let j = i + 1;
+      j < found.length && found[j - 1].line + found[j - 1].lines === found[j].line;
+      j += 1
+    ) {
+      licensed.add(j);
+    }
+  }
+  return found.filter((c, i) => !licensed.has(i) && !DIRECTIVE.test(c.text));
 }
 
 function strip(file, text) {
