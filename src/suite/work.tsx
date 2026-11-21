@@ -23,6 +23,8 @@ import {
 import { Input } from "../ui/input.js";
 import { Label } from "../ui/label.js";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover.js";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip.js";
+import { Link } from "./link.js";
 import { DEFAULT_PROJECT_COLOUR, PROJECT_ICONS } from "./project-appearance.js";
 import { ProjectIcon } from "./project-icon.js";
 
@@ -451,5 +453,44 @@ export function TimeAgo({ at, prefix }: { at: string; prefix?: string }) {
     <time dateTime={at} title={new Date(at).toLocaleString()}>
       {prefix ? `${prefix} ${ago(at)}` : ago(at)}
     </time>
+  );
+}
+
+export function IconAction({
+  label,
+  icon,
+  primary,
+  onClick,
+  href,
+}: {
+  label: string;
+  icon: ReactNode;
+  primary?: boolean;
+  onClick?: () => void;
+  href?: string;
+}) {
+  const look = {
+    variant: primary ? ("default" as const) : ("outline" as const),
+    size: "icon-sm" as const,
+    "aria-label": label,
+    className: primary ? "[&_svg]:size-4" : "text-muted-foreground [&_svg]:size-4",
+  };
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          {href ? (
+            <Button asChild {...look}>
+              <Link href={href}>{icon}</Link>
+            </Button>
+          ) : (
+            <Button {...look} onClick={onClick}>
+              {icon}
+            </Button>
+          )}
+        </TooltipTrigger>
+        <TooltipContent>{label}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

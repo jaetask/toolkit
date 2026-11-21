@@ -73,6 +73,7 @@ export {
   EmptyLine,
   Field,
   FormDialog,
+  IconAction,
   IconAvatar,
   InlineText,
   type MenuEntry,
