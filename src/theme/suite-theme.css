@@ -1,7 +1,4 @@
-/* The suite's look, as the theme variables the ui parts read (the values the Marketing app uses).
-   Light on :root, dark under .dark. An app can override any of them after importing styles.css. */
 :root {
-  /* The page is a very light grey, so white cards and threads stand out on it. */
   --background: 0 0% 97.6%;
   --foreground: 0 0% 10%;
   --card: 0 0% 100%;
@@ -22,7 +19,6 @@
   --input: 0 0% 90%;
   --ring: 0 0% 40%;
   --radius: 0.5rem;
-  /* The sidebar is a step greyer than the page. */
   --sidebar-background: 0 0% 95.3%;
   --sidebar-foreground: 0 0% 45%;
   --sidebar-primary: 0 0% 15%;
@@ -79,10 +75,6 @@
   }
 }
 
-/*
- * No focus rings. The ported parts ask for a ring with Tailwind's ring and outline classes; the
- * suite's look draws none, on any part. A focused field shows a darker border in its place.
- */
 :focus,
 :focus-visible {
   outline: none !important;

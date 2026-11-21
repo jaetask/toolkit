@@ -1,5 +1,3 @@
-// Filtering a board or a list: one Filter button that opens the properties to filter by, and a
-// chip for each filter in use.
 import { IconFilter, IconX } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 import { Button } from "../ui/button.js";
@@ -13,20 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu.js";
 
-/** One property a list can be filtered by, and the values to choose from. */
 export type FilterChoice = {
   id: string;
   label: string;
   icon?: ReactNode;
   options: { id: string; name: string }[];
-  /** True when several values can be chosen at once. */
   many?: boolean;
 };
 
-/**
- * The Filter button and the chips of the filters in use. `values` holds, for each property, the
- * ids chosen; a property with none is not in use.
- */
 export function FilterMenu({
   filters,
   values,

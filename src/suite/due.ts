@@ -1,10 +1,6 @@
-// Reads a due date typed in words: "tomorrow", "24h", "7 days", "fri", "Feb 9",
-// "2026-02-09". Answers a day as YYYY-MM-DD, or null when it cannot tell.
-
 const DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
-/** A local day as YYYY-MM-DD. */
 export const day = (date: Date): string =>
   `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
@@ -17,7 +13,6 @@ export function parseDue(text: string, now: Date = new Date()): string | null {
   if (words === "today") return day(now);
   if (words === "tomorrow") return day(plus(now, 1));
 
-  // 24h, 7 days, 2w, 3 weeks
   const span = /^(?:in )?(\d{1,3}) ?(h|hours?|d|days?|w|weeks?)$/.exec(words);
   if (span) {
     const n = Number(span[1]);
@@ -26,15 +21,12 @@ export function parseDue(text: string, now: Date = new Date()): string | null {
     return day(plus(now, unit === "w" ? n * 7 : n));
   }
 
-  // A weekday: the next one, never today.
   const weekday = DAYS.findIndex((d) => words.length >= 3 && d.startsWith(words));
   if (weekday >= 0) return day(plus(now, (weekday - now.getDay() + 7) % 7 || 7));
 
-  // 2026-02-09
   const iso = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(words);
   if (iso) return valid(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3]));
 
-  // Feb 9, 9 Feb, February 9: this year, or next when that day has passed.
   const named =
     /^([a-z]{3,9})\.? (\d{1,2})(?:st|nd|rd|th)?$/.exec(words) ??
     /^(\d{1,2})(?:st|nd|rd|th)? ([a-z]{3,9})\.?$/.exec(words);
@@ -51,7 +43,6 @@ export function parseDue(text: string, now: Date = new Date()): string | null {
   return null;
 }
 
-/** The day, when the three numbers name a real one. */
 function valid(year: number, month: number, date: number): string | null {
   const made = new Date(year, month, date);
   return made.getFullYear() === year && made.getMonth() === month && made.getDate() === date
@@ -59,6 +50,5 @@ function valid(year: number, month: number, date: number): string | null {
     : null;
 }
 
-/** The Friday of the week `now` is in; the next Friday when it is already the weekend. */
 export const endOfWeek = (now: Date = new Date()): string =>
   day(plus(now, (5 - now.getDay() + 7) % 7));

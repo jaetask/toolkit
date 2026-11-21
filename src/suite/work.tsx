@@ -1,5 +1,3 @@
-// Working pages: a small title with the page's actions beside it, sections with a quiet heading,
-// names edited where they are shown, a "..." menu on a row, and a dialog for a short form.
 import { IconChevronRight, IconDots, IconHelpCircle, IconPlus } from "@tabler/icons-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button.js";
@@ -28,10 +26,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover.js";
 import { DEFAULT_PROJECT_COLOUR, PROJECT_ICONS } from "./project-appearance.js";
 import { ProjectIcon } from "./project-icon.js";
 
-/**
- * A working page: one small title, what the page is for behind a "?", the page's actions on the
- * right, then its content straight on the page. `wide` uses the whole width, for a board.
- */
 export function WorkPage({
   title,
   icon,
@@ -41,9 +35,7 @@ export function WorkPage({
   children,
 }: {
   title: string;
-  /** A mark before the title, such as a project's icon. */
   icon?: ReactNode;
-  /** What the page is for, shown when "?" is pressed. */
   help?: ReactNode;
   action?: ReactNode;
   wide?: boolean;
@@ -80,10 +72,6 @@ export function WorkPage({
   );
 }
 
-/**
- * A section of a page: a small grey heading that folds, a count, and at most one "+" on the
- * right where things can be added.
- */
 export function PageSection({
   id,
   title,
@@ -99,7 +87,6 @@ export function PageSection({
   count?: ReactNode;
   onAdd?: () => void;
   addLabel?: string;
-  /** Anything else for the right of the heading. */
   aside?: ReactNode;
   defaultOpen?: boolean;
   children: ReactNode;
@@ -142,15 +129,10 @@ export function PageSection({
   );
 }
 
-/** What a list says when it holds nothing: one quiet line. */
 export function EmptyLine({ children }: { children: ReactNode }) {
   return <p className="tk-empty-line">{children}</p>;
 }
 
-/**
- * A name edited where it is shown. A click turns it into a box; Enter or leaving the box saves,
- * Escape puts back what was there.
- */
 export function InlineText({
   value,
   label,
@@ -162,11 +144,9 @@ export function InlineText({
   className,
 }: {
   value: string;
-  /** What the box is called, such as "Rename Coder". */
   label: string;
   onSave: (value: string) => void;
   disabled?: boolean;
-  /** Set to open or close the box from outside, such as from a row's Rename. */
   editing?: boolean;
   onEditingChange?: (editing: boolean) => void;
   maxLength?: number;
@@ -215,7 +195,6 @@ export function InlineText({
   );
 }
 
-/** One line of a RowMenu: something to do, a line between groups, or a menu inside the menu. */
 export type MenuEntry =
   | { label: string; onSelect: () => void; disabled?: boolean; hint?: string }
   | { label: string; items: MenuEntry[]; disabled?: boolean }
@@ -260,24 +239,17 @@ function Entries({ items }: { items: MenuEntry[] }) {
   );
 }
 
-/**
- * The "..." at the end of a row or the top of a page: everything that can be done to the thing,
- * in one quiet menu. `quiet` shows the button only while its row is pointed at or focused.
- */
 export function RowMenu({
   label,
   items,
   quiet,
   align = "end",
 }: {
-  /** What the menu is for, such as "Label bug". */
   label: string;
   items: MenuEntry[];
   quiet?: boolean;
   align?: "start" | "end";
 }) {
-  // What an item does runs once the menu has closed and given up the focus, so a box or dialog
-  // it opens keeps the focus it takes.
   const after = useRef<(() => void) | null>(null);
   const later = (entries: MenuEntry[]): MenuEntry[] =>
     entries.map((e) =>
@@ -290,8 +262,6 @@ export function RowMenu({
               onSelect: () => {
                 const run = e.onSelect;
                 after.current = run;
-                // A menu opened again before it finished closing never says it closed: the
-                // item still runs, a moment later.
                 setTimeout(() => {
                   if (after.current !== run) return;
                   after.current = null;
@@ -328,10 +298,6 @@ export function RowMenu({
   );
 }
 
-/**
- * A short form in the centre of the page: a title, its fields, Cancel and one button that saves.
- * Enter in a field saves; Cmd+Enter saves from anywhere in it. `onSave` answers true to close.
- */
 export function FormDialog({
   open,
   onOpenChange,
@@ -349,7 +315,6 @@ export function FormDialog({
   line?: ReactNode;
   saveLabel?: string;
   onSave: () => boolean | Promise<boolean>;
-  /** Something for the left of the buttons. */
   extra?: ReactNode;
   wide?: boolean;
   children: ReactNode;
@@ -407,7 +372,6 @@ export function FormDialog({
   );
 }
 
-/** One field of a FormDialog: its name above it, and a line of help under it when it needs one. */
 export function Field({
   label,
   hint,
@@ -434,10 +398,6 @@ export function Field({
   );
 }
 
-/**
- * The round mark of a person or an agent: its icon in its colour, an emoji, or the first letter
- * of its name on grey.
- */
 export function IconAvatar({
   name,
   icon,
@@ -445,7 +405,6 @@ export function IconAvatar({
   size = 24,
 }: {
   name: string;
-  /** An icon name the ProjectIconPicker offers, an emoji, or nothing. */
   icon?: string;
   colour?: string;
   size?: number;
@@ -470,7 +429,6 @@ export function IconAvatar({
   );
 }
 
-/** How long ago a time was, in a few letters: "now", "5m ago", "3h ago", "2d ago", "6w ago". */
 export function ago(at: string | number | Date, now: number = Date.now()): string {
   const minutes = Math.max(0, Math.floor((now - new Date(at).getTime()) / 60_000));
   if (minutes < 1) return "now";
@@ -483,7 +441,6 @@ export function ago(at: string | number | Date, now: number = Date.now()): strin
   return `${Math.floor(days / 365)}y ago`;
 }
 
-/** A time shown as how long ago it was; the full date shows when it is pointed at. */
 export function TimeAgo({ at, prefix }: { at: string; prefix?: string }) {
   const [, tick] = useState(0);
   useEffect(() => {

@@ -1,5 +1,3 @@
-// Copies the stylesheets beside the compiled files, as the agent-native toolkit's build does, so
-// dist/styles.css and its @import and @source paths work from the published package.
 import { copyFileSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import { dirname, extname, join, relative } from "node:path";
 

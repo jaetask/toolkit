@@ -1,7 +1,3 @@
-/* @jaetask/toolkit: tokens and component styles. Import once at the app's root:
-   import "@jaetask/toolkit/styles.css";
-   Dark values apply under .dark or [data-theme="dark"] on any ancestor. */
-
 :root {
   --tk-ink: #1f2328;
   --tk-muted: #6b6a63;
@@ -22,7 +18,6 @@
   --tk-danger: #b42318;
   --tk-focus: #1f2328;
 
-  /* The six named colours: labels, project colours, avatars. */
   --tk-c-blue: #0b5cad;
   --tk-c-blue-soft: #e3eefb;
   --tk-c-teal: #0f766e;
@@ -86,7 +81,6 @@
   --tk-c-pink-soft: #3d1630;
 }
 
-/* ---------- Base ---------- */
 .tk-root {
   font-family: var(--tk-font);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
@@ -100,7 +94,6 @@
 .tk-root *::after {
   box-sizing: border-box;
 }
-/* No ring is drawn round a focused part. A focused field shows a darker border. */
 .tk-root :focus-visible {
   outline: none;
 }
@@ -108,7 +101,6 @@
   color: var(--tk-muted);
 }
 
-/* ---------- Shell ---------- */
 .tk-shell {
   display: grid;
   grid-template-columns: var(--tk-sidebar-width) minmax(0, 1fr);
@@ -414,7 +406,6 @@ a.tk-group-label:hover {
   }
 }
 
-/* ---------- Page kit ---------- */
 .tk-page {
   display: flex;
   flex-direction: column;
@@ -572,7 +563,6 @@ a.tk-list-body:hover {
   gap: 6px;
 }
 
-/* ---------- Buttons and inputs ---------- */
 .tk-button {
   display: inline-flex;
   align-items: center;
@@ -649,7 +639,6 @@ a.tk-list-body:hover {
   color: var(--tk-page);
 }
 
-/* ---------- Edit page ---------- */
 .tk-edit {
   display: flex;
   flex-direction: column;
@@ -712,7 +701,6 @@ a.tk-list-body:hover {
   }
 }
 
-/* ---------- Confirm delete ---------- */
 .tk-dialog {
   max-width: 28rem;
   padding: 24px;
@@ -742,7 +730,6 @@ a.tk-list-body:hover {
   }
 }
 
-/* ---------- Named colours ---------- */
 [data-colour="blue"] {
   --tk-tint: var(--tk-c-blue);
   --tk-tint-soft: var(--tk-c-blue-soft);
@@ -788,7 +775,6 @@ a.tk-list-body:hover {
   object-fit: cover;
 }
 
-/* ---------- Counts ---------- */
 .tk-count {
   margin-left: auto;
   min-width: 20px;
@@ -807,7 +793,6 @@ a.tk-list-body:hover {
   background: var(--tk-panel);
 }
 
-/* ---------- Rows: drag, blocked ---------- */
 .tk-list-row[draggable="true"] {
   cursor: grab;
 }
@@ -827,7 +812,6 @@ a.tk-list-body:hover {
   cursor: grab;
 }
 
-/* ---------- Board ---------- */
 .tk-board {
   display: grid;
   grid-auto-flow: column;
@@ -878,7 +862,6 @@ a.tk-list-body:hover {
   font-size: 13px;
 }
 
-/* ---------- Thread ---------- */
 .tk-thread,
 .tk-replies {
   margin: 0;
@@ -969,7 +952,6 @@ a.tk-list-body:hover {
   margin-left: auto;
 }
 
-/* ---------- Facts, notices, inline ---------- */
 .tk-facts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -1025,7 +1007,6 @@ a.tk-list-body:hover {
   flex: 1 1 10rem;
 }
 
-/* ---------- Centred page ---------- */
 .tk-centered {
   display: grid;
   place-items: center;
@@ -1036,7 +1017,6 @@ a.tk-list-body:hover {
   width: min(100%, 30rem);
 }
 
-/* ---------- Tabs, composer, filters ---------- */
 .tk-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -1089,7 +1069,6 @@ a.tk-list-body:hover {
   color: var(--tk-page);
 }
 
-/* ---------- Thumbnails ---------- */
 .tk-thumbs {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -1136,7 +1115,6 @@ a.tk-list-body:hover {
   opacity: 1;
 }
 
-/* ---------- Working pages ---------- */
 .tk-content[data-bar="none"] {
   padding-top: 18px;
 }
@@ -1226,7 +1204,6 @@ a.tk-list-body:hover {
   font-size: 12px;
 }
 
-/* Suite parts on ported ui parts */
 .tk-blocked {
   border-color: transparent;
   background: var(--tk-c-amber-soft, #fdf0dc);

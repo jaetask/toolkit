@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { endOfWeek, parseDue } from "./due.js";
 
-// A Friday.
 const now = new Date(2026, 10, 20, 15, 0);
 
 test("words for a due date become a day", () => {

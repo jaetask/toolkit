@@ -1,14 +1,3 @@
-/*
- * @jaetask/toolkit styles. The ui parts are the agent-native toolkit's, styled with Tailwind 4 and
- * the theme variables in theme/suite-theme.css; the suite parts use suite/suite.css.
- *
- * Import in an app's CSS entry, after Tailwind:
- *
- *   @import "tailwindcss";
- *   @import "@jaetask/toolkit/styles.css";
- *
- * The @source line below makes Tailwind generate the classes used inside the toolkit's own files.
- */
 @import "./theme/resource-icons.css";
 @import "./theme/suite-theme.css";
 @import "./suite/suite.css";

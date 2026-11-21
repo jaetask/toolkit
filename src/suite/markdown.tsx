@@ -1,4 +1,3 @@
-// Markdown shown as text: a comment or a description, with headings, lists, code and pictures.
 import ReactMarkdown, { type Components, defaultUrlTransform } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { cn } from "../utils.js";
@@ -25,7 +24,6 @@ const ELEMENTS = [
   "ul",
 ];
 
-/** True for a picture the page may load: one served by the app itself. */
 const ownPicture = (src: string) => src.startsWith("/") && !src.startsWith("//");
 
 const components: Components = {
@@ -43,8 +41,6 @@ const components: Components = {
       </a>
     );
   },
-  // A picture from the app is shown; one from elsewhere is a link, so opening a page asks no
-  // other site for anything.
   img: ({ src, alt }) => {
     const from = typeof src === "string" ? src : "";
     if (ownPicture(from)) {
@@ -91,7 +87,6 @@ const components: Components = {
   hr: () => <hr className="my-3" />,
 };
 
-/** Markdown as it reads: paragraphs, headings, lists, code, links and the app's own pictures. */
 export function MarkdownText({ content, className }: { content: string; className?: string }) {
   return (
     <div className={cn("grid gap-2 break-words", className)}>
@@ -101,7 +96,6 @@ export function MarkdownText({ content, className }: { content: string; classNam
         remarkPlugins={[remarkGfm]}
         skipHtml
         unwrapDisallowed
-        // A picture's address is judged in `img` above; here it only has to pass through.
         urlTransform={(url, key) => (key === "src" ? url : defaultUrlTransform(url))}
       >
         {content}

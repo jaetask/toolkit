@@ -1,4 +1,3 @@
-# Guardrails. on runs a check; off skips it. Re-run the guardrails skill to check again.
 commands:
   typecheck: "npm run typecheck"
   lint: "npm run lint" # biome, then the scrub check

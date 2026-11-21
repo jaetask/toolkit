@@ -101,7 +101,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json && node scripts/finalize-build.mjs && chmod +x dist/guard.js",
     "typecheck": "tsc --noEmit",
-    "lint": "biome lint . && node scripts/check-scrub.mjs",
+    "lint": "biome lint . && node scripts/check-scrub.mjs && node .agents/guardrails/check-comments.mjs",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "test": "tsx --test src/*.test.ts src/suite/*.test.tsx",
