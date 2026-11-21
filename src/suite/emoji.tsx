@@ -1,4 +1,7 @@
+// The emoji picker panel and comment reactions from the agent-native Content app
 // (app/components/editor/EmojiPicker.tsx and CommentReactions.tsx, MIT, Copyright (c) 2026
+// Builder.io, Inc.). Same names and props; the app's translations are English strings here, and the
+// popover is the toolkit's ported Popover.
 import { IconMoodSmile } from "@tabler/icons-react";
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover.js";
