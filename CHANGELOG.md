@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.4
+
+- Neutral greys: `--tk-panel`, `--tk-line`, `--tk-line-strong`, `--tk-muted`, `--tk-todo` and the dark surfaces are plain greys, with no warm tint. A test fails if one gets a tint again.
+
 ## 0.3.3
 
 - Suite: working pages. `WorkPage` (one small title, what the page is for behind "?", the page's actions), `PageSection` (a small grey heading that folds, a count, a "+"), `EmptyLine`, `InlineText` (a name edited where it is shown), `RowMenu` (the "..." of a row, with menus inside it), `FormDialog` and `Field` (a short form in the centre of the page), `IconAvatar` (an icon in its colour, an emoji or a first letter), `TimeAgo` and `ago`.
