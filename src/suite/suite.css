@@ -1,9 +1,9 @@
 :root {
   --tk-ink: #1f2328;
-  --tk-muted: #6b6a63;
-  --tk-line: #e6e4dd;
-  --tk-line-strong: #c9c7bf;
-  --tk-panel: #f0efe9;
+  --tk-muted: #737373;
+  --tk-line: #e5e5e5;
+  --tk-line-strong: #d4d4d4;
+  --tk-panel: #f3f3f3;
   --tk-card: #ffffff;
   --tk-page: #f9f9f9;
   --tk-side: #f3f3f3;
@@ -12,7 +12,7 @@
   --tk-side-line: #e6e6e6;
   --tk-primary: #262626;
   --tk-on-primary: #ffffff;
-  --tk-todo: #c9c7bf;
+  --tk-todo: #d4d4d4;
   --tk-doing: #d97706;
   --tk-done: #1a7f37;
   --tk-danger: #b42318;
@@ -49,11 +49,11 @@
 .dark,
 [data-theme="dark"] {
   --tk-ink: #e6edf3;
-  --tk-muted: #9a9890;
-  --tk-line: #3a3935;
-  --tk-line-strong: #5a5952;
-  --tk-panel: #222220;
-  --tk-card: #2d2d2b;
+  --tk-muted: #999999;
+  --tk-line: #333333;
+  --tk-line-strong: #525252;
+  --tk-panel: #222222;
+  --tk-card: #2a2a2a;
   --tk-page: #181818;
   --tk-side: #222222;
   --tk-side-fill: #292929;
@@ -61,7 +61,7 @@
   --tk-side-line: #333333;
   --tk-primary: #bfbfbf;
   --tk-on-primary: #1a1a1a;
-  --tk-todo: #5a5952;
+  --tk-todo: #525252;
   --tk-doing: #d97706;
   --tk-done: #3fb950;
   --tk-danger: #f97066;
