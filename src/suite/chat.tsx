@@ -56,6 +56,7 @@ export type ChatLine = {
   at: string;
   status?: "running" | "done" | "failed";
   steps?: ChatStepView[];
+  detail?: string;
 };
 
 export const dollars = (cost: number): string =>
@@ -370,6 +371,12 @@ function Message({ line }: { line: ChatLine }) {
   return (
     <div className={cn("tk-chat-reply", line.status === "failed" && "tk-chat-failed")}>
       <MarkdownText content={line.text} />
+      {line.detail && (
+        <details className="tk-chat-detail">
+          <summary>Details</summary>
+          <pre>{line.detail}</pre>
+        </details>
+      )}
       {line.status === "running" && <p className="tk-chat-note">Working</p>}
     </div>
   );

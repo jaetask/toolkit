@@ -3,6 +3,7 @@
 ## 0.3.9
 
 - Readable type: suite text is never under 13px, small Tailwind text (`text-xs`) is 13px and `text-sm` is 15px. Chat messages and the composer are 15px, the Trajectory 14px. A test holds the 13px floor.
+- `ChatPane`: a line can carry `detail`, shown behind a Details toggle; a failed reply uses it for the full error.
 
 ## 0.3.8
 
