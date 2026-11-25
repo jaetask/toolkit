@@ -396,6 +396,8 @@ export function ChatPane({
   tools,
   footer,
   problem,
+  tab: shownTab,
+  onTabChange,
 }: {
   label: string;
   lines: ChatLine[];
@@ -407,9 +409,17 @@ export function ChatPane({
   tools?: ReactNode;
   footer?: ReactNode;
   problem?: string;
+  tab?: "chat" | "trajectory";
+  onTabChange?: (tab: "chat" | "trajectory") => void;
 }) {
   const [text, setText] = useState("");
-  const [tab, setTab] = useState("chat");
+  const [ownTab, setOwnTab] = useState<"chat" | "trajectory">("chat");
+  const tab = shownTab ?? ownTab;
+  const setTab = (next: string) => {
+    const kept = next === "trajectory" ? "trajectory" : "chat";
+    setOwnTab(kept);
+    onTabChange?.(kept);
+  };
   const end = useRef<HTMLDivElement>(null);
   const size = lines.length + (lines.at(-1)?.text.length ?? 0);
   useEffect(() => {

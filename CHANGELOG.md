@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.12
+
+- `ChatPane` takes `tab` and `onTabChange`, so an app can keep the Chat or Trajectory tab across a reload.
+
 ## 0.3.11
 
 - `ModelSwitcher`: Recommended and the Max usage warning are pills on the effort's line; the warning is amber with a warning icon, as in Claude.
