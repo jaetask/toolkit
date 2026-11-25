@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.11
+
+- `ModelSwitcher`: Recommended and the Max usage warning are pills on the effort's line; the warning is amber with a warning icon, as in Claude.
+
 ## 0.3.10
 
 - `ChatPane`: a line can carry `detail`, shown behind a Details toggle; a failed reply uses it for the full error.
