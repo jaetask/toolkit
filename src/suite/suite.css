@@ -1418,20 +1418,22 @@ a.tk-list-body:hover {
 }
 .tk-effort-name {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  gap: 8px;
 }
 .tk-model-pill {
-  margin-left: 8px;
-  padding: 1px 6px;
-  border-radius: var(--tk-radius-row);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
   background: var(--tk-panel);
   color: var(--tk-muted);
   font-size: 13px;
 }
 .tk-model-warn {
+  background: var(--tk-c-amber-soft);
   color: var(--tk-c-amber);
-  font-size: 13px;
 }
 .tk-models {
   display: grid;

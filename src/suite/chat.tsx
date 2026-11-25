@@ -1,4 +1,4 @@
-import { IconArrowUp, IconCheck, IconChevronDown } from "@tabler/icons-react";
+import { IconAlertTriangle, IconArrowUp, IconCheck, IconChevronDown } from "@tabler/icons-react";
 import {
   type CSSProperties,
   type FormEvent,
@@ -182,11 +182,14 @@ export function ModelSwitcher({
                     className="tk-model-option"
                   >
                     <span className="tk-effort-name">
-                      <span>
-                        {effortName(e)}
-                        {e === recommended && <span className="tk-model-pill">Recommended</span>}
-                      </span>
-                      {e === "max" && <span className="tk-model-warn">3.5× or more usage</span>}
+                      {effortName(e)}
+                      {e === recommended && <span className="tk-model-pill">Recommended</span>}
+                      {e === "max" && (
+                        <span className="tk-model-pill tk-model-warn">
+                          <IconAlertTriangle size={13} aria-hidden />
+                          3.5× or more usage
+                        </span>
+                      )}
                     </span>
                     {e === value.effort && (
                       <IconCheck size={14} aria-label="Chosen" className="ms-auto" />
