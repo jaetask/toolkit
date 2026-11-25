@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.7
+
+- `ModelSwitcher` is one small button showing the model and effort ("Opus 5.5 Medium"). It opens a menu to pick each, the way Claude's composer does.
+- `ChatPane` takes `tools`, shown in the composer next to the send button; the model button goes there.
+- `ChatPane` and `Trajectory` fill the full width of their panel.
+
 ## 0.3.6
 
 - Suite: `ChatPane`, a chat with an agent: the messages, the composer (Enter sends, Shift+Enter a new line), a Chat and Trajectory tab, a `header` slot and a `footer` slot. It takes its lines as data, so any app can use it.

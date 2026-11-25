@@ -1,4 +1,4 @@
-import { IconArrowUp } from "@tabler/icons-react";
+import { IconArrowUp, IconCheck, IconChevronDown } from "@tabler/icons-react";
 import {
   type CSSProperties,
   type FormEvent,
@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog.js";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select.js";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover.js";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs.js";
 import { Textarea } from "../ui/textarea.js";
 import { cn } from "../utils.js";
@@ -83,41 +83,54 @@ export function ModelSwitcher({
   onChange: (next: { model: string; effort: string }) => void;
   disabled?: boolean;
 }) {
+  const [open, setOpen] = useState(false);
+  const label = models.find((m) => m.id === value.model)?.label ?? value.model;
+  const effortName = (e: string) => e.charAt(0).toUpperCase() + e.slice(1);
   return (
-    <div className="tk-model-switcher">
-      <Select
-        value={value.model}
-        disabled={disabled}
-        onValueChange={(model) => onChange({ ...value, model })}
-      >
-        <SelectTrigger aria-label="Model" className="h-8 w-auto gap-1 text-xs">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {models.map((m) => (
-            <SelectItem key={m.id} value={m.id}>
-              {m.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <Select
-        value={value.effort}
-        disabled={disabled}
-        onValueChange={(effort) => onChange({ ...value, effort })}
-      >
-        <SelectTrigger aria-label="Effort" className="h-8 w-auto gap-1 text-xs">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {efforts.map((e) => (
-            <SelectItem key={e} value={e}>
-              {e}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          disabled={disabled}
+          aria-label={`Model: ${label}, effort ${value.effort}`}
+          className="tk-model-button"
+        >
+          <span>{label}</span>
+          <span className="tk-model-effort">{effortName(value.effort)}</span>
+          <IconChevronDown size={14} aria-hidden />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="end" side="top" className="tk-model-menu w-64 p-1">
+        <p className="tk-model-heading">Model</p>
+        {models.map((m) => (
+          <button
+            key={m.id}
+            type="button"
+            className="tk-model-option"
+            aria-pressed={m.id === value.model}
+            onClick={() => onChange({ ...value, model: m.id })}
+          >
+            <span>{m.label}</span>
+            {m.id === value.model && <IconCheck size={14} aria-hidden />}
+          </button>
+        ))}
+        <p className="tk-model-heading">Effort</p>
+        {efforts.map((e) => (
+          <button
+            key={e}
+            type="button"
+            className="tk-model-option"
+            aria-pressed={e === value.effort}
+            onClick={() => onChange({ ...value, effort: e })}
+          >
+            <span>{effortName(e)}</span>
+            {e === value.effort && <IconCheck size={14} aria-hidden />}
+          </button>
+        ))}
+      </PopoverContent>
+    </Popover>
   );
 }
 
@@ -140,6 +153,7 @@ export function ChatPane({
   placeholder,
   empty,
   header,
+  tools,
   footer,
   problem,
 }: {
@@ -150,6 +164,7 @@ export function ChatPane({
   placeholder?: string;
   empty?: ReactNode;
   header?: ReactNode;
+  tools?: ReactNode;
   footer?: ReactNode;
   problem?: string;
 }) {
@@ -203,6 +218,7 @@ export function ChatPane({
             onKeyDown={onKey}
           />
           <div className="tk-chat-send">
+            {tools}
             <Button
               type="submit"
               size="icon"
