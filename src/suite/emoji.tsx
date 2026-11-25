@@ -658,7 +658,7 @@ export function EmojiPickerPanel({
         ) : (
           filteredCategories.map((category) => (
             <div key={category.name} className="mb-2 last:mb-0">
-              <div className="text-[11px] font-medium text-muted-foreground/60 uppercase tracking-wider px-0.5 mb-1">
+              <div className="text-[13px] font-medium text-muted-foreground/60 uppercase tracking-wider px-0.5 mb-1">
                 {category.name}
               </div>
               <div className="grid grid-cols-7 gap-0 sm:grid-cols-8">

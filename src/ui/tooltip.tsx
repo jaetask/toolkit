@@ -36,7 +36,7 @@ const TooltipContent = React.forwardRef<
         sideOffset={sideOffset}
         data-agent-native-tooltip="true"
         className={cn(
-          "z-[500] overflow-hidden rounded-md border border-border bg-popover px-2 py-1 text-[11px] text-foreground shadow-md origin-[var(--radix-tooltip-content-transform-origin)] data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-[state=delayed-open]:duration-150 motion-reduce:data-[state=delayed-open]:zoom-in-100",
+          "z-[500] overflow-hidden rounded-md border border-border bg-popover px-2 py-1 text-[13px] text-foreground shadow-md origin-[var(--radix-tooltip-content-transform-origin)] data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-[state=delayed-open]:duration-150 motion-reduce:data-[state=delayed-open]:zoom-in-100",
           className,
         )}
         {...props}
