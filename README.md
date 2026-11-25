@@ -11,6 +11,8 @@ npm install @jaetask/toolkit react react-dom
 npm install -D tailwindcss @tailwindcss/cli
 ```
 
+Each new version is published to npm by the `publish` workflow through npm trusted publishing, so no npm token is stored.
+
 ## Set up an app
 
 The ui parts are styled with Tailwind 4, as in the agent-native toolkit. The app's CSS entry:
