@@ -60,6 +60,27 @@ test("the chat pane shows each line, a Trajectory tab and the composer", () => {
   assert.match(html, /tk-chat-send"><span>model-picker<\/span>/);
 });
 
+test("a failed reply shows one plain line and its error behind Details", () => {
+  const html = renderToStaticMarkup(
+    <ChatPane
+      label="Claude"
+      lines={[
+        {
+          id: "f",
+          from: "assistant",
+          text: "Claude could not answer that message.",
+          at: "2026-11-25T10:00:00.000Z",
+          status: "failed",
+          detail: "400 invalid_request_error",
+        },
+      ]}
+      onSend={() => undefined}
+    />,
+  );
+  assert.match(html, /tk-chat-failed/);
+  assert.match(html, /<summary>Details<\/summary><pre>400 invalid_request_error<\/pre>/);
+});
+
 test("an empty chat shows its hint, and a problem replaces the footer", () => {
   const html = renderToStaticMarkup(
     <ChatPane

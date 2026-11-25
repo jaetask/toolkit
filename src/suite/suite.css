@@ -1337,6 +1337,22 @@ a.tk-list-body:hover {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+.tk-chat-detail {
+  margin-top: 4px;
+  color: var(--tk-muted);
+  font-size: 13px;
+}
+.tk-chat-detail summary {
+  cursor: pointer;
+}
+.tk-chat-detail pre {
+  margin: 6px 0 0;
+  padding: 8px 10px;
+  border-radius: var(--tk-radius-row);
+  background: var(--tk-panel);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 .tk-chat-failed {
   color: var(--tk-danger);
 }
