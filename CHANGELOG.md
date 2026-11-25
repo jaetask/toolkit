@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.5
+
+- Suite: `EntityNav`, the sidebar for an app whose work lives inside entities, such as projects or brands. Each entity is a row with its mark, its name and a chevron, and opens into the same links (Intake, Backlog, Board), any of which can open into its own list (Features, articles). The entity being shown and the link holding it open by themselves; what was opened or closed is remembered in the browser under the app's `storageKey`. Pass `onMove` to reorder by dragging a handle or with the arrows, `drop` on a link to accept something dropped on it, and `menu` for the row's right-click menu.
+- `toolkit-guard` knows `EntityNav`.
+
 ## 0.3.4
 
 - Neutral greys: `--tk-panel`, `--tk-line`, `--tk-line-strong`, `--tk-muted`, `--tk-todo` and the dark surfaces are plain greys, with no warm tint. A test fails if one gets a tint again.

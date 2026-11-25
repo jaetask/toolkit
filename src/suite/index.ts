@@ -88,3 +88,11 @@ export {
   WorkPage,
 } from "./work.js";
 export { type FilterChoice, FilterMenu } from "./filters.js";
+export {
+  ENTITY_SUB_LINK,
+  type Entity,
+  type EntityDrop,
+  type EntityLink,
+  EntityNav,
+  type EntityNavProps,
+} from "./entity-nav.js";

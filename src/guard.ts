@@ -28,6 +28,7 @@ const KIT = [
   "PageControls",
   "PageGroups",
   "PageGroup",
+  "EntityNav",
 ];
 const CODE = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs"]);
 const STYLE = new Set([".css", ".scss"]);
