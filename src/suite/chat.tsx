@@ -16,7 +16,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog.js";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover.js";
+import { useDefaultLayout } from "react-resizable-panels";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu.js";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "../ui/resizable.js";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table.js";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs.js";
 import { Textarea } from "../ui/textarea.js";
 import { cn } from "../utils.js";
@@ -68,69 +81,281 @@ export function usageOf(lines: ChatLine[]): { cost: number; calls: number; token
   return { cost, calls, tokens };
 }
 
-export type ModelChoice = { id: string; label: string };
+export type ModelChoice = { id: string; label: string; efforts?: readonly string[] };
+
+const EFFORT_NAMES: Record<string, string> = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+  xhigh: "Extra",
+  max: "Max",
+};
+export const effortName = (effort: string): string =>
+  EFFORT_NAMES[effort] ?? effort.charAt(0).toUpperCase() + effort.slice(1);
 
 export function ModelSwitcher({
   models,
+  more = [],
   efforts,
+  recommended = "medium",
   value,
   onChange,
   disabled,
 }: {
   models: ModelChoice[];
+  more?: ModelChoice[];
   efforts: readonly string[];
+  recommended?: string;
   value: { model: string; effort: string };
   onChange: (next: { model: string; effort: string }) => void;
   disabled?: boolean;
 }) {
-  const [open, setOpen] = useState(false);
-  const label = models.find((m) => m.id === value.model)?.label ?? value.model;
-  const effortName = (e: string) => e.charAt(0).toUpperCase() + e.slice(1);
+  const all = [...models, ...more];
+  const current = all.find((m) => m.id === value.model);
+  const label = current?.label ?? value.model;
+  const allowed = current?.efforts ?? efforts;
+  const pick = (model: ModelChoice) => {
+    const next = model.efforts ?? efforts;
+    onChange({
+      model: model.id,
+      effort: next.includes(value.effort)
+        ? value.effort
+        : next.includes(recommended)
+          ? recommended
+          : (next[0] ?? value.effort),
+    });
+  };
+  const onKey = (e: KeyboardEvent<HTMLDivElement>) => {
+    const index = Number(e.key) - 1;
+    const model = models[index];
+    if (model && index >= 0) {
+      e.preventDefault();
+      pick(model);
+    }
+  };
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         <Button
           type="button"
           variant="ghost"
           size="sm"
           disabled={disabled}
-          aria-label={`Model: ${label}, effort ${value.effort}`}
+          aria-label={`Model: ${label}${allowed.length ? `, effort ${value.effort}` : ""}`}
           className="tk-model-button"
         >
           <span>{label}</span>
-          <span className="tk-model-effort">{effortName(value.effort)}</span>
+          {allowed.length > 0 && (
+            <span className="tk-model-effort">{effortName(value.effort)}</span>
+          )}
           <IconChevronDown size={14} aria-hidden />
         </Button>
-      </PopoverTrigger>
-      <PopoverContent align="end" side="top" className="tk-model-menu w-64 p-1">
-        <p className="tk-model-heading">Model</p>
-        {models.map((m) => (
-          <button
-            key={m.id}
-            type="button"
-            className="tk-model-option"
-            aria-pressed={m.id === value.model}
-            onClick={() => onChange({ ...value, model: m.id })}
-          >
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" side="top" className="tk-model-menu" onKeyDown={onKey}>
+        {models.map((m, index) => (
+          <DropdownMenuItem key={m.id} onSelect={() => pick(m)} className="tk-model-option">
             <span>{m.label}</span>
-            {m.id === value.model && <IconCheck size={14} aria-hidden />}
-          </button>
+            {m.id === value.model ? (
+              <IconCheck size={14} aria-label="Chosen" className="ms-auto" />
+            ) : (
+              <DropdownMenuShortcut>{index + 1}</DropdownMenuShortcut>
+            )}
+          </DropdownMenuItem>
         ))}
-        <p className="tk-model-heading">Effort</p>
-        {efforts.map((e) => (
-          <button
-            key={e}
-            type="button"
-            className="tk-model-option"
-            aria-pressed={e === value.effort}
-            onClick={() => onChange({ ...value, effort: e })}
-          >
-            <span>{effortName(e)}</span>
-            {e === value.effort && <IconCheck size={14} aria-hidden />}
-          </button>
-        ))}
-      </PopoverContent>
-    </Popover>
+        {allowed.length > 0 && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger className="tk-model-option">
+                <span>Effort</span>
+                <span className="tk-model-effort ms-auto">{effortName(value.effort)}</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent className="tk-model-menu tk-effort-menu">
+                <p className="tk-model-intro">
+                  Higher effort means more thorough responses, but takes longer and costs more.
+                </p>
+                {allowed.map((e) => (
+                  <DropdownMenuItem
+                    key={e}
+                    onSelect={() => onChange({ ...value, effort: e })}
+                    className="tk-model-option"
+                  >
+                    <span className="tk-effort-name">
+                      <span>
+                        {effortName(e)}
+                        {e === recommended && <span className="tk-model-pill">Recommended</span>}
+                      </span>
+                      {e === "max" && <span className="tk-model-warn">3.5× or more usage</span>}
+                    </span>
+                    {e === value.effort && (
+                      <IconCheck size={14} aria-label="Chosen" className="ms-auto" />
+                    )}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          </>
+        )}
+        {more.length > 0 && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger className="tk-model-option">
+                More models
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent className="tk-model-menu">
+                {more.map((m) => (
+                  <DropdownMenuItem key={m.id} onSelect={() => pick(m)} className="tk-model-option">
+                    <span>{m.label}</span>
+                    {m.id === value.model && (
+                      <IconCheck size={14} aria-label="Chosen" className="ms-auto" />
+                    )}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          </>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+export type ModelRow = {
+  id: string;
+  label: string;
+  releasedAt: string;
+  contextWindow: number | null;
+  maxOutput: number | null;
+  efforts: readonly string[];
+  usage: { calls: number; tokens: number; cost: number; priced: boolean };
+};
+
+const tokensShort = (n: number | null) =>
+  n === null
+    ? "–"
+    : n >= 1_000_000
+      ? `${n / 1_000_000}M`
+      : n >= 1000
+        ? `${Math.round(n / 1000)}K`
+        : String(n);
+
+export function ModelsSettings({
+  rows,
+  defaultModel,
+  defaultEffort,
+  syncedAt,
+  syncing,
+  onSync,
+}: {
+  rows: ModelRow[];
+  defaultModel: string;
+  defaultEffort: string;
+  syncedAt: string | null;
+  syncing?: boolean;
+  onSync: () => void;
+}) {
+  return (
+    <div className="tk-models">
+      <div className="tk-models-bar">
+        <span className="tk-models-synced">
+          {syncedAt
+            ? `Synced ${new Date(syncedAt).toLocaleString()}`
+            : "Not synced yet: built-in list"}
+        </span>
+        <Button type="button" size="sm" variant="outline" onClick={onSync} disabled={syncing}>
+          {syncing ? "Syncing…" : "Sync models"}
+        </Button>
+      </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Model</TableHead>
+            <TableHead>API ID</TableHead>
+            <TableHead>Released</TableHead>
+            <TableHead>Context / output</TableHead>
+            <TableHead>Efforts</TableHead>
+            <TableHead className="text-right">This month</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map((m) => (
+            <TableRow key={m.id}>
+              <TableCell>
+                {m.label}
+                {m.id === defaultModel && (
+                  <span className="tk-model-pill">Default · {effortName(defaultEffort)}</span>
+                )}
+              </TableCell>
+              <TableCell className="font-mono text-xs">{m.id}</TableCell>
+              <TableCell>{m.releasedAt ? m.releasedAt.slice(0, 10) : "–"}</TableCell>
+              <TableCell>
+                {tokensShort(m.contextWindow)} / {tokensShort(m.maxOutput)}
+              </TableCell>
+              <TableCell>{m.efforts.length ? m.efforts.map(effortName).join(", ") : "–"}</TableCell>
+              <TableCell className="text-right">
+                {m.usage.calls
+                  ? `${m.usage.calls} calls · ${count(m.usage.tokens)} tokens · ${m.usage.priced ? dollars(m.usage.cost) : "cost unknown"}`
+                  : "–"}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+}
+
+const NO_STORAGE = { getItem: () => null, setItem: () => undefined };
+
+export function ChatLayout({
+  id,
+  top,
+  fill,
+  chat,
+  children,
+}: {
+  id: string;
+  top?: ReactNode;
+  fill?: boolean;
+  chat: ReactNode;
+  children: ReactNode;
+}) {
+  const saved = useDefaultLayout({
+    id,
+    storage: typeof localStorage === "undefined" ? NO_STORAGE : localStorage,
+    panelIds: [`${id}-content`, `${id}-chat`],
+    onlySaveAfterUserInteractions: true,
+  });
+  return (
+    <ResizablePanelGroup
+      orientation="horizontal"
+      id={id}
+      defaultLayout={saved.defaultLayout}
+      onLayoutChanged={saved.onLayoutChanged}
+      className="tk-chat-layout"
+    >
+      <ResizablePanel
+        id={`${id}-content`}
+        defaultSize="64"
+        minSize="35"
+        maxSize="80"
+        className="flex min-w-0"
+      >
+        <div className="tk-chat-layout-main">
+          {top}
+          <div className="tk-chat-layout-body" data-fill={fill ? "true" : undefined}>
+            {children}
+          </div>
+        </div>
+      </ResizablePanel>
+      <ResizableHandle withHandle aria-label="Drag to resize the chat" />
+      <ResizablePanel id={`${id}-chat`} minSize="20" className="flex min-w-0">
+        <aside className="tk-chat-layout-chat" aria-label="Chat">
+          {chat}
+        </aside>
+      </ResizablePanel>
+    </ResizablePanelGroup>
   );
 }
 
