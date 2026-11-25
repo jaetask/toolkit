@@ -1327,8 +1327,15 @@ a.tk-list-body:hover {
   white-space: pre-wrap;
 }
 .tk-chat-reply {
+  min-width: 0;
   font-size: 0.875rem;
   line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.tk-chat-reply code,
+.tk-chat-reply pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 .tk-chat-failed {
   color: var(--tk-danger);
