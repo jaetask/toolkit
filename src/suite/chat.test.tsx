@@ -81,6 +81,13 @@ test("a failed reply shows one plain line and its error behind Details", () => {
   assert.match(html, /<summary>Details<\/summary><pre>400 invalid_request_error<\/pre>/);
 });
 
+test("the chat pane can open on the Trajectory tab it is given", () => {
+  const html = renderToStaticMarkup(
+    <ChatPane label="Claude" lines={lines} onSend={() => undefined} tab="trajectory" />,
+  );
+  assert.match(html, /1 model call/);
+});
+
 test("an empty chat shows its hint, and a problem replaces the footer", () => {
   const html = renderToStaticMarkup(
     <ChatPane
