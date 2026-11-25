@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.9
+
+- Readable type: suite text is never under 13px, small Tailwind text (`text-xs`) is 13px and `text-sm` is 15px. Chat messages and the composer are 15px, the Trajectory 14px. A test holds the 13px floor.
+
 ## 0.3.8
 
 - `ModelSwitcher` works like Claude's own picker: the top models with number keys 1 to 4, an Effort submenu with only the efforts the chosen model supports (Low, Medium marked Recommended, High, Extra for `xhigh`, Max with its usage warning), and a More models submenu.

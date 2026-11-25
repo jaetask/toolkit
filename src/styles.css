@@ -273,6 +273,10 @@ body:has(.fixed.bottom-3.left-3) [data-sidebar-footer-actions] {
 }
 
 @theme inline {
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.25rem;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.5rem;
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
