@@ -1278,3 +1278,204 @@ a.tk-list-body:hover {
   font-size: 11px;
   font-weight: 700;
 }
+
+.tk-chat {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  gap: 0;
+}
+.tk-chat-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--tk-line);
+}
+.tk-chat-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  margin: 0;
+}
+.tk-chat-lines {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px;
+}
+.tk-chat-person {
+  align-self: flex-end;
+  max-width: 85%;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: var(--tk-radius-card);
+  background: var(--tk-panel);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.tk-chat-reply {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.tk-chat-failed {
+  color: var(--tk-danger);
+}
+.tk-chat-note,
+.tk-chat-empty {
+  margin: 0;
+  color: var(--tk-muted);
+  font-size: 0.8125rem;
+}
+.tk-chat-empty {
+  margin: auto;
+  max-width: 22rem;
+  text-align: center;
+}
+.tk-chat-composer {
+  margin: 0 12px 10px;
+  padding: 10px;
+  border: 1px solid var(--tk-line);
+  border-radius: var(--tk-radius-card);
+  background: var(--tk-card);
+}
+.tk-chat-send {
+  display: flex;
+  justify-content: flex-end;
+}
+.tk-chat-foot,
+.tk-chat-problem {
+  margin: 0;
+  padding: 0 12px 10px;
+  color: var(--tk-muted);
+  font-size: 0.75rem;
+}
+.tk-chat-problem {
+  color: var(--tk-danger);
+}
+.tk-model-switcher {
+  display: flex;
+  gap: 6px;
+}
+.tk-trajectory {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px;
+}
+.tk-trajectory-usage,
+.tk-turn-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  color: var(--tk-muted);
+  font-size: 0.75rem;
+}
+.tk-turn {
+  display: grid;
+  gap: 8px;
+}
+.tk-turn-head {
+  color: var(--tk-ink);
+  font-weight: 600;
+}
+.tk-turn-plot {
+  display: grid;
+  gap: 6px;
+}
+.tk-turn-lane {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  align-items: center;
+  gap: 8px;
+}
+.tk-turn-lane-name {
+  color: var(--tk-muted);
+  font-size: 0.6875rem;
+}
+.tk-turn-track {
+  position: relative;
+  height: 10px;
+  border-radius: var(--tk-radius-row);
+  background: var(--tk-panel);
+}
+.tk-turn-bar {
+  position: absolute;
+  top: 0;
+  height: 10px;
+  border: 0;
+  border-radius: var(--tk-radius-row);
+  cursor: pointer;
+}
+.tk-turn-bar.model,
+.tk-turn-tag.model {
+  background: var(--tk-c-purple);
+}
+.tk-turn-bar.tool,
+.tk-turn-tag.tool {
+  background: var(--tk-c-teal);
+}
+.tk-turn-bar.bad,
+.tk-turn-tag.bad {
+  background: var(--tk-danger);
+}
+.tk-turn-steps {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tk-turn-steps button {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: var(--tk-radius-row);
+  background: transparent;
+  color: var(--tk-ink);
+  font-size: 0.75rem;
+  text-align: left;
+  cursor: pointer;
+}
+.tk-turn-steps button:hover {
+  background: var(--tk-panel);
+}
+.tk-turn-tag {
+  padding: 1px 6px;
+  border-radius: var(--tk-radius-row);
+  color: var(--tk-on-primary);
+  font-size: 0.6875rem;
+}
+.tk-turn-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tk-turn-meta {
+  color: var(--tk-muted);
+}
+.tk-turn-pre {
+  margin: 4px 0;
+  padding: 12px;
+  border-radius: var(--tk-radius-row);
+  background: var(--tk-panel);
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

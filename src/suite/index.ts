@@ -96,3 +96,15 @@ export {
   EntityNav,
   type EntityNavProps,
 } from "./entity-nav.js";
+export {
+  type ChatLine,
+  ChatPane,
+  type ChatStepView,
+  dollars,
+  type ModelChoice,
+  ModelSwitcher,
+  seconds,
+  type StepTokens,
+  Trajectory,
+  usageOf,
+} from "./chat.js";
