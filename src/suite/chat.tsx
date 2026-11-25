@@ -328,34 +328,39 @@ export function ChatLayout({
     onlySaveAfterUserInteractions: true,
   });
   return (
-    <ResizablePanelGroup
-      orientation="horizontal"
-      id={id}
-      defaultLayout={saved.defaultLayout}
-      onLayoutChanged={saved.onLayoutChanged}
-      className="tk-chat-layout"
-    >
-      <ResizablePanel
-        id={`${id}-content`}
-        defaultSize="64"
-        minSize="35"
-        maxSize="80"
-        className="flex min-w-0"
+    <div className="tk-chat-layout">
+      <ResizablePanelGroup
+        orientation="horizontal"
+        id={id}
+        defaultLayout={saved.defaultLayout}
+        onLayoutChanged={saved.onLayoutChanged}
       >
-        <div className="tk-chat-layout-main">
-          {top}
-          <div className="tk-chat-layout-body" data-fill={fill ? "true" : undefined}>
-            {children}
+        <ResizablePanel
+          id={`${id}-content`}
+          defaultSize="64"
+          minSize="35"
+          maxSize="80"
+          className="flex min-w-0"
+        >
+          <div className="tk-chat-layout-main">
+            {top}
+            <div className="tk-chat-layout-body" data-fill={fill ? "true" : undefined}>
+              {children}
+            </div>
           </div>
-        </div>
-      </ResizablePanel>
-      <ResizableHandle withHandle aria-label="Drag to resize the chat" />
-      <ResizablePanel id={`${id}-chat`} minSize="20" className="flex min-w-0">
-        <aside className="tk-chat-layout-chat" aria-label="Chat">
-          {chat}
-        </aside>
-      </ResizablePanel>
-    </ResizablePanelGroup>
+        </ResizablePanel>
+        <ResizableHandle
+          withHandle
+          aria-label="Drag to resize the chat"
+          className="aria-[orientation=vertical]:h-auto aria-[orientation=vertical]:w-px aria-[orientation=vertical]:after:inset-y-0 aria-[orientation=vertical]:after:left-1/2 aria-[orientation=vertical]:after:h-auto aria-[orientation=vertical]:after:w-1 aria-[orientation=vertical]:after:-translate-x-1/2 aria-[orientation=vertical]:after:translate-y-0 [&[aria-orientation=vertical]>div]:rotate-0"
+        />
+        <ResizablePanel id={`${id}-chat`} minSize="20" className="flex min-w-0">
+          <aside className="tk-chat-layout-chat" aria-label="Chat">
+            {chat}
+          </aside>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>
   );
 }
 
