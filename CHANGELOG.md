@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.6
+
+- Suite: `ChatPane`, a chat with an agent: the messages, the composer (Enter sends, Shift+Enter a new line), a Chat and Trajectory tab, a `header` slot and a `footer` slot. It takes its lines as data, so any app can use it.
+- Suite: `Trajectory`, each turn as a strip with a Model lane and a Tools lane, the steps listed under it, and a dialog with a step's summary and payload. The top line sums model calls, cost and tokens.
+- Suite: `ModelSwitcher`, a model and an effort picked from the lists the app passes.
+- `dollars`, `seconds` and `usageOf` for showing cost and time.
+
 ## 0.3.5
 
 - Suite: `EntityNav`, the sidebar for an app whose work lives inside entities, such as projects or brands. Each entity is a row with its mark, its name and a chevron, and opens into the same links (Intake, Backlog, Board), any of which can open into its own list (Features, articles). The entity being shown and the link holding it open by themselves; what was opened or closed is remembered in the browser under the app's `storageKey`. Pass `onMove` to reorder by dragging a handle or with the arrows, `drop` on a link to accept something dropped on it, and `menu` for the row's right-click menu.

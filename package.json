@@ -1,6 +1,6 @@
 {
   "name": "@jaetask/toolkit",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "The agent-native toolkit's ui parts, ported with the suite's look, plus the suite's app shell and page kit.",
   "keywords": [
     "react",
