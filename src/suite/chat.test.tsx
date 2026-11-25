@@ -34,7 +34,13 @@ const lines: ChatLine[] = [
 
 test("the chat pane shows each line, a Trajectory tab and the composer", () => {
   const html = renderToStaticMarkup(
-    <ChatPane label="Claude" lines={lines} onSend={() => undefined} footer={<span>$0.01</span>} />,
+    <ChatPane
+      label="Claude"
+      lines={lines}
+      onSend={() => undefined}
+      tools={<span>model-picker</span>}
+      footer={<span>$0.01</span>}
+    />,
   );
   assert.match(html, /aria-label="Chat with Claude"/);
   assert.match(html, /Tighten the opening/);
@@ -42,6 +48,7 @@ test("the chat pane shows each line, a Trajectory tab and the composer", () => {
   assert.match(html, />Trajectory</);
   assert.match(html, /aria-label="Message Claude"/);
   assert.match(html, /\$0\.01/);
+  assert.match(html, /tk-chat-send"><span>model-picker<\/span>/);
 });
 
 test("an empty chat shows its hint, and a problem replaces the footer", () => {
@@ -89,6 +96,7 @@ test("the model switcher shows the chosen model and effort", () => {
       onChange={() => undefined}
     />,
   );
-  assert.match(html, /aria-label="Model"/);
-  assert.match(html, /aria-label="Effort"/);
+  assert.match(html, /aria-label="Model: Model B, effort medium"/);
+  assert.match(html, />Model B</);
+  assert.match(html, />Medium</);
 });
