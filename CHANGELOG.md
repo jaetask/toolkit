@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.8
+
+- `ModelSwitcher` works like Claude's own picker: the top models with number keys 1 to 4, an Effort submenu with only the efforts the chosen model supports (Low, Medium marked Recommended, High, Extra for `xhigh`, Max with its usage warning), and a More models submenu.
+- `ModelsSettings`, a Settings section for any app: a Sync models button with the last sync time, and a table of each model's ID, release date, context window and output, efforts, and this app's use of it this month. The default model is marked.
+- `ChatLayout`: the content with an optional strip on top, a divider whose position is remembered, and the chat at full height on the right. The content resizes with the divider.
+
 ## 0.3.7
 
 - `ModelSwitcher` is one small button showing the model and effort ("Opus 5.5 Medium"). It opens a menu to pick each, the way Claude's composer does.

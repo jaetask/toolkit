@@ -1,7 +1,16 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import { type ChatLine, ChatPane, dollars, ModelSwitcher, Trajectory, usageOf } from "./index.js";
+import {
+  ChatLayout,
+  type ChatLine,
+  ChatPane,
+  dollars,
+  ModelSwitcher,
+  ModelsSettings,
+  Trajectory,
+  usageOf,
+} from "./index.js";
 
 const lines: ChatLine[] = [
   { id: "1", from: "person", text: "Tighten the opening", at: "2026-11-25T10:00:00.000Z" },
@@ -84,19 +93,71 @@ test("dollars shows small costs to four places", () => {
   assert.equal(dollars(12.5), "$12.50");
 });
 
-test("the model switcher shows the chosen model and effort", () => {
+test("the model switcher shows the chosen model and effort, and Extra for xhigh", () => {
   const html = renderToStaticMarkup(
     <ModelSwitcher
       models={[
         { id: "a", label: "Model A" },
         { id: "b", label: "Model B" },
       ]}
-      efforts={["low", "medium"]}
-      value={{ model: "b", effort: "medium" }}
+      more={[{ id: "c", label: "Model C", efforts: [] }]}
+      efforts={["low", "medium", "xhigh"]}
+      value={{ model: "b", effort: "xhigh" }}
       onChange={() => undefined}
     />,
   );
-  assert.match(html, /aria-label="Model: Model B, effort medium"/);
+  assert.match(html, /aria-label="Model: Model B, effort xhigh"/);
   assert.match(html, />Model B</);
-  assert.match(html, />Medium</);
+  assert.match(html, />Extra</);
+});
+
+test("the models section lists each model with its usage and marks the default", () => {
+  const html = renderToStaticMarkup(
+    <ModelsSettings
+      rows={[
+        {
+          id: "m-1",
+          label: "Model One",
+          releasedAt: "2026-09-01T00:00:00Z",
+          contextWindow: 1_000_000,
+          maxOutput: 128_000,
+          efforts: ["low", "medium"],
+          usage: { calls: 3, tokens: 1500, cost: 0.02, priced: true },
+        },
+        {
+          id: "m-2",
+          label: "Model Two",
+          releasedAt: "",
+          contextWindow: null,
+          maxOutput: null,
+          efforts: [],
+          usage: { calls: 1, tokens: 10, cost: 0, priced: false },
+        },
+      ]}
+      defaultModel="m-1"
+      defaultEffort="medium"
+      syncedAt={null}
+      onSync={() => undefined}
+    />,
+  );
+  assert.match(html, /Not synced yet/);
+  assert.match(html, />Sync models</);
+  assert.match(html, /Default · Medium/);
+  assert.match(html, /1M \/ 128K/);
+  assert.match(html, /3 calls · 1,500 tokens · \$0\.02/);
+  assert.match(html, /cost unknown/);
+  assert.doesNotMatch(html, /MTok/);
+});
+
+test("the chat layout puts the content and its top strip beside the chat", () => {
+  const html = renderToStaticMarkup(
+    <ChatLayout id="t" top={<nav>steps</nav>} fill chat={<p>chat here</p>}>
+      <p>content here</p>
+    </ChatLayout>,
+  );
+  assert.match(
+    html,
+    /<nav>steps<\/nav><div class="tk-chat-layout-body" data-fill="true"><p>content here/,
+  );
+  assert.match(html, /aria-label="Chat"><p>chat here/);
 });
