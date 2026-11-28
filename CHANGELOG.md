@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.15
+
+- Voice: a reply is spoken one sentence at a time, the next fetched while the current one plays, so a speech server that takes one request at a time reads the whole reply instead of stopping after the first sentence.
+- `ChatPane`: a problem line under the composer is 15px.
+
 ## 0.3.14
 
 - `ChatPane`: the composer's buttons wrap to a second row in a narrow chat instead of squeezing Send, so the model picker, the voice controls and Send always fit.
