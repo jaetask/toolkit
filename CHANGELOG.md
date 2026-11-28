@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.17
+
+- `ArcGauge`: the usual band is a clear green against the grey track, in light and dark.
+
 ## 0.3.16
 
 - `ArcGauge`: a half-circle gauge with one big number, its unit, a green band for the usual range and a marker for the value. The marker's dot turns amber below the band and blue above it; `gaugeTone` says which.
