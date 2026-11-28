@@ -112,6 +112,7 @@ export {
   Trajectory,
   usageOf,
 } from "./chat.js";
+export { ArcGauge, type GaugeTone, gaugeTone } from "./gauge.js";
 export {
   type ChatVoice,
   MicIcon,
