@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.14
+
+- `ChatPane`: the composer's buttons wrap to a second row in a narrow chat instead of squeezing Send, so the model picker, the voice controls and Send always fit.
+
 ## 0.3.13
 
 - Voice in the chat composer, the same for every app: `useChatVoice` and `ChatPane`'s `voice` prop put a hold-to-talk mic (or hold Space) and a hands-free voice call beside Send, with the status in the composer ("Speaking · Esc to stop"). Esc stops a reply being read aloud; talking over it on a call interrupts it.
