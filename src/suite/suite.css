@@ -1397,7 +1397,8 @@ a.tk-list-body:hover {
 }
 .tk-gauge-band {
   fill: none;
-  stroke: var(--tk-c-green-soft);
+  stroke: var(--tk-c-green);
+  stroke-opacity: 0.4;
 }
 .tk-gauge-mark {
   stroke: var(--tk-ink);
