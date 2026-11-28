@@ -1376,9 +1376,14 @@ a.tk-list-body:hover {
 }
 .tk-chat-send {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  gap: 4px;
+  gap: 6px 4px;
+}
+.tk-chat-send > *,
+.tk-voice > * {
+  flex: none;
 }
 .tk-voice {
   display: flex;
