@@ -1380,6 +1380,35 @@ a.tk-list-body:hover {
   justify-content: flex-end;
   gap: 4px;
 }
+.tk-voice {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tk-voice-status {
+  padding-right: 4px;
+  color: var(--tk-muted);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.tk-voice-call {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+}
+.tk-voice-call.is-on {
+  animation: tk-voice-pulse 1.6s ease-in-out infinite;
+}
+@keyframes tk-voice-pulse {
+  50% {
+    opacity: 0.7;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tk-voice-call.is-on {
+    animation: none;
+  }
+}
 .tk-chat-foot,
 .tk-chat-problem {
   margin: 0;

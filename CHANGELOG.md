@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.13
+
+- Voice in the chat composer, the same for every app: `useChatVoice` and `ChatPane`'s `voice` prop put a hold-to-talk mic (or hold Space) and a hands-free voice call beside Send, with the status in the composer ("Speaking · Esc to stop"). Esc stops a reply being read aloud; talking over it on a call interrupts it.
+- The app gives `useChatVoice` its speech server and chat as `transcribe`, `speak` and `ask`, and may give `workletUrl` where its page does not allow `blob:` scripts (`PCM_WORKLET` is the file to serve).
+- `MicIcon`, `WaveIcon` and `StopIcon` for voice controls.
+
 ## 0.3.12
 
 - `ChatPane` takes `tab` and `onTabChange`, so an app can keep the Chat or Trajectory tab across a reload.

@@ -34,6 +34,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs.js";
 import { Textarea } from "../ui/textarea.js";
 import { cn } from "../utils.js";
 import { MarkdownText } from "./markdown.js";
+import { type ChatVoice, VoiceControls } from "./voice.js";
 
 export type StepTokens = { input: number; output: number; cacheRead: number; cacheWrite: number };
 
@@ -398,6 +399,7 @@ export function ChatPane({
   problem,
   tab: shownTab,
   onTabChange,
+  voice,
 }: {
   label: string;
   lines: ChatLine[];
@@ -411,6 +413,7 @@ export function ChatPane({
   problem?: string;
   tab?: "chat" | "trajectory";
   onTabChange?: (tab: "chat" | "trajectory") => void;
+  voice?: ChatVoice;
 }) {
   const [text, setText] = useState("");
   const [ownTab, setOwnTab] = useState<"chat" | "trajectory">("chat");
@@ -469,6 +472,7 @@ export function ChatPane({
           />
           <div className="tk-chat-send">
             {tools}
+            {voice && <VoiceControls voice={voice} />}
             <Button
               type="submit"
               size="icon"
@@ -485,9 +489,9 @@ export function ChatPane({
       <TabsContent value="trajectory" className="tk-chat-body">
         <Trajectory lines={lines} />
       </TabsContent>
-      {problem ? (
+      {problem || voice?.error ? (
         <p className="tk-chat-problem" role="alert">
-          {problem}
+          {problem || voice?.error}
         </p>
       ) : (
         footer && <div className="tk-chat-foot">{footer}</div>
