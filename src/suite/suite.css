@@ -1385,6 +1385,42 @@ a.tk-list-body:hover {
 .tk-voice > * {
   flex: none;
 }
+.tk-gauge {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+}
+.tk-gauge-track {
+  fill: none;
+  stroke: var(--tk-line);
+}
+.tk-gauge-band {
+  fill: none;
+  stroke: var(--tk-c-green-soft);
+}
+.tk-gauge-mark {
+  stroke: var(--tk-ink);
+}
+.tk-gauge-dot {
+  fill: var(--tk-ink);
+}
+.tk-gauge-dot.is-below {
+  fill: var(--tk-c-amber);
+}
+.tk-gauge-dot.is-above {
+  fill: var(--tk-c-blue);
+}
+.tk-gauge-value {
+  fill: var(--tk-ink);
+  font-size: 30px;
+  font-weight: 800;
+}
+.tk-gauge-unit,
+.tk-gauge-edge {
+  fill: var(--tk-muted);
+  font-size: 13px;
+}
 .tk-voice {
   display: flex;
   align-items: center;

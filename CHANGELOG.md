@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.16
+
+- `ArcGauge`: a half-circle gauge with one big number, its unit, a green band for the usual range and a marker for the value. The marker's dot turns amber below the band and blue above it; `gaugeTone` says which.
+
 ## 0.3.15
 
 - Voice: a reply is spoken one sentence at a time, the next fetched while the current one plays, so a speech server that takes one request at a time reads the whole reply instead of stopping after the first sentence.
