@@ -1423,6 +1423,7 @@ a.tk-list-body:hover {
 }
 .tk-chat-problem {
   color: var(--tk-danger);
+  font-size: 15px;
 }
 .tk-model-button {
   gap: 6px;

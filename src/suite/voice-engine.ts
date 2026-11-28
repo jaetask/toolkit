@@ -420,10 +420,13 @@ export class VoiceEngine {
         this.turns.reset();
         this.set({ state: "speaking" });
         const { player } = this.audio();
-        const parts = sentences(answer).map((s) => this.backend.speak(s));
-        for (const part of parts) {
-          const { pcm: said, rate } = await part;
+        const parts = sentences(answer);
+        let next = parts.length ? this.backend.speak(parts[0] as string) : null;
+        for (let i = 0; next; i++) {
+          const { pcm: said, rate } = await next;
           if (!live()) return;
+          const after = parts[i + 1];
+          next = after === undefined ? null : this.backend.speak(after);
           player.push(said, rate);
         }
         await player.idle();
