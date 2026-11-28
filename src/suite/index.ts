@@ -112,3 +112,22 @@ export {
   Trajectory,
   usageOf,
 } from "./chat.js";
+export {
+  type ChatVoice,
+  MicIcon,
+  StopIcon,
+  useChatVoice,
+  VOICE_STATUS,
+  VoiceControls,
+  WaveIcon,
+} from "./voice.js";
+export {
+  MIC_RATE,
+  PCM_WORKLET,
+  sentences,
+  TurnDetector,
+  type VoiceBackend,
+  VoiceEngine,
+  type VoiceState,
+  type VoiceView,
+} from "./voice-engine.js";
